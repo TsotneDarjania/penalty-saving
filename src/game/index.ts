@@ -2,6 +2,7 @@ import { Application, Container, ContainerChild } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { EvenetManager } from "./core/eventManager.ts";
+import { RopeEffect } from "../gameObjects/ropeEffect.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
@@ -40,6 +41,24 @@ export class Game extends Application {
 
   private startGame() {
     this.addGameObjects();
+
+    // const ropeEffect = new RopeEffect(
+    //   this.gameResources.assets.circle!,
+    //   this,
+    //   true
+    // );
+
+    const ballRopeEffect = new RopeEffect(
+      this.gameResources.assets.circle!,
+      this,
+      false,
+      this.gameObjects.ball!
+    );
+
+    ballRopeEffect.effectOnn();
+
+    // ropeEffect.effectOnn();
+
     this.addEvenetManager();
   }
 

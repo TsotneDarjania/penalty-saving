@@ -8,7 +8,9 @@ export class Ball extends Container {
   blurFilter!: BlurFilter;
 
   private isLastRotation = false;
-  private isReadyForShoot = true;
+  private isReadyForPreperation = true;
+  private isReadyForShoot = false;
+  private isShootCommand = false;
 
   constructor(public ballTexture: Texture, public ballBorderTexture: Texture) {
     super();
@@ -23,7 +25,7 @@ export class Ball extends Container {
 
   private addBallBorder() {
     const blurFilter = new BlurFilter({
-      strength: 1.8,
+      strength: 1.1,
     });
 
     let border = new Graphics({
@@ -32,7 +34,8 @@ export class Ball extends Container {
     })
       .circle(this.x, this.y, gameConfig.desktop.ball.radius)
       .stroke({
-        width: 4,
+        color: "black",
+        width: 2.4,
       });
 
     this.addChild(border);
@@ -42,8 +45,8 @@ export class Ball extends Container {
     for (let i = 0; i < 2; i++) {
       const sprite = new Sprite(this.ballTexture);
       sprite.anchor = 0.5;
-      sprite.scale = 0.5;
-      sprite.y = (-i * sprite.texture.frame.height) / 2;
+      sprite.scale = 0.24;
+      sprite.y = -i * sprite.height;
 
       this.spriteContainer.addChild(sprite);
     }
@@ -61,26 +64,17 @@ export class Ball extends Container {
     this.maskContainer.addChild(mask);
 
     this.addChild(this.maskContainer);
-
-    this.blurFilter = new BlurFilter({
-      strength: 1,
-    });
-
-    this.spriteContainer.filters = [this.blurFilter];
   }
 
   private startRotation(): void {
     const firstElement = this.spriteContainer.getChildAt(0) as Sprite;
-    const lastY = firstElement.y + firstElement.texture.frame.height / 2;
-    const startY = firstElement.y - firstElement.texture.frame.height / 2;
-
-    console.log(startY);
-    console.log(lastY);
+    const lastY = firstElement.y + firstElement.height;
+    const startY = firstElement.y - firstElement.height;
 
     for (const element of this.spriteContainer.children) {
       gsap.to(element, {
-        duration: 0.7,
-        y: (element as Sprite).y + (element as Sprite).texture.frame.height / 2,
+        duration: 0.4,
+        y: (element as Sprite).y + (element as Sprite).height,
         ease: "power3.in",
         onComplete: () => {
           if (element.y === lastY) {
@@ -94,8 +88,8 @@ export class Ball extends Container {
 
   moveDown(sprite: Sprite, lastY: number, startY: number) {
     gsap.to(sprite, {
-      duration: 0.25,
-      y: sprite.y + sprite.texture.frame.height / 2,
+      duration: 0.15,
+      y: sprite.y + sprite.height,
       ease: "none",
       onComplete: () => {
         if (sprite.y === lastY) {
@@ -111,38 +105,39 @@ export class Ball extends Container {
 
   lastMoveDown(sprite: Sprite, lastY: number, startY: number) {
     gsap.to(sprite, {
-      duration: this.isLastRotation ? 0.8 : 0.25,
-      y: sprite.y + sprite.texture.frame.height / 2,
+      duration: this.isLastRotation ? 0.4 : 0.15,
+      y: sprite.y + sprite.height,
       ease: "power4.out",
       onComplete: () => {
         if (sprite.y === lastY) {
           sprite.y = startY;
         }
         this.isLastRotation = false;
-        this.isReadyForShoot = true;
+        this.isReadyForPreperation = true;
       },
     });
   }
 
   private increaseScale() {
-    const blurFilter = new BlurFilter({
+    this.blurFilter = new BlurFilter({
       strength: 0,
     });
-
-    this.filters = [blurFilter];
-
-    gsap.to(blurFilter, {
-      duration: 1.5,
-      strength: 3, // Final blur strength
+    this.filters = [this.blurFilter];
+    gsap.to(this.blurFilter, {
+      duration: 0.3,
+      strength: 1, // Final blur strength
       ease: "power4.out",
       onUpdate: () => {
         // Reapply the filter on each update to ensure the animation reflects
-        this.filters = [blurFilter];
+        this.filters = [this.blurFilter];
+      },
+      onComplete: () => {
+        this.isReadyForShoot = true;
+        this.isShootCommand && this.shoot();
       },
     });
-
     gsap.to(this.scale, {
-      duration: 1.5,
+      duration: 0.3,
       x: 1.3,
       y: 1.3,
       ease: "power4.out",
@@ -153,17 +148,43 @@ export class Ball extends Container {
     this.isLastRotation = true;
   }
 
+  public shoot() {
+    this.isShootCommand = true;
+    if (!this.isReadyForShoot) return;
+    gsap.to(this, {
+      duration: 0.4,
+      x: 650,
+      y: 320,
+      ease: "power2",
+    });
+    // Scale Aniamtion
+    gsap.to(this.scale, {
+      duration: 0.3,
+      x: 0.4,
+      y: 0.8,
+      ease: "power2",
+      onComplete: () => {
+        gsap.to(this.scale, {
+          duration: 0.1,
+          x: 0.5,
+          y: 0.5,
+          ease: "power2",
+          onComplete: () => {
+            this.stopRotation();
+            this.blurFilter.strength = 1;
+          },
+        });
+      },
+    });
+  }
+
   public startPrepare(): void {
-    if (!this.isReadyForShoot) {
+    if (!this.isReadyForPreperation) {
       return;
     }
-    this.isReadyForShoot = false;
+    this.isReadyForPreperation = false;
 
     this.startRotation();
     this.increaseScale();
-
-    // setTimeout(() => {
-    //   this.stopRotation();
-    // }, 2000);
   }
 }
