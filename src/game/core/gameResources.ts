@@ -21,12 +21,21 @@ export class GameResources extends AssetsClass {
     )) as Texture;
     this.assets.circle = (await Assets.load("../assets/circle.png")) as Texture;
     this.assets.ballTexture = (await Assets.load(
-      "../assets/ball-texture.jpg"
+      "../assets/ball-texture.png"
     )) as Texture;
     this.assets.circleBorder = (await Assets.load(
       "../assets/circle-border.png"
     )) as Texture;
 
-    await Assets.load("https://pixijs.com/assets/flowerTop.png");
+    await Assets.load([
+      {
+        alias: "spineSkeleton",
+        src: "../assets/animation/character/Personality.json",
+      },
+      {
+        alias: "spineAtlas",
+        src: "../assets/animation/character/Personality.atlas",
+      },
+    ]);
   }
 }

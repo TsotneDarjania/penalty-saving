@@ -1,6 +1,8 @@
 import { Ball } from "../../gameObjects/ball.ts";
 
 export class EvenetManager {
+  isBallClicked = false;
+
   constructor(public gameObjects: { ball: Ball }) {
     this.addListeners();
   }
@@ -12,6 +14,14 @@ export class EvenetManager {
 
     this.gameObjects.ball.on("pointerdown", () => {
       this.gameObjects.ball.startPrepare();
+      document.body.style.cursor = "pointer";
+      this.isBallClicked = true;
+    });
+
+    addEventListener("mouseup", () => {
+      if (this.isBallClicked) {
+        this.gameObjects.ball.shoot();
+      }
     });
   }
 }
