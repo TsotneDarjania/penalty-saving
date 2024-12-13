@@ -1,13 +1,12 @@
-import { assetsType } from "../../types/gameTypes.ts";
-import { Container, Sprite } from "pixi.js";
-import { Ball } from "../../gameObjects/ball.ts";
+import { Container } from "pixi.js";
 import { FootballDor } from "../../gameObjects/footballDor.ts";
+import { Ball } from "../../gameObjects/ball/index.ts";
 
 export class GameObjects {
   ball: Ball | null = null;
-  footballDor: Sprite | null = null;
+  footballDor: FootballDor | null = null;
 
-  constructor(public assets: assetsType, public scene: Container<any>) {
+  constructor(public scene: Container<any>) {
     this.addInitialGameObjects();
   }
 
@@ -17,7 +16,7 @@ export class GameObjects {
   }
 
   private addBall() {
-    this.ball = new Ball(this.assets.ballTexture!, this.assets.circleBorder!);
+    this.ball = new Ball();
     this.ball.x = window.innerWidth / 2;
     this.ball.y = window.innerHeight - 120;
     this.ball.zIndex = 5;
@@ -25,7 +24,7 @@ export class GameObjects {
   }
 
   addFootballDor() {
-    this.footballDor = new FootballDor(this.assets.footballDor!);
+    this.footballDor = new FootballDor();
     this.footballDor.x = window.innerWidth / 2;
     this.footballDor.y = 340;
 

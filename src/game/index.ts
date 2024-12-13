@@ -1,9 +1,10 @@
-import { Application, Container, ContainerChild } from "pixi.js";
+import { Application, Container, ContainerChild, Texture } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { EvenetManager } from "./core/eventManager.ts";
 import { RopeEffect } from "../gameObjects/ropeEffect.ts";
 import { SpineBoy } from "../gameObjects/character.ts";
+import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
@@ -44,19 +45,21 @@ export class Game extends Application {
     this.addGameObjects();
 
     // const ropeEffect = new RopeEffect(
-    //   this.gameResources.assets.circle!,
+    //   Texture.from(GameObjectEnums.circle),
     //   this,
     //   true
     // );
 
     const ballRopeEffect = new RopeEffect(
-      this.gameResources.assets.circle!,
+      Texture.from(GameObjectEnums.ballRopeEffect),
       this,
       false,
       this.gameObjects.ball!
     );
 
-    ballRopeEffect.effectOnn();
+    this.gameObjects.ball!.setRopeEffect = ballRopeEffect;
+
+    // ballRopeEffect.effectOnn();
 
     // ropeEffect.effectOnn();
 
@@ -71,11 +74,12 @@ export class Game extends Application {
   private addEvenetManager() {
     this.eventManager = new EvenetManager({
       ball: this.gameObjects.ball!,
+      footballDor: this.gameObjects.footballDor!,
     });
   }
 
   private addGameObjects() {
-    this.gameObjects = new GameObjects(this.gameResources.assets, this.scene);
+    this.gameObjects = new GameObjects(this.scene);
 
     // this.scene.addChild(this.gameObjects.ball!.graphics);
 

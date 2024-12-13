@@ -1,9 +1,10 @@
-import { Ball } from "../../gameObjects/ball.ts";
+import { Ball } from "../../gameObjects/ball";
+import { FootballDor } from "../../gameObjects/footballDor";
 
 export class EvenetManager {
   isBallClicked = false;
 
-  constructor(public gameObjects: { ball: Ball }) {
+  constructor(public gameObjects: { ball: Ball; footballDor: FootballDor }) {
     this.addListeners();
   }
 
@@ -13,7 +14,7 @@ export class EvenetManager {
     this.gameObjects.ball.cursor = "pointer";
 
     this.gameObjects.ball.on("pointerdown", () => {
-      this.gameObjects.ball.startPrepare();
+      this.gameObjects.ball.selectForShoot();
       document.body.style.cursor = "pointer";
       this.isBallClicked = true;
     });
@@ -22,6 +23,10 @@ export class EvenetManager {
       if (this.isBallClicked) {
         this.gameObjects.ball.shoot();
       }
+    });
+
+    this.gameObjects.ball.eventEmitter.on("TouchGrid", () => {
+      this.gameObjects.footballDor.startGridAnimation();
     });
   }
 }
