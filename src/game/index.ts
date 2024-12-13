@@ -3,6 +3,7 @@ import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { EvenetManager } from "./core/eventManager.ts";
 import { RopeEffect } from "../gameObjects/ropeEffect.ts";
+import { SpineBoy } from "../gameObjects/character.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
@@ -60,6 +61,11 @@ export class Game extends Application {
     // ropeEffect.effectOnn();
 
     this.addEvenetManager();
+
+    const character = new SpineBoy();
+    character.x = window.innerWidth / 2;
+    character.y = 520;
+    this.scene.addChild(character);
   }
 
   private addEvenetManager() {

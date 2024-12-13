@@ -27,6 +27,15 @@ export class GameResources extends AssetsClass {
       "../assets/circle-border.png"
     )) as Texture;
 
-    await Assets.load("https://pixijs.com/assets/flowerTop.png");
+    await Assets.load([
+      {
+        alias: "spineSkeleton",
+        src: "../assets/animation/character/Personality.json",
+      },
+      {
+        alias: "spineAtlas",
+        src: "../assets/animation/character/Personality.atlas",
+      },
+    ]);
   }
 }
