@@ -21,6 +21,7 @@ export class Ball extends Container {
   eventEmitter!: EventEmitter;
 
   private isReadyForPreperation = true;
+  isReadyForShoot = false;
 
   constructor() {
     super();
@@ -44,6 +45,13 @@ export class Ball extends Container {
       this.blurManager.removeBlurEffect();
       this.fallDown();
     });
+
+    this.eventEmitter.on("FinishMinSpin", () => {
+      if (!this.isReadyForShoot) {
+        this.isReadyForShoot = true;
+        this.eventEmitter.emit("IsReadyForShoot");
+      }
+    });
   }
 
   private createGraphic() {
@@ -52,10 +60,13 @@ export class Ball extends Container {
   }
 
   private creatSpinManager() {
-    this.spinManager = new SpinManager([
-      this.ballGraphic.container.getChildAt(0),
-      this.ballGraphic.container.getChildAt(1),
-    ]);
+    this.spinManager = new SpinManager(
+      [
+        this.ballGraphic.container.getChildAt(0),
+        this.ballGraphic.container.getChildAt(1),
+      ],
+      this
+    );
   }
 
   private createShootManager() {
@@ -74,12 +85,13 @@ export class Ball extends Container {
     this.eventEmitter = new EventEmitter();
   }
 
-  public shoot() {
+  public shoot(points: { x: number; y: number }) {
+    if (!this.isReadyForShoot) return;
     if (!this.ropeEffect.effectIsOnn) this.adctivateRopeEffect();
 
     this.shootManager.shoot({
-      x: 530,
-      y: 420,
+      x: points.x,
+      y: points.y,
     });
     this.scaleManager.startScaleAnimationDuringShoot();
   }

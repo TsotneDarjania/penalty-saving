@@ -68,6 +68,11 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.ballRopeEffect,
         src: "../assets/image/ball-rope-effect.png",
       },
+      // Target
+      {
+        alias: GameObjectEnums.target,
+        src: "../assets/image/target.png",
+      },
     ]);
   }
 }

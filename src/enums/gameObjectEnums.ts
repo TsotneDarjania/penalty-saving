@@ -6,5 +6,6 @@ export enum GameObjectEnums {
   circle = "Circle",
   footballDor = "FootballDor",
   circleBorder = "CircleBorder",
-  ballRopeEffect = "BallRopeEffect"
+  ballRopeEffect = "BallRopeEffect",
+  target = "Target",
 }

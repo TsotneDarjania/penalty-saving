@@ -1,10 +1,11 @@
 import { Sprite } from "pixi.js";
 import gsap from "gsap";
+import { Ball } from "..";
 
 export class SpinManager {
   isLastRotation = false;
 
-  constructor(public sprites: Sprite[]) {}
+  constructor(public sprites: Sprite[], public ball: Ball) {}
 
   public startSpin() {
     const firstElement = this.sprites[0];
@@ -35,6 +36,8 @@ export class SpinManager {
         if (sprite.y === lastY) {
           sprite.y = startY;
         }
+
+        this.ball.eventEmitter.emit("FinishMinSpin");
 
         this.isLastRotation
           ? this.lastMoveDown(sprite, lastY, startY)

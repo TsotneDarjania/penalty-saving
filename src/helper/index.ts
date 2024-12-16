@@ -26,3 +26,41 @@ export function adjustSVGPath(
     return `${command} ${adjustedCoords}`;
   });
 }
+
+export const createKey = (arr: [number, number]): string => arr.join(",");
+
+export function calculatePercentage(part: number, total: number): number {
+  return Math.floor((part / 100) * total);
+}
+
+export function getRandomIntInRange(from: number, to: number): number {
+  if (from > to) {
+    throw new Error(
+      "Invalid range: 'from' should be less than or equal to 'to'."
+    );
+  }
+  return Math.floor(Math.random() * (to - from + 1)) + from;
+}
+
+export function findClosestPoint(
+  points: { x: number; y: number }[],
+  target: { x: number; y: number }
+): { x: number; y: number } {
+  let closestPoint = points[0]; // Initialize with the first point
+  let minDistance = Number.MAX_VALUE; // Start with the maximum possible value
+
+  points.forEach((point) => {
+    // Calculate Euclidean distance
+    const distance = Math.sqrt(
+      Math.pow(point.x - target.x, 2) + Math.pow(point.y - target.y, 2)
+    );
+
+    // Update the closest point if this point is closer
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestPoint = point;
+    }
+  });
+
+  return closestPoint;
+}

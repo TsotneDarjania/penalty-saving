@@ -32,13 +32,13 @@ export class FootballDor extends Container {
     this.addChild(this.dor);
   }
 
-  public startGridAnimation() {
-    // this.filterEffect.centerX = 0.31;
-    // this.filterEffect.centerY = 0.7;
-    // const mask = new Graphics();
-    // mask.rect(0, 0, 1100, 500);
-    // mask.fill();
-    // this.mask = mask;
-    // this.filters = [this.filterEffect];
-  }
+  // public startGridAnimation() {
+  //   // this.filterEffect.centerX = 0.31;
+  //   // this.filterEffect.centerY = 0.7;
+  //   // const mask = new Graphics();
+  //   // mask.rect(0, 0, 1100, 500);
+  //   // mask.fill();
+  //   // this.mask = mask;
+  //   // this.filters = [this.filterEffect];
+  // }
 }
