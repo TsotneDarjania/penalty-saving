@@ -94,6 +94,7 @@ export class Ball extends Container {
       y: points.y,
     });
     this.scaleManager.startScaleAnimationDuringShoot();
+    this.eventEmitter.emit("Shoot");
   }
 
   public selectForShoot(): void {

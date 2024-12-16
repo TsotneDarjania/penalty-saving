@@ -3,7 +3,7 @@ import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { EvenetManager } from "./core/eventManager.ts";
 import { RopeEffect } from "../gameObjects/ropeEffect.ts";
-import { SpineBoy } from "../gameObjects/character.ts";
+import { Character } from "../gameObjects/character.ts";
 import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
 import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
@@ -15,6 +15,7 @@ export class Game extends Application {
   public eventManager!: EvenetManager;
   public dorTargetpoints!: DorTargetPoints;
   public gameManager!: GameManager;
+  public character!: Character;
 
   constructor(public backgroundColor: string, public htmlRootId: string) {
     super();
@@ -69,14 +70,7 @@ export class Game extends Application {
     // ropeEffect.effectOnn();
 
     this.addEvenetManager();
-
-    const character = new SpineBoy();
-    character.x = window.innerWidth / 2;
-    character.y = 520;
-    character.interactive = false;
-    character.interactiveChildren = false;
-    this.scene.addChild(character);
-
+    this.addCharacter();
     this.addGameManager();
   }
 
@@ -100,5 +94,11 @@ export class Game extends Application {
 
   private addGameManager() {
     this.gameManager = new GameManager(this);
+  }
+
+  private addCharacter() {
+    this.character = new Character(this.scene);
+    this.character.x = window.innerWidth / 2;
+    this.character.y = 520;
   }
 }

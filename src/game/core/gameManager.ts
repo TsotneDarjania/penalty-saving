@@ -4,6 +4,7 @@ import { createKey, getRandomIntInRange } from "../../helper";
 export class GameManager {
   isBallSelectedForShoot = false;
   shootIsPossible = false;
+  shootCommandIsPossible = true;
 
   possibleToShowTargets = true;
 
@@ -41,10 +42,14 @@ export class GameManager {
   }
 
   shootCommand() {
+    if (!this.shootCommandIsPossible) return;
+    this.shootCommandIsPossible = false;
     this.shoot();
   }
 
   selectBallForShoot() {
+    if (!this.shootCommandIsPossible) return;
+
     this.possibleToShowTargets && this.showTargetsOnDor();
     this.possibleToShowTargets = false;
 
@@ -82,17 +87,25 @@ export class GameManager {
     this.game.dorTargetpoints.eventEmitter.on(
       "SelectetShootTargetByClick",
       () => {
+        this.game.dorTargetpoints.isSelectPossible = false;
         this.selectBallForShoot();
-
-        setTimeout(() => {
-          // this.shoot();
-        }, 1000);
       }
     );
 
     // Ball
     this.game.gameObjects.ball?.eventEmitter.on("IsReadyForShoot", () => {
       this.isBallSelectedForShoot && this.shoot();
+    });
+    this.game.gameObjects.ball?.eventEmitter.on("Shoot", () => {
+      setTimeout(() => {
+        const randomDirection =
+          getRandomIntInRange(0, 1) === 0 ? "left" : "right";
+        const randomheight = getRandomIntInRange(0, 2) as 0 | 1 | 2;
+        const side = getRandomIntInRange(0, 1) ? true : false;
+
+        this.game.character.jump(randomDirection, randomheight, side);
+      }, 200);
+      this.shootIsPossible = false;
     });
   }
 }

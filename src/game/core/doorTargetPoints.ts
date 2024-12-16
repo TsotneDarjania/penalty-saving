@@ -3,6 +3,7 @@ import { FootballDor } from "../../gameObjects/footballDor";
 import { calculatePercentage, createKey, findClosestPoint } from "../../helper";
 import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
+import { GameManager } from "./gameManager";
 
 export class DorTargetPoints {
   continueTargetAnimations = true;
@@ -13,6 +14,8 @@ export class DorTargetPoints {
   selectedPoint: string = "";
 
   eventEmitter!: EventEmitter;
+
+  isSelectPossible = true;
 
   points: Map<string, { x: number; y: number; targetImage?: Sprite }> =
     new Map();
@@ -31,6 +34,7 @@ export class DorTargetPoints {
       point.targetImage!.cursor = "pointer";
 
       point.targetImage!.on("mousemove", () => {
+        if (!this.isSelectPossible) return;
         this.selectedPoint = key;
         this.isSelectedPoint = true;
       });
