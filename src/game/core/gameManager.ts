@@ -63,6 +63,10 @@ export class GameManager {
     this.game.dorTargetpoints.lightOnnTargets();
   }
 
+  getResult(){
+
+  }
+
   listenUserEvents() {
     // Select Ball
     this.game.eventManager.evenetEmitter.on("SelectBallForShoot", () => {
@@ -107,5 +111,9 @@ export class GameManager {
       }, 200);
       this.shootIsPossible = false;
     });
+  }
+
+  jumpGoalKeeper(){
+    
   }
 }
