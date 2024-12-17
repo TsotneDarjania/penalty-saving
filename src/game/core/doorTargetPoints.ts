@@ -1,0 +1,260 @@
+import { Container, EventEmitter, Sprite, Texture } from "pixi.js";
+import { FootballDor } from "../../gameObjects/footballDor";
+import { calculatePercentage, createKey, findClosestPoint } from "../../helper";
+import { GameObjectEnums } from "../../enums/gameObjectEnums";
+import gsap from "gsap";
+import { GameManager } from "./gameManager";
+
+export class DorTargetPoints {
+  continueTargetAnimations = true;
+  isTargetsOnn = false;
+  gsapTargetAnimation!: gsap.core.Tween;
+
+  isSelectedPoint = false;
+  selectedPoint: string = "";
+
+  eventEmitter!: EventEmitter;
+
+  isSelectPossible = true;
+
+  points: Map<string, { x: number; y: number; targetImage?: Sprite }> =
+    new Map();
+
+  constructor(public footballDor: FootballDor, public scene: Container) {
+    this.eventEmitter = new EventEmitter();
+
+    this.calculateTargetPoints();
+    this.addTargets();
+    this.addListeners();
+  }
+
+  addListeners() {
+    this.points.forEach((point, key) => {
+      point.targetImage!.interactive = true;
+      point.targetImage!.cursor = "pointer";
+
+      point.targetImage!.on("mousemove", () => {
+        if (!this.isSelectPossible) return;
+        this.selectedPoint = key;
+        this.isSelectedPoint = true;
+      });
+
+      point.targetImage!.on("click", () => {
+        this.selectedPoint = key;
+        this.isSelectedPoint = true;
+        this.eventEmitter.emit("SelectetShootTargetByClick");
+      });
+    });
+
+    this.footballDor.dor.interactive = true;
+    this.footballDor.dor.cursor = "pointer";
+    this.footballDor.dor.on("click", (event) => {
+      const mousePosition = event.global;
+
+      const targetPoint = {
+        x: mousePosition.x,
+        y: mousePosition.y,
+      };
+
+      const points = Array.from(this.points.values()).map((point) => {
+        return { x: point.x, y: point.y };
+      });
+
+      const closestPoint = findClosestPoint(points, targetPoint);
+
+      const selectedPoint = Array.from(this.points.entries()).filter(
+        (point) => {
+          return point[1].x === closestPoint.x && point[1].y === closestPoint.y;
+        }
+      );
+
+      this.selectedPoint = String(selectedPoint.map((point) => point[0]));
+      this.isSelectedPoint = true;
+
+      this.eventEmitter.emit("SelectetShootTargetByClick");
+    });
+    this.footballDor.dor.on("mouseup", (event) => {
+      const mousePosition = event.global;
+
+      const targetPoint = {
+        x: mousePosition.x,
+        y: mousePosition.y,
+      };
+
+      const points = Array.from(this.points.values()).map((point) => {
+        return { x: point.x, y: point.y };
+      });
+
+      const closestPoint = findClosestPoint(points, targetPoint);
+
+      const selectedPoint = Array.from(this.points.entries()).filter(
+        (point) => {
+          return point[1].x === closestPoint.x && point[1].y === closestPoint.y;
+        }
+      );
+
+      this.selectedPoint = String(selectedPoint.map((point) => point[0]));
+      this.isSelectedPoint = true;
+
+      this.eventEmitter.emit("SelectetShootTargetByClick");
+    });
+  }
+
+  selectTargetPoiint() {}
+
+  calculateTargetPoints() {
+    this.points.set(createKey([0, 0]), {
+      x:
+        this.footballDor.x -
+        calculatePercentage(33, this.footballDor.dor.width),
+      y:
+        this.footballDor.y +
+        calculatePercentage(30, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([0, 1]), {
+      x:
+        this.footballDor.x -
+        calculatePercentage(34, this.footballDor.dor.width),
+      y:
+        this.footballDor.y +
+        calculatePercentage(10, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([0, 2]), {
+      x:
+        this.footballDor.x -
+        calculatePercentage(35, this.footballDor.dor.width),
+      y:
+        this.footballDor.y -
+        calculatePercentage(10, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([1, 0]), {
+      x: this.footballDor.x,
+      y:
+        this.footballDor.y +
+        calculatePercentage(24, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([1, 1]), {
+      x: this.footballDor.x,
+      y:
+        this.footballDor.y +
+        +calculatePercentage(7, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([1, 2]), {
+      x: this.footballDor.x,
+      y:
+        this.footballDor.y -
+        calculatePercentage(15, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([2, 0]), {
+      x:
+        this.footballDor.x +
+        calculatePercentage(33, this.footballDor.dor.width),
+      y:
+        this.footballDor.y +
+        calculatePercentage(29, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([2, 1]), {
+      x:
+        this.footballDor.x +
+        calculatePercentage(34, this.footballDor.dor.width),
+      y:
+        this.footballDor.y +
+        calculatePercentage(9, this.footballDor.dor.height),
+    });
+
+    this.points.set(createKey([2, 2]), {
+      x:
+        this.footballDor.x +
+        calculatePercentage(35, this.footballDor.dor.width),
+      y:
+        this.footballDor.y -
+        calculatePercentage(11, this.footballDor.dor.height),
+    });
+  }
+
+  addTargets() {
+    this.points.forEach((point) => {
+      const sprite = new Sprite(Texture.from(GameObjectEnums.target));
+      sprite.x = point.x;
+      sprite.y = point.y;
+
+      sprite.anchor = 0.5;
+      sprite.alpha = 0;
+      sprite.zIndex = 10;
+
+      this.scene.addChild(sprite);
+
+      point.targetImage = sprite;
+    });
+  }
+
+  lightOnnTargets() {
+    if (this.isTargetsOnn) return;
+
+    this.isTargetsOnn = true;
+
+    const targetImages = Array.from(this.points.values())
+      .map((point) => point.targetImage)
+      .filter((sprite) => sprite !== undefined) as Sprite[];
+
+    targetImages.forEach((image) => {
+      gsap.to(image.scale, {
+        x: 1.1,
+        y: 1.1,
+        repeat: -1,
+        yoyo: true,
+        duration: 0.2,
+        ease: "none",
+      });
+    });
+
+    this.animateTargets(targetImages);
+  }
+
+  animateTargets(images: Sprite[]) {
+    images.forEach((image, index) => {
+      gsap.to(image, {
+        alpha: 0.6,
+        delay: 0.1 * index,
+        duration: 1.8,
+        onComplete: () => {
+          if (index === images.length - 1) {
+            this.aniamteToHideTargets();
+          }
+        },
+        ease: "power4.inOut",
+      });
+    });
+  }
+
+  aniamteToHideTargets() {
+    const targetImages = Array.from(this.points.values())
+      .map((point) => point.targetImage)
+      .filter((sprite) => sprite !== undefined) as Sprite[];
+
+    targetImages.forEach((image, index) => {
+      gsap.to(image, {
+        alpha: 0,
+        delay: 0.1 * index,
+        duration: 1,
+        onComplete: () => {
+          if (index === 0) {
+            this.continueTargetAnimations && this.animateTargets(targetImages);
+          }
+        },
+        ease: "power4.inOut",
+      });
+    });
+  }
+
+  lightoffTargets() {
+    this.continueTargetAnimations = false;
+  }
+}

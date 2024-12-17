@@ -1,25 +1,44 @@
-import { Sprite, Texture } from "pixi.js";
+import { Container, Sprite, Texture } from "pixi.js";
 import { BulgePinchFilter } from "pixi-filters";
+import { GameObjectEnums } from "../enums/gameObjectEnums";
 
-export class FootballDor extends Sprite {
-  filterEffect!: BulgePinchFilter;
+export class FootballDor extends Container {
+  bulgeGilterEffect!: BulgePinchFilter;
+  dor!: Sprite;
+  topGrid!: Sprite;
+  leftGrid!: Sprite;
+  baseGrid!: Sprite;
+  RightGrid!: Sprite;
 
-  constructor(texture: Texture) {
-    super(texture);
+  gridContainer: Container = new Container();
 
-    this.anchor.set(0.5);
+  constructor() {
+    super();
 
-    this.createFilter();
+    this.addDor();
+    this.createBulgeFilter();
   }
 
-  private createFilter() {
-    this.filterEffect = new BulgePinchFilter({
-      strength: -0.5,
+  private createBulgeFilter() {
+    this.bulgeGilterEffect = new BulgePinchFilter({
+      strength: -0.6,
       radius: 80,
     });
   }
 
-  public startGridAnimation() {
-    this.filters = [this.filterEffect];
+  private addDor() {
+    this.dor = new Sprite(Texture.from(GameObjectEnums.footballDor));
+    this.dor.anchor = 0.5;
+    this.addChild(this.dor);
   }
+
+  // public startGridAnimation() {
+  //   // this.filterEffect.centerX = 0.31;
+  //   // this.filterEffect.centerY = 0.7;
+  //   // const mask = new Graphics();
+  //   // mask.rect(0, 0, 1100, 500);
+  //   // mask.fill();
+  //   // this.mask = mask;
+  //   // this.filters = [this.filterEffect];
+  // }
 }

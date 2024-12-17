@@ -1,15 +1,21 @@
-import { Application, Container, ContainerChild } from "pixi.js";
+import { Application, Container, ContainerChild, Texture } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { EvenetManager } from "./core/eventManager.ts";
 import { RopeEffect } from "../gameObjects/ropeEffect.ts";
-import { SpineBoy } from "../gameObjects/character.ts";
+import { Character } from "../gameObjects/character.ts";
+import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
+import { DorTargetPoints } from "./core/doorTargetPoints.ts";
+import { GameManager } from "./core/gameManager.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
   public gameResources!: GameResources;
   public gameObjects!: GameObjects;
   public eventManager!: EvenetManager;
+  public dorTargetpoints!: DorTargetPoints;
+  public gameManager!: GameManager;
+  public character!: Character;
 
   constructor(public backgroundColor: string, public htmlRootId: string) {
     super();
@@ -42,116 +48,57 @@ export class Game extends Application {
 
   private startGame() {
     this.addGameObjects();
+    this.addDorTargetPoints();
 
     // const ropeEffect = new RopeEffect(
-    //   this.gameResources.assets.circle!,
+    //   Texture.from(GameObjectEnums.circle),
     //   this,
     //   true
     // );
 
     const ballRopeEffect = new RopeEffect(
-      this.gameResources.assets.circle!,
+      Texture.from(GameObjectEnums.ballRopeEffect),
       this,
       false,
       this.gameObjects.ball!
     );
 
-    ballRopeEffect.effectOnn();
+    this.gameObjects.ball!.setRopeEffect = ballRopeEffect;
+
+    // ballRopeEffect.effectOnn();
 
     // ropeEffect.effectOnn();
 
     this.addEvenetManager();
-
-    const character = new SpineBoy();
-    character.x = window.innerWidth / 2;
-    character.y = 520;
-    this.scene.addChild(character);
+    this.addCharacter();
+    this.addGameManager();
   }
 
   private addEvenetManager() {
     this.eventManager = new EvenetManager({
       ball: this.gameObjects.ball!,
+      footballDor: this.gameObjects.footballDor!,
     });
   }
 
   private addGameObjects() {
-    this.gameObjects = new GameObjects(this.gameResources.assets, this.scene);
+    this.gameObjects = new GameObjects(this.scene);
+  }
 
-    // this.scene.addChild(this.gameObjects.ball!.graphics);
+  private addDorTargetPoints() {
+    this.dorTargetpoints = new DorTargetPoints(
+      this.gameObjects.footballDor!,
+      this.scene
+    );
+  }
 
-    // gsap.to(this.gameObjects.ball!.scale!, {
-    //   duration: 2,
-    //   x: 0.3,
-    //   y: 0.3,
-    //   repeat: Infinity,
-    //   yoyo: true,
-    //   ease: "power1.inOut",
-    // });
-    //
-    // gsap.to(this.gameObjects.ball!, {
-    //   duration: 2,
-    //   x: 600,
-    //   y: 100,
-    //   repeat: Infinity,
-    //   yoyo: true,
-    //   ease: "power1.inOut",
-    // });
-    //
-    // const container = new ParticleContainer({
-    //   // this is the default, but we show it here for clarity
-    //   dynamicProperties: {
-    //     position: true, // Allow dynamic position changes (default)
-    //     scale: true, // Static scale for extra performance
-    //     rotation: false, // Static rotation
-    //     color: true, // Static color
-    //   },
-    // });
-    //
-    // this.gameObjects.ball?.addChild(container);
-    //
-    // gsap.to(container.scale, {
-    //   duration: 2,
-    //   x: 0.3,
-    //   y: 0.3,
-    //   repeat: Infinity,
-    //   yoyo: true,
-    //   ease: "power1.inOut",
-    // });
-    //
-    // gsap.to(container, {
-    //   duration: 2,
-    //   x: 600,
-    //   y: 100,
-    //   repeat: Infinity,
-    //   yoyo: true,
-    //   ease: "power1.inOut",
-    // });
-    //
-    // // Animate shake effect
-    // this.ticker.add(() => {
-    //   // this.gameObjects.footballDor!.x = Math.sin(Date.now() * 0.4) * 5;
-    //   // this.gameObjects.footballDor!.y = Math.cos(Date.now() * 0.4) * 5;
-    //
-    //   let particle = new Particle({
-    //     texture: this.gameResources.assets.circle!,
-    //     x: this.gameObjects.ball!.x - 50,
-    //     y: this.gameObjects.ball!.y - 20,
-    //   });
-    //
-    //   particle.scaleX = 0.7;
-    //   particle.scaleY = 0.7;
-    //
-    //   gsap.to(particle, {
-    //     duration: 0.3,
-    //     alpha: 0,
-    //     scaleX: 0,
-    //     scaleY: 0,
-    //     ease: "linear",
-    //   });
-    //
-    //   container.addParticle(particle);
-    // });
-    //
-    // this.scene.addChild(container);
+  private addGameManager() {
+    this.gameManager = new GameManager(this);
+  }
+
+  private addCharacter() {
+    this.character = new Character(this.scene);
+    this.character.x = window.innerWidth / 2;
+    this.character.y = 520;
   }
 }

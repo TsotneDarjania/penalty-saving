@@ -5,9 +5,9 @@ export class RopeEffect {
   historyX: number[] = [];
   historyY: number[] = [];
   // historySize determines how long the trail will be.
-  historySize = 18;
+  historySize = 8;
   // ropeSize determines how smooth the trail will be.
-  ropeSize = 9;
+  ropeSize = 20;
   points: Point[] = [];
 
   rope!: MeshRope;
@@ -36,9 +36,9 @@ export class RopeEffect {
   init() {
     // Create history array.
     for (let i = 0; i < this.historySize; i++) {
-      this.historyX.push(0);
+      this.historyX.push(this.target!.x);
 
-      this.historyY.push(0);
+      this.historyY.push(this.target!.y);
     }
     // Create rope points.
     for (let i = 0; i < this.ropeSize; i++) {
