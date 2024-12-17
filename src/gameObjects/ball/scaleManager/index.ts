@@ -5,7 +5,7 @@ export class ScaleManager {
   constructor(public ball: Ball) {}
 
   increaseScaleForShoot() {
-    gsap.to(this.ball.scale, {
+    gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.3,
       x: 1.4,
       y: 1.4,
@@ -22,8 +22,8 @@ export class ScaleManager {
       onComplete: () => {
         gsap.to(this.ball.ballGraphic.container.scale, {
           duration: 0.1,
-          x: 0.6,
-          y: 0.6,
+          x: 0.9,
+          y: 0.9,
           ease: "power2",
         });
       },

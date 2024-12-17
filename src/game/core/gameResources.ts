@@ -7,19 +7,8 @@ export class GameResources extends AssetsClass {
   }
 
   public async startLoadAssets() {
-    // this.assets.ball = (await Assets.load("../assets/ball.webp")) as Texture;
-    // this.assets.footballDor = (await Assets.load(
-    //   "../assets/football-dor.png"
-    // )) as Texture;
-    // this.assets.circle = (await Assets.load("../assets/circle.png")) as Texture;
-    // this.assets.ballTexture = (await Assets.load(
-    //   "../assets/ball-texture.png"
-    // )) as Texture;
-    // this.assets.circleBorder = (await Assets.load(
-    //   "../assets/circle-border.png"
-    // )) as Texture;
-
     await Assets.load([
+      // Character
       {
         alias: "spineSkeleton",
         src: "../assets/animation/character/Personality.json",

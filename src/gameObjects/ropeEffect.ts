@@ -84,7 +84,6 @@ export class RopeEffect {
       mouseposition.x = this.target!.x;
       mouseposition.y = this.target!.y;
 
-      if (!this.effectIsOnn) return;
       if (!mouseposition) return;
 
       // Update the mouse values to history
@@ -92,6 +91,8 @@ export class RopeEffect {
       this.historyX.unshift(mouseposition.x);
       this.historyY.pop();
       this.historyY.unshift(mouseposition.y);
+
+      if (!this.effectIsOnn) return;
       // Update the points to correspond with history.
       for (let i = 0; i < this.ropeSize; i++) {
         const p = this.points[i];

@@ -1,7 +1,6 @@
 import { Application, Container, ContainerChild, Texture } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
-import { EvenetManager } from "./core/eventManager.ts";
 import { RopeEffect } from "../gameObjects/ropeEffect.ts";
 import { Character } from "../gameObjects/character.ts";
 import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
@@ -12,7 +11,6 @@ export class Game extends Application {
   public scene!: Container<ContainerChild>;
   public gameResources!: GameResources;
   public gameObjects!: GameObjects;
-  public eventManager!: EvenetManager;
   public dorTargetpoints!: DorTargetPoints;
   public gameManager!: GameManager;
   public character!: Character;
@@ -69,16 +67,8 @@ export class Game extends Application {
 
     // ropeEffect.effectOnn();
 
-    this.addEvenetManager();
     this.addCharacter();
     this.addGameManager();
-  }
-
-  private addEvenetManager() {
-    this.eventManager = new EvenetManager({
-      ball: this.gameObjects.ball!,
-      footballDor: this.gameObjects.footballDor!,
-    });
   }
 
   private addGameObjects() {
@@ -87,7 +77,7 @@ export class Game extends Application {
 
   private addDorTargetPoints() {
     this.dorTargetpoints = new DorTargetPoints(
-      this.gameObjects.footballDor!,
+      this.gameObjects.footballDoor!,
       this.scene
     );
   }

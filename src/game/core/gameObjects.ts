@@ -1,10 +1,11 @@
 import { Container } from "pixi.js";
-import { FootballDor } from "../../gameObjects/footballDor.ts";
+import { FootballDoor } from "../../gameObjects/footballDoor.ts";
 import { Ball } from "../../gameObjects/ball/index.ts";
+import { gameConfig } from "../../config/gameConfig.ts";
 
 export class GameObjects {
   ball: Ball | null = null;
-  footballDor: FootballDor | null = null;
+  footballDoor: FootballDoor | null = null;
 
   constructor(public scene: Container<any>) {
     this.addInitialGameObjects();
@@ -18,16 +19,16 @@ export class GameObjects {
   private addBall() {
     this.ball = new Ball();
     this.ball.x = window.innerWidth / 2;
-    this.ball.y = window.innerHeight - 120;
+    this.ball.y = gameConfig.desktop.ball.positionY;
     this.ball.zIndex = 5;
     this.scene.addChild(this.ball);
   }
 
   addFootballDor() {
-    this.footballDor = new FootballDor();
-    this.footballDor.x = window.innerWidth / 2;
-    this.footballDor.y = 340;
+    this.footballDoor = new FootballDoor();
+    this.footballDoor.x = window.innerWidth / 2;
+    this.footballDoor.y = 340;
 
-    this.scene.addChild(this.footballDor);
+    this.scene.addChild(this.footballDoor);
   }
 }

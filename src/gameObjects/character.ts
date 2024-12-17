@@ -21,17 +21,22 @@ export class Character extends Container {
     });
 
     this.spine.state.setAnimation(0, "Idle", true);
-    // this.scale._x = -1;
 
     this.addChild(this.spine);
   }
 
-  jump(direction: "left" | "right", position: 0 | 1 | 2, side: boolean) {
+  jump(direction: "left" | "right" | "center", height: 0 | 1 | 2) {
     this.scale.x = direction === "right" ? -1 : 1;
 
-    let aniamtionName = side ? "Side_" : "Center_";
-    aniamtionName += position;
+    let animationName =
+      direction === "left" || direction === "right" ? "Side_" : "Center_";
 
-    this.spine.state.setAnimation(0, aniamtionName, false);
+    animationName += height;
+
+    this.spine.state.setAnimation(0, animationName, false);
+  }
+
+  reset() {
+    this.spine.state.setAnimation(0, "Idle", true);
   }
 }
