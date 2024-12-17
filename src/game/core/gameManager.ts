@@ -1,36 +1,24 @@
 import { Game } from "..";
+import { getResult } from "../../api";
+import { GameEventEnums } from "../../enums/gameEvenetEnums";
 import { createKey, getRandomIntInRange } from "../../helper";
 
 export class GameManager {
-  isBallSelectedForShoot = false;
-  shootIsPossible = false;
-  shootCommandIsPossible = true;
+  isShootCommand = false;
+  isBallSelected = false;
+  firstTimeSelectBall = true;
 
-  possibleToShowTargets = true;
+  result!: {
+    goalKeeperJumpPoint: [number, number];
+  };
 
   constructor(public game: Game) {
     this.listenUserEvents();
   }
 
-  shoot() {
-    if (!this.shootIsPossible) {
-      return;
-    }
-
+  shoot(point: [number, number]) {
     this.game.dorTargetpoints.lightoffTargets();
-
-    let targetKey = createKey([
-      getRandomIntInRange(0, 2),
-      getRandomIntInRange(0, 2),
-    ]);
-
-    if (this.game.dorTargetpoints.isSelectedPoint) {
-      const keyArray = this.game.dorTargetpoints.selectedPoint
-        .split(",")
-        .map(Number);
-
-      targetKey = createKey(keyArray as [number, number]);
-    }
+    let targetKey = createKey(point);
 
     const x = this.game.dorTargetpoints.points.get(targetKey)!.x;
     const y = this.game.dorTargetpoints.points.get(targetKey)!.y;
@@ -41,79 +29,109 @@ export class GameManager {
     });
   }
 
-  shootCommand() {
-    if (!this.shootCommandIsPossible) return;
-    this.shootCommandIsPossible = false;
-    this.shoot();
-  }
-
   selectBallForShoot() {
-    if (!this.shootCommandIsPossible) return;
+    if (this.isBallSelected) return;
+    this.isBallSelected = true;
 
-    this.possibleToShowTargets && this.showTargetsOnDor();
-    this.possibleToShowTargets = false;
+    this.firstTimeSelectBall && this.game.dorTargetpoints.lightOnnTargets();
+    this.firstTimeSelectBall = false;
 
-    this.isBallSelectedForShoot = true;
     this.game.gameObjects.ball!.selectForShoot();
-
-    // document.body.style.cursor = "pointer";
   }
 
-  showTargetsOnDor() {
-    this.game.dorTargetpoints.lightOnnTargets();
+  reset() {
+    setTimeout(() => {
+      this.game.character.reset();
+      this.game.gameObjects.ball!.reset();
+
+      this.isShootCommand = false;
+      this.isBallSelected = false;
+    }, 500);
   }
 
-  getResult(){
+  async shootCommand() {
+    if (this.isShootCommand) return;
+    this.isShootCommand = true;
 
+    const userSelectedPoint = this.game.dorTargetpoints.selectedPoint
+      ? (this.game.dorTargetpoints.selectedPoint!.split(",").map(Number) as [
+          number,
+          number
+        ])
+      : ([getRandomIntInRange(0, 2), getRandomIntInRange(0, 2)] as [
+          number,
+          number
+        ]);
+
+    this.result = await getResult(userSelectedPoint);
+    this.game.gameObjects.ball!.ballFallinDownRawPath =
+      this.game.dorTargetpoints.points.get(
+        createKey(this.result.goalKeeperJumpPoint)
+      )!.ball.isSave.fallingDawnPath;
+
+    this.shoot(userSelectedPoint);
   }
 
   listenUserEvents() {
-    // Select Ball
-    this.game.eventManager.evenetEmitter.on("SelectBallForShoot", () => {
+    // Selecting Ball
+    this.game.gameObjects.ball!.interactive = true;
+    this.game.gameObjects.ball!.cursor = "pointer";
+    this.game.gameObjects.ball!.on("pointerdown", () => {
       this.selectBallForShoot();
     });
 
+    // Mouse Over Door
+    this.game.gameObjects.footballDoor!.interactive = true;
+    this.game.gameObjects.footballDoor!.on("mouseover", () => {
+      this.firstTimeSelectBall && this.game.dorTargetpoints.lightOnnTargets();
+      this.firstTimeSelectBall = false;
+    });
+
     //MouseUp
-    this.game.eventManager.evenetEmitter.on("MouseUp", () => {
-      if (this.isBallSelectedForShoot) {
-        this.shootIsPossible = true;
+    addEventListener("mouseup", () => {
+      if (this.isBallSelected && !this.isShootCommand) {
         this.shootCommand();
       }
     });
 
-    //Football Dor
-    this.game.eventManager.evenetEmitter.on("MouseIsOverDor", () => {
-      this.possibleToShowTargets && this.showTargetsOnDor();
-      this.possibleToShowTargets = false;
-    });
-
-    // Dor Targets
+    // Select Shoot By Target Click
     this.game.dorTargetpoints.eventEmitter.on(
-      "SelectetShootTargetByClick",
+      GameEventEnums.selectedShootByTargetClick,
       () => {
-        this.game.dorTargetpoints.isSelectPossible = false;
         this.selectBallForShoot();
+        this.shootCommand();
       }
     );
 
-    // Ball
-    this.game.gameObjects.ball?.eventEmitter.on("IsReadyForShoot", () => {
-      this.isBallSelectedForShoot && this.shoot();
-    });
-    this.game.gameObjects.ball?.eventEmitter.on("Shoot", () => {
-      setTimeout(() => {
-        const randomDirection =
-          getRandomIntInRange(0, 1) === 0 ? "left" : "right";
-        const randomheight = getRandomIntInRange(0, 2) as 0 | 1 | 2;
-        const side = getRandomIntInRange(0, 1) ? true : false;
+    // Select Shoot By Click on Door
+    this.game.dorTargetpoints.eventEmitter.on(
+      GameEventEnums.selectedShootByDoorClick,
+      () => {
+        this.selectBallForShoot();
+        this.shootCommand();
+      }
+    );
 
-        this.game.character.jump(randomDirection, randomheight, side);
-      }, 200);
-      this.shootIsPossible = false;
-    });
+    this.game.gameObjects.ball!.eventEmitter.on(
+      GameEventEnums.isTimeToJumpGoalKeeper,
+      () => {
+        this.jumpGoalKeeper(this.result.goalKeeperJumpPoint);
+      }
+    );
+
+    this.game.gameObjects.ball!.eventEmitter.on(
+      GameEventEnums.finishFallingOfBall,
+      () => {
+        this.reset();
+      }
+    );
   }
 
-  jumpGoalKeeper(){
-    
+  jumpGoalKeeper(point: [number, number]) {
+    const jumpData = this.game.dorTargetpoints.points.get(
+      createKey(point)
+    )?.goalKeeperJumpData;
+
+    this.game.character.jump(jumpData!.direction, jumpData!.height);
   }
 }

@@ -4,24 +4,27 @@ import { Ball } from "..";
 
 export class SpinManager {
   isLastRotation = false;
+  firstElement!: Sprite;
+  lastY!: number;
+  startY!: number;
 
-  constructor(public sprites: Sprite[], public ball: Ball) {}
+  constructor(public sprites: Sprite[], public ball: Ball) {
+    this.firstElement = this.sprites[0];
+    this.lastY = this.firstElement.y + this.firstElement.height;
+    this.startY = this.firstElement.y - this.firstElement.height;
+  }
 
   public startSpin() {
-    const firstElement = this.sprites[0];
-    const lastY = firstElement.y + firstElement.height;
-    const startY = firstElement.y - firstElement.height;
-
     for (const sprite of this.sprites) {
       gsap.to(sprite, {
         duration: 0.4,
         y: sprite.y + sprite.height,
         ease: "power3.in",
         onComplete: () => {
-          if (sprite.y === lastY) {
-            sprite.y = startY;
+          if (sprite.y === this.lastY) {
+            sprite.y = this.startY;
           }
-          this.moveDown(sprite, lastY, startY);
+          this.moveDown(sprite, this.lastY, this.startY);
         },
       });
     }
@@ -36,8 +39,6 @@ export class SpinManager {
         if (sprite.y === lastY) {
           sprite.y = startY;
         }
-
-        this.ball.eventEmitter.emit("FinishMinSpin");
 
         this.isLastRotation
           ? this.lastMoveDown(sprite, lastY, startY)

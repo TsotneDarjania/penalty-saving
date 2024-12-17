@@ -2,7 +2,7 @@ import { Container, Sprite, Texture } from "pixi.js";
 import { BulgePinchFilter } from "pixi-filters";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 
-export class FootballDor extends Container {
+export class FootballDoor extends Container {
   bulgeGilterEffect!: BulgePinchFilter;
   dor!: Sprite;
   topGrid!: Sprite;

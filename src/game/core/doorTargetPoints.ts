@@ -1,29 +1,41 @@
 import { Container, EventEmitter, Sprite, Texture } from "pixi.js";
-import { FootballDor } from "../../gameObjects/footballDor";
 import { calculatePercentage, createKey, findClosestPoint } from "../../helper";
 import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
-import { GameManager } from "./gameManager";
+import { FootballDoor } from "../../gameObjects/footballDoor";
+import { GameEventEnums } from "../../enums/gameEvenetEnums";
 
 export class DorTargetPoints {
   continueTargetAnimations = true;
   isTargetsOnn = false;
   gsapTargetAnimation!: gsap.core.Tween;
 
-  isSelectedPoint = false;
-  selectedPoint: string = "";
+  selectedPoint: string | undefined = undefined;
 
   eventEmitter!: EventEmitter;
 
-  isSelectPossible = true;
+  points: Map<
+    string,
+    {
+      x: number;
+      y: number;
+      targetImage?: Sprite;
+      goalKeeperJumpData: {
+        direction: "center" | "left" | "right";
+        height: 0 | 1 | 2;
+      };
+      ball: {
+        isSave: {
+          fallingDawnPath: string;
+        };
+      };
+    }
+  > = new Map();
 
-  points: Map<string, { x: number; y: number; targetImage?: Sprite }> =
-    new Map();
-
-  constructor(public footballDor: FootballDor, public scene: Container) {
+  constructor(public footballDor: FootballDoor, public scene: Container) {
     this.eventEmitter = new EventEmitter();
 
-    this.calculateTargetPoints();
+    this.generateTargetPoints();
     this.addTargets();
     this.addListeners();
   }
@@ -34,15 +46,12 @@ export class DorTargetPoints {
       point.targetImage!.cursor = "pointer";
 
       point.targetImage!.on("mousemove", () => {
-        if (!this.isSelectPossible) return;
         this.selectedPoint = key;
-        this.isSelectedPoint = true;
       });
 
       point.targetImage!.on("click", () => {
         this.selectedPoint = key;
-        this.isSelectedPoint = true;
-        this.eventEmitter.emit("SelectetShootTargetByClick");
+        this.eventEmitter.emit(GameEventEnums.selectedShootByTargetClick);
       });
     });
 
@@ -69,9 +78,8 @@ export class DorTargetPoints {
       );
 
       this.selectedPoint = String(selectedPoint.map((point) => point[0]));
-      this.isSelectedPoint = true;
 
-      this.eventEmitter.emit("SelectetShootTargetByClick");
+      this.eventEmitter.emit(GameEventEnums.selectedShootByDoorClick);
     });
     this.footballDor.dor.on("mouseup", (event) => {
       const mousePosition = event.global;
@@ -94,15 +102,12 @@ export class DorTargetPoints {
       );
 
       this.selectedPoint = String(selectedPoint.map((point) => point[0]));
-      this.isSelectedPoint = true;
 
-      this.eventEmitter.emit("SelectetShootTargetByClick");
+      this.eventEmitter.emit(GameEventEnums.selectedShootByDoorClick);
     });
   }
 
-  selectTargetPoiint() {}
-
-  calculateTargetPoints() {
+  generateTargetPoints() {
     this.points.set(createKey([0, 0]), {
       x:
         this.footballDor.x -
@@ -110,6 +115,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y +
         calculatePercentage(30, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "left",
+        height: 0,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M -7 -12 L -41 -23 L -75 -4 L -108 34 L -164 78 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([0, 1]), {
@@ -119,6 +134,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y +
         calculatePercentage(10, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "left",
+        height: 1,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([0, 2]), {
@@ -128,6 +153,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y -
         calculatePercentage(10, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "left",
+        height: 2,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M 5 -10 L -19 -9 L -41 -1 L -89 60 L -428 224 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([1, 0]), {
@@ -135,6 +170,15 @@ export class DorTargetPoints {
       y:
         this.footballDor.y +
         calculatePercentage(24, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "center",
+        height: 0,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath: "M 5 -10 L 1 11 L 8 31 L -3 41 L -5 62 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([1, 1]), {
@@ -142,6 +186,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y +
         +calculatePercentage(7, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "center",
+        height: 1,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M -7 -12 L -21 -9 L -29 10 L -40 41 L -50 114 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([1, 2]), {
@@ -149,6 +203,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y -
         calculatePercentage(15, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "center",
+        height: 2,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M -7 -12 L 11 -21 L 41 -8 L 68 47 L 90 110 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([2, 0]), {
@@ -158,6 +222,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y +
         calculatePercentage(29, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "right",
+        height: 0,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M -7 -12 L 25 -24 L 51 -10 L 87 20 L 115 68 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([2, 1]), {
@@ -167,6 +241,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y +
         calculatePercentage(9, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "right",
+        height: 1,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M -7 -12 L 31 -26 L 80 -7 L 131 49 L 263 212 M -101 -24",
+        },
+      },
     });
 
     this.points.set(createKey([2, 2]), {
@@ -176,6 +260,16 @@ export class DorTargetPoints {
       y:
         this.footballDor.y -
         calculatePercentage(11, this.footballDor.dor.height),
+      goalKeeperJumpData: {
+        direction: "right",
+        height: 2,
+      },
+      ball: {
+        isSave: {
+          fallingDawnPath:
+            "M -7 -12 L 33 -25 L 90 -11 L 196 49 L 450 138 M -101 -24",
+        },
+      },
     });
   }
 

@@ -1,5 +1,4 @@
 import { Container, EventEmitter } from "pixi.js";
-import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { BallGraphic } from "./ballGraphic";
 import { SpinManager } from "./spinManager";
@@ -8,6 +7,9 @@ import { adjustSVGPath } from "../../helper";
 import { ScaleManager } from "./scaleManager";
 import { BlurManager } from "./blurManager";
 import { RopeEffect } from "../ropeEffect";
+import gsap from "gsap";
+import { GameEventEnums } from "../../enums/gameEvenetEnums";
+import { gameConfig } from "../../config/gameConfig";
 gsap.registerPlugin(MotionPathPlugin);
 
 export class Ball extends Container {
@@ -17,11 +19,9 @@ export class Ball extends Container {
   scaleManager!: ScaleManager;
   blurManager!: BlurManager;
   ropeEffect!: RopeEffect;
-
   eventEmitter!: EventEmitter;
 
-  private isReadyForPreperation = true;
-  isReadyForShoot = false;
+  ballFallinDownRawPath!: string;
 
   constructor() {
     super();
@@ -44,13 +44,6 @@ export class Ball extends Container {
       this.spinManager.stopRotation();
       this.blurManager.removeBlurEffect();
       this.fallDown();
-    });
-
-    this.eventEmitter.on("FinishMinSpin", () => {
-      if (!this.isReadyForShoot) {
-        this.isReadyForShoot = true;
-        this.eventEmitter.emit("IsReadyForShoot");
-      }
     });
   }
 
@@ -86,7 +79,6 @@ export class Ball extends Container {
   }
 
   public shoot(points: { x: number; y: number }) {
-    if (!this.isReadyForShoot) return;
     if (!this.ropeEffect.effectIsOnn) this.adctivateRopeEffect();
 
     this.shootManager.shoot({
@@ -94,27 +86,23 @@ export class Ball extends Container {
       y: points.y,
     });
     this.scaleManager.startScaleAnimationDuringShoot();
-    this.eventEmitter.emit("Shoot");
+
+    setTimeout(() => {
+      this.eventEmitter.emit(GameEventEnums.isTimeToJumpGoalKeeper);
+    }, 200);
   }
 
   public selectForShoot(): void {
-    if (!this.isReadyForPreperation) {
-      return;
-    }
-    this.isReadyForPreperation = false;
-
     this.spinManager.startSpin();
     this.scaleManager.increaseScaleForShoot();
     this.blurManager.makeItBlur();
   }
 
   private fallDown() {
-    const rawPath: string = "M 2 1 L -19 -9 L -41 -2 L -70 48 M -101 -24";
-
     // Adjust the path relative to the target's current position
     const scale: number = 2; // Define the scale factor
     const scaledAndOffsetPath: string = adjustSVGPath(
-      rawPath,
+      this.ballFallinDownRawPath,
       this.x,
       this.y,
       scale
@@ -127,6 +115,9 @@ export class Ball extends Container {
         curviness: 1.5, // Controls the smoothness of the curve
       },
       ease: "bounce.out",
+      onComplete: () => {
+        this.eventEmitter.emit(GameEventEnums.finishFallingOfBall);
+      },
     });
   }
 
@@ -136,5 +127,31 @@ export class Ball extends Container {
 
   private adctivateRopeEffect() {
     this.ropeEffect.effectOnn();
+  }
+
+  private deactivateRopeEffect() {
+    this.ropeEffect.effectoff();
+  }
+
+  public reset() {
+    this.deactivateRopeEffect();
+    this.x = window.innerWidth / 2;
+    this.y = -window.innerHeight - 100;
+
+    gsap.to(this.ballGraphic.container.scale, {
+      duration: 0.1,
+      x: 1,
+      y: 1,
+      ease: "power2",
+    });
+
+    gsap.to(this, {
+      duration: 0.8,
+      y: gameConfig.desktop.ball.positionY,
+      ease: "bounce.out",
+      onComplete: () => {
+        this.adctivateRopeEffect();
+      },
+    });
   }
 }

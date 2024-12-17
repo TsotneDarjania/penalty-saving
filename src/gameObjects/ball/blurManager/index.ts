@@ -18,7 +18,7 @@ export class BlurManager {
   public makeItBlur() {
     gsap.to(this.blurFilter, {
       duration: 0.3,
-      strength: 0.6,
+      strength: 0.7,
       ease: "power4.out",
       onUpdate: () => {
         this.ball.filters = [this.blurFilter];
