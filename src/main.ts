@@ -1,3 +1,3 @@
 import { Game } from "./game";
 
-new Game("#000000", "pixi-container");
+new Game("#20405E", "pixi-container");

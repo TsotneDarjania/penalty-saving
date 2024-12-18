@@ -8,6 +8,8 @@ export class GameManager {
   isBallSelected = false;
   firstTimeSelectBall = true;
 
+  step = 0;
+
   result!: {
     goalKeeperJumpPoint: [number, number];
   };
@@ -27,6 +29,19 @@ export class GameManager {
       x,
       y,
     });
+
+    if (this.step === 5) {
+      this.step = 0;
+      this.game.ui.progressBar.reset();
+      return;
+    } else {
+      console.log(this.step);
+      this.game.ui.progressBar.makeFillAniamtion(
+        this.step as 0 | 1 | 2 | 3 | 4
+      );
+    }
+
+    this.step++;
   }
 
   selectBallForShoot() {
@@ -82,13 +97,13 @@ export class GameManager {
 
     // Mouse Over Door
     this.game.gameObjects.footballDoor!.interactive = true;
-    this.game.gameObjects.footballDoor!.on("mouseover", () => {
+    this.game.gameObjects.footballDoor!.on("pointerover", () => {
       this.firstTimeSelectBall && this.game.dorTargetpoints.lightOnnTargets();
       this.firstTimeSelectBall = false;
     });
 
     //MouseUp
-    addEventListener("mouseup", () => {
+    addEventListener("pointerup", () => {
       if (this.isBallSelected && !this.isShootCommand) {
         this.shootCommand();
       }

@@ -1,4 +1,10 @@
-import { Application, Container, ContainerChild, Texture } from "pixi.js";
+import {
+  Application,
+  Container,
+  ContainerChild,
+  Sprite,
+  Texture,
+} from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { RopeEffect } from "../gameObjects/ropeEffect.ts";
@@ -6,6 +12,8 @@ import { Character } from "../gameObjects/character.ts";
 import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
 import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
+import { calculatePercentage } from "../helper/index.ts";
+import { UI } from "../ui/index.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
@@ -14,6 +22,7 @@ export class Game extends Application {
   public dorTargetpoints!: DorTargetPoints;
   public gameManager!: GameManager;
   public character!: Character;
+  public ui!: UI;
 
   constructor(public backgroundColor: string, public htmlRootId: string) {
     super();
@@ -45,29 +54,19 @@ export class Game extends Application {
   }
 
   private startGame() {
+    this.scene.eventMode = "static";
+
     this.addGameObjects();
     this.addDorTargetPoints();
-
-    // const ropeEffect = new RopeEffect(
-    //   Texture.from(GameObjectEnums.circle),
-    //   this,
-    //   true
-    // );
-
     const ballRopeEffect = new RopeEffect(
       Texture.from(GameObjectEnums.ballRopeEffect),
       this,
       false,
       this.gameObjects.ball!
     );
-
     this.gameObjects.ball!.setRopeEffect = ballRopeEffect;
-
-    // ballRopeEffect.effectOnn();
-
-    // ropeEffect.effectOnn();
-
     this.addCharacter();
+    this.addUI();
     this.addGameManager();
   }
 
@@ -89,6 +88,12 @@ export class Game extends Application {
   private addCharacter() {
     this.character = new Character(this.scene);
     this.character.x = window.innerWidth / 2;
-    this.character.y = 520;
+    this.character.y =
+      this.gameObjects.footballDoor!.y +
+      calculatePercentage(45, this.gameObjects.footballDoor!.height);
+  }
+
+  private addUI() {
+    this.ui = new UI(this.scene);
   }
 }

@@ -3,7 +3,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
   await new Promise<void>((res) => {
     setTimeout(() => {
       res();
-    }, 800);
+    }, 300);
   });
 
   console.log("User Selected : " + userSelectedPoint);

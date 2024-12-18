@@ -28,6 +28,7 @@ export class FootballDoor extends Container {
 
   private addDor() {
     this.dor = new Sprite(Texture.from(GameObjectEnums.footballDor));
+    this.dor.scale = 0.5;
     this.dor.anchor = 0.5;
     this.addChild(this.dor);
   }

@@ -1,7 +1,6 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Container } from "pixi.js";
 
-// Class for handling the character Spine and its animations.
 export class Character extends Container {
   spine!: Spine;
   constructor(public scene: Container) {
@@ -21,7 +20,7 @@ export class Character extends Container {
     });
 
     this.spine.state.setAnimation(0, "Idle", true);
-
+    this.spine.scale = 0.5;
     this.addChild(this.spine);
   }
 

@@ -45,11 +45,11 @@ export class DorTargetPoints {
       point.targetImage!.interactive = true;
       point.targetImage!.cursor = "pointer";
 
-      point.targetImage!.on("mousemove", () => {
+      point.targetImage!.on("pointerenter", () => {
         this.selectedPoint = key;
       });
 
-      point.targetImage!.on("click", () => {
+      point.targetImage!.on("pointerdown", () => {
         this.selectedPoint = key;
         this.eventEmitter.emit(GameEventEnums.selectedShootByTargetClick);
       });
@@ -81,7 +81,7 @@ export class DorTargetPoints {
 
       this.eventEmitter.emit(GameEventEnums.selectedShootByDoorClick);
     });
-    this.footballDor.dor.on("mouseup", (event) => {
+    this.footballDor.dor.on("pointerup", (event) => {
       const mousePosition = event.global;
 
       const targetPoint = {
@@ -278,6 +278,7 @@ export class DorTargetPoints {
       const sprite = new Sprite(Texture.from(GameObjectEnums.target));
       sprite.x = point.x;
       sprite.y = point.y;
+      sprite.scale = 0.3;
 
       sprite.anchor = 0.5;
       sprite.alpha = 0;
@@ -300,8 +301,8 @@ export class DorTargetPoints {
 
     targetImages.forEach((image) => {
       gsap.to(image.scale, {
-        x: 1.1,
-        y: 1.1,
+        x: 0.34,
+        y: 0.34,
         repeat: -1,
         yoyo: true,
         duration: 0.2,

@@ -8,4 +8,11 @@ export enum GameObjectEnums {
   circleBorder = "CircleBorder",
   ballRopeEffect = "BallRopeEffect",
   target = "Target",
+  progressGray = "ProgressGray",
+  progressGreen = "ProgressGreen",
+  star_1 = "Star_1",
+  star_2 = "Star_2",
+  star_3 = "Star_3",
+  star_4 = "Star_4",
+  star_5 = "Star_5",
 }

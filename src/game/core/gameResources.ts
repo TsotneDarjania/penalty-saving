@@ -60,8 +60,52 @@ export class GameResources extends AssetsClass {
       // Target
       {
         alias: GameObjectEnums.target,
-        src: "../assets/image/target.png",
+        src: "../assets/image/target.svg",
+      },
+      // Progress Gray
+      {
+        alias: GameObjectEnums.progressGray,
+        src: "../assets/image/progress-grey.svg",
+      },
+      // Progress Green
+      {
+        alias: GameObjectEnums.progressGreen,
+        src: "../assets/image/progress-green.svg",
+      },
+      // Star 1
+      {
+        alias: GameObjectEnums.star_1,
+        src: "../assets/image/star-1.svg",
+      },
+      // Star 2
+      {
+        alias: GameObjectEnums.star_2,
+        src: "../assets/image/star-2.svg",
+      },
+      // Star 3
+      {
+        alias: GameObjectEnums.star_3,
+        src: "../assets/image/star-3.svg",
+      },
+      // Star 4
+      {
+        alias: GameObjectEnums.star_4,
+        src: "../assets/image/star-4.svg",
+      },
+      // Star 5
+      {
+        alias: GameObjectEnums.star_5,
+        src: "../assets/image/star-5.svg",
       },
     ]);
+
+    const fontFace = new FontFace(
+      "CustomFont1",
+      "url('../assets/custom-font.otf')"
+    );
+    await fontFace.load().then((loadedFont) => {
+      document.fonts.add(loadedFont);
+      console.log("Custom font registered!");
+    });
   }
 }

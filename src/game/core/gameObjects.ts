@@ -2,6 +2,7 @@ import { Container } from "pixi.js";
 import { FootballDoor } from "../../gameObjects/footballDoor.ts";
 import { Ball } from "../../gameObjects/ball/index.ts";
 import { gameConfig } from "../../config/gameConfig.ts";
+import { calculatePercentage } from "../../helper/index.ts";
 
 export class GameObjects {
   ball: Ball | null = null;
@@ -27,7 +28,7 @@ export class GameObjects {
   addFootballDor() {
     this.footballDoor = new FootballDoor();
     this.footballDoor.x = window.innerWidth / 2;
-    this.footballDoor.y = 340;
+    this.footballDoor.y = calculatePercentage(44, window.innerHeight);
 
     this.scene.addChild(this.footballDoor);
   }
