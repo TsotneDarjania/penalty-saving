@@ -6,7 +6,6 @@ import { ShootManager } from "./shootManager";
 import { adjustSVGPath } from "../../helper";
 import { ScaleManager } from "./scaleManager";
 import { BlurManager } from "./blurManager";
-import { RopeEffect } from "../ropeEffect";
 import gsap from "gsap";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
 import { gameConfig } from "../../config/gameConfig";
@@ -18,7 +17,6 @@ export class Ball extends Container {
   shootManager!: ShootManager;
   scaleManager!: ScaleManager;
   blurManager!: BlurManager;
-  ropeEffect!: RopeEffect;
   eventEmitter!: EventEmitter;
 
   isGoal = false;
@@ -49,6 +47,7 @@ export class Ball extends Container {
     this.eventEmitter.on("FinishShoot", () => {
       this.spinManager.stopRotation();
       this.blurManager.removeBlurEffect();
+      this.eventEmitter.emit(GameEventEnums.ballTouchGoalKeeperOrGrid);
       this.fallDown();
     });
   }
@@ -85,8 +84,6 @@ export class Ball extends Container {
   }
 
   public shoot(points: { x: number; y: number }) {
-    if (!this.ropeEffect.effectIsOnn) this.adctivateRopeEffect();
-
     this.shootManager.shoot({
       x: points.x,
       y: points.y,
@@ -127,22 +124,9 @@ export class Ball extends Container {
     });
   }
 
-  set setRopeEffect(ropeEffect: RopeEffect) {
-    this.ropeEffect = ropeEffect;
-  }
-
-  private adctivateRopeEffect() {
-    this.ropeEffect.effectOnn();
-  }
-
-  private deactivateRopeEffect() {
-    this.ropeEffect.effectoff();
-  }
-
   public reset() {
     this.isGoal = false;
 
-    this.deactivateRopeEffect();
     this.x = window.innerWidth / 2;
     this.y = -window.innerHeight - 100;
 
@@ -157,9 +141,6 @@ export class Ball extends Container {
       duration: 0.8,
       y: gameConfig.desktop.ball.positionY,
       ease: "bounce.out",
-      onComplete: () => {
-        this.adctivateRopeEffect();
-      },
     });
   }
 }

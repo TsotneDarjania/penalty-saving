@@ -1,21 +1,24 @@
 import { Container, Sprite, Texture } from "pixi.js";
 import { BulgePinchFilter } from "pixi-filters";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
+import { Spine } from "@esotericsoftware/spine-pixi-v8";
 
 export class FootballDoor extends Container {
   bulgeGilterEffect!: BulgePinchFilter;
-  dor!: Sprite;
+  door!: Container;
   topGrid!: Sprite;
   leftGrid!: Sprite;
   baseGrid!: Sprite;
   RightGrid!: Sprite;
+
+  spine!: Spine;
 
   gridContainer: Container = new Container();
 
   constructor() {
     super();
 
-    this.addDor();
+    this.addDoor();
     this.createBulgeFilter();
   }
 
@@ -26,20 +29,31 @@ export class FootballDoor extends Container {
     });
   }
 
-  private addDor() {
-    this.dor = new Sprite(Texture.from(GameObjectEnums.footballDor));
-    this.dor.scale = 0.5;
-    this.dor.anchor = 0.5;
-    this.addChild(this.dor);
+  private addDoor() {
+    this.door = new Container();
+
+    this.spine = Spine.from({
+      skeleton: "FootballDoorSkeleton",
+      atlas: "FootballDoorAtlas",
+    });
+
+    this.spine.y = this.y + 97;
+    this.spine.scale = 0.5;
+
+    this.door.addChild(this.spine);
+
+    this.spine.state.setAnimation(0, "Idle", true);
+
+    this.addChild(this.door);
   }
 
-  // public startGridAnimation() {
-  //   // this.filterEffect.centerX = 0.31;
-  //   // this.filterEffect.centerY = 0.7;
-  //   // const mask = new Graphics();
-  //   // mask.rect(0, 0, 1100, 500);
-  //   // mask.fill();
-  //   // this.mask = mask;
-  //   // this.filters = [this.filterEffect];
-  // }
+  playGridAnimation(point: [number, number]) {
+    if (point[1] > 1) point[1] = 1;
+    const animationName = `${point[0]}_${point[1]}`;
+    this.spine.state.setAnimation(0, animationName, false);
+  }
+
+  playIdleAnimation() {
+    this.spine.state.setAnimation(0, "Idle", true);
+  }
 }

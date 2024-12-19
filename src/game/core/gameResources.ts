@@ -17,6 +17,15 @@ export class GameResources extends AssetsClass {
         alias: "spineAtlas",
         src: "../assets/animation/character/Personality.atlas",
       },
+      //Football Door Animation
+      {
+        alias: "FootballDoorSkeleton",
+        src: "../assets/animation/footballDoor/Football_Door.json",
+      },
+      {
+        alias: "FootballDoorAtlas",
+        src: "../assets/animation/footballDoor/Football_Door.atlas",
+      },
       // Football Dor
       {
         alias: GameObjectEnums.footballDor,
