@@ -5,7 +5,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
   await new Promise<void>((res) => {
     setTimeout(() => {
       res();
-    }, 800);
+    }, 400);
   });
 
   const goalKeeperJumpPoint = [0, 0];

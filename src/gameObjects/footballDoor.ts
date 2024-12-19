@@ -1,6 +1,5 @@
-import { Container, Sprite, Texture } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 import { BulgePinchFilter } from "pixi-filters";
-import { GameObjectEnums } from "../enums/gameObjectEnums";
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 
 export class FootballDoor extends Container {
