@@ -15,4 +15,8 @@ export enum GameObjectEnums {
   star_3 = "Star_3",
   star_4 = "Star_4",
   star_5 = "Star_5",
+  menu = "menu",
+  arrow = "arrow",
+  lighting = "lighting",
+  coin = "coin",
 }

@@ -1,7 +1,6 @@
 import { Ball } from "..";
 import gsap from "gsap";
 export class ShootManager {
-  isReadyForShoot = true;
   constructor(public ball: Ball) {}
 
   shoot(targetLocation: { x: number; y: number }) {

@@ -1,8 +1,8 @@
 export const gameConfig = {
   desktop: {
     ball: {
-      radius: 30,
-      positionY: window.innerHeight - 80,
+      radius: 43,
+      positionY: window.innerHeight - 67,
     },
   },
 };

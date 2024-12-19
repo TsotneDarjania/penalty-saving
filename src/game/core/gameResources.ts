@@ -97,6 +97,26 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.star_5,
         src: "../assets/image/star-5.svg",
       },
+      // menu
+      {
+        alias: GameObjectEnums.menu,
+        src: "../assets/image/menu.svg",
+      },
+      // arrow
+      {
+        alias: GameObjectEnums.arrow,
+        src: "../assets/image/arrow.svg",
+      },
+      // lighting
+      {
+        alias: GameObjectEnums.lighting,
+        src: "../assets/image/lighting.svg",
+      },
+      // coin
+      {
+        alias: GameObjectEnums.coin,
+        src: "../assets/image/coin.svg",
+      },
     ]);
 
     const fontFace = new FontFace(

@@ -28,6 +28,13 @@ export class DorTargetPoints {
         isSave: {
           fallingDawnPath: string;
         };
+        isNotSave: {
+          fallingDawnPath: string;
+        };
+        fallingDawnPathData: {
+          offsetX: number;
+          offsetY: number;
+        };
       };
     }
   > = new Map();
@@ -111,10 +118,10 @@ export class DorTargetPoints {
     this.points.set(createKey([0, 0]), {
       x:
         this.footballDor.x -
-        calculatePercentage(33, this.footballDor.dor.width),
+        calculatePercentage(36, this.footballDor.dor.width),
       y:
         this.footballDor.y +
-        calculatePercentage(30, this.footballDor.dor.height),
+        calculatePercentage(34, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "left",
         height: 0,
@@ -124,16 +131,24 @@ export class DorTargetPoints {
           fallingDawnPath:
             "M -7 -12 L -41 -23 L -75 -4 L -108 34 L -164 78 M -101 -24",
         },
+        isNotSave: {
+          fallingDawnPath:
+            "M -7 -12 L -9 -13 L -11 -12 L -13 -9 L -12 -3 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 9,
+          offsetY: 16,
+        },
       },
     });
 
     this.points.set(createKey([0, 1]), {
       x:
         this.footballDor.x -
-        calculatePercentage(34, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.dor.width),
       y:
         this.footballDor.y +
-        calculatePercentage(10, this.footballDor.dor.height),
+        calculatePercentage(8, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "left",
         height: 1,
@@ -143,16 +158,23 @@ export class DorTargetPoints {
           fallingDawnPath:
             "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
         },
+        isNotSave: {
+          fallingDawnPath: "M -7 -12 L -7 -8 L -7 -2 L -7 8 L -5 22 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 23,
+          offsetY: 16,
+        },
       },
     });
 
     this.points.set(createKey([0, 2]), {
       x:
         this.footballDor.x -
-        calculatePercentage(35, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.dor.width),
       y:
         this.footballDor.y -
-        calculatePercentage(10, this.footballDor.dor.height),
+        calculatePercentage(19, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "left",
         height: 2,
@@ -162,6 +184,14 @@ export class DorTargetPoints {
           fallingDawnPath:
             "M 5 -10 L -19 -9 L -41 -1 L -89 60 L -428 224 M -101 -24",
         },
+        isNotSave: {
+          fallingDawnPath:
+            "M -7 -12 L -9 -13 L -11 -12 L -12 -10 L -13 -7 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: -15,
+          offsetY: 19,
+        },
       },
     });
 
@@ -169,14 +199,22 @@ export class DorTargetPoints {
       x: this.footballDor.x,
       y:
         this.footballDor.y +
-        calculatePercentage(24, this.footballDor.dor.height),
+        calculatePercentage(36, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "center",
         height: 0,
       },
       ball: {
         isSave: {
-          fallingDawnPath: "M 5 -10 L 1 11 L 8 31 L -3 41 L -5 62 M -101 -24",
+          fallingDawnPath: "M -7 -12 L -4 -3 L -6 7 L -7 17 L -8 27 M -101 -24",
+        },
+        isNotSave: {
+          fallingDawnPath:
+            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 0,
+          offsetY: 0,
         },
       },
     });
@@ -185,7 +223,7 @@ export class DorTargetPoints {
       x: this.footballDor.x,
       y:
         this.footballDor.y +
-        +calculatePercentage(7, this.footballDor.dor.height),
+        +calculatePercentage(5, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "center",
         height: 1,
@@ -193,7 +231,15 @@ export class DorTargetPoints {
       ball: {
         isSave: {
           fallingDawnPath:
-            "M -7 -12 L -21 -9 L -29 10 L -40 41 L -50 114 M -101 -24",
+            "M -7 -12 L -15 -10 L -25 0 L -29 17 L -30 52 M -101 -24",
+        },
+        isNotSave: {
+          fallingDawnPath:
+            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 0,
+          offsetY: 0,
         },
       },
     });
@@ -202,7 +248,7 @@ export class DorTargetPoints {
       x: this.footballDor.x,
       y:
         this.footballDor.y -
-        calculatePercentage(15, this.footballDor.dor.height),
+        calculatePercentage(22, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "center",
         height: 2,
@@ -210,7 +256,15 @@ export class DorTargetPoints {
       ball: {
         isSave: {
           fallingDawnPath:
-            "M -7 -12 L 11 -21 L 41 -8 L 68 47 L 90 110 M -101 -24",
+            "M -7 -12 L -3 -18 L 7 -19 L 14 -11 L 33 62 M -101 -24",
+        },
+        isNotSave: {
+          fallingDawnPath:
+            "M -7 -12 L -3 -18 L 7 -19 L 14 -11 L 33 62 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 0,
+          offsetY: 0,
         },
       },
     });
@@ -218,10 +272,10 @@ export class DorTargetPoints {
     this.points.set(createKey([2, 0]), {
       x:
         this.footballDor.x +
-        calculatePercentage(33, this.footballDor.dor.width),
+        calculatePercentage(36, this.footballDor.dor.width),
       y:
         this.footballDor.y +
-        calculatePercentage(29, this.footballDor.dor.height),
+        calculatePercentage(35, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "right",
         height: 0,
@@ -231,13 +285,21 @@ export class DorTargetPoints {
           fallingDawnPath:
             "M -7 -12 L 25 -24 L 51 -10 L 87 20 L 115 68 M -101 -24",
         },
+        isNotSave: {
+          fallingDawnPath:
+            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 0,
+          offsetY: 0,
+        },
       },
     });
 
     this.points.set(createKey([2, 1]), {
       x:
         this.footballDor.x +
-        calculatePercentage(34, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.dor.width),
       y:
         this.footballDor.y +
         calculatePercentage(9, this.footballDor.dor.height),
@@ -250,16 +312,24 @@ export class DorTargetPoints {
           fallingDawnPath:
             "M -7 -12 L 31 -26 L 80 -7 L 131 49 L 263 212 M -101 -24",
         },
+        isNotSave: {
+          fallingDawnPath:
+            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 0,
+          offsetY: 0,
+        },
       },
     });
 
     this.points.set(createKey([2, 2]), {
       x:
         this.footballDor.x +
-        calculatePercentage(35, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.dor.width),
       y:
         this.footballDor.y -
-        calculatePercentage(11, this.footballDor.dor.height),
+        calculatePercentage(19, this.footballDor.dor.height),
       goalKeeperJumpData: {
         direction: "right",
         height: 2,
@@ -268,6 +338,14 @@ export class DorTargetPoints {
         isSave: {
           fallingDawnPath:
             "M -7 -12 L 33 -25 L 90 -11 L 196 49 L 450 138 M -101 -24",
+        },
+        isNotSave: {
+          fallingDawnPath:
+            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+        },
+        fallingDawnPathData: {
+          offsetX: 0,
+          offsetY: 0,
         },
       },
     });
@@ -278,7 +356,7 @@ export class DorTargetPoints {
       const sprite = new Sprite(Texture.from(GameObjectEnums.target));
       sprite.x = point.x;
       sprite.y = point.y;
-      sprite.scale = 0.3;
+      sprite.scale = 0.25;
 
       sprite.anchor = 0.5;
       sprite.alpha = 0;
@@ -301,8 +379,8 @@ export class DorTargetPoints {
 
     targetImages.forEach((image) => {
       gsap.to(image.scale, {
-        x: 0.34,
-        y: 0.34,
+        x: 0.28,
+        y: 0.28,
         repeat: -1,
         yoyo: true,
         duration: 0.2,

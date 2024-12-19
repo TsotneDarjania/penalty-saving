@@ -109,7 +109,7 @@ export class ProgressBar extends Container {
     this.texts[0].scale = 0.7;
     this.texts[0].anchor = 0.5;
     this.texts[0].x = -100;
-    this.texts[0].y = 20;
+    this.texts[0].y = 25;
     this.texts[0].rotation = -0.2;
 
     this.texts[1] = new Text({
@@ -122,7 +122,7 @@ export class ProgressBar extends Container {
     this.texts[1].scale = 0.7;
     this.texts[1].anchor = 0.5;
     this.texts[1].x = -53;
-    this.texts[1].y = 13;
+    this.texts[1].y = 17;
     this.texts[1].rotation = -0.1;
 
     this.texts[2] = new Text({
@@ -135,7 +135,7 @@ export class ProgressBar extends Container {
     this.texts[2].scale = 0.8;
     this.texts[2].anchor = 0.5;
     this.texts[2].x = 0;
-    this.texts[2].y = 10;
+    this.texts[2].y = 15;
     this.texts[2].rotation = -0;
 
     this.texts[3] = new Text({
@@ -148,7 +148,7 @@ export class ProgressBar extends Container {
     this.texts[3].scale = 0.9;
     this.texts[3].anchor = 0.5;
     this.texts[3].x = 54;
-    this.texts[3].y = 15;
+    this.texts[3].y = 20;
     this.texts[3].rotation = 0.2;
 
     this.texts[4] = new Text({
@@ -161,7 +161,7 @@ export class ProgressBar extends Container {
     this.texts[4].scale = 0.93;
     this.texts[4].anchor = 0.5;
     this.texts[4].x = 110;
-    this.texts[4].y = 30;
+    this.texts[4].y = 35;
     this.texts[4].rotation = 0.3;
 
     this.texts.forEach((text) => {

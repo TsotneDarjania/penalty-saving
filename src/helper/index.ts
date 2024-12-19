@@ -15,13 +15,16 @@ export function adjustSVGPath(
   return path.replace(/([ML])\s*([\d\s.,-]+)/g, (_match, command, coords) => {
     const adjustedCoords = coords
       .trim()
-      .split(/\s+/)
-      .map(
-        (coord: string, index: number) =>
-          index % 2 === 0
-            ? offsetX + scale * parseFloat(coord) // Adjust X
-            : offsetY + scale * parseFloat(coord) // Adjust Y
-      )
+      .split(/[\s,]+/)
+      .map((coord: string, index: number) => {
+        const originalValue = parseFloat(coord);
+        // Apply scaling and offsets
+        const adjustedValue =
+          index % 2 === 0 // Even index for X, odd for Y
+            ? offsetX + scale * originalValue // Adjust X
+            : offsetY + scale * originalValue; // Adjust Y
+        return adjustedValue.toFixed(2); // Limit decimals for precision
+      })
       .join(" ");
     return `${command} ${adjustedCoords}`;
   });
@@ -63,4 +66,16 @@ export function findClosestPoint(
   });
 
   return closestPoint;
+}
+
+export function areArraysEqual(arr1: number[], arr2: number[]) {
+  // Check if the lengths are the same
+  if (arr1.length !== arr2.length) return false;
+
+  // Compare each element
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+
+  return true;
 }

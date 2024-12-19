@@ -21,7 +21,13 @@ export class Ball extends Container {
   ropeEffect!: RopeEffect;
   eventEmitter!: EventEmitter;
 
-  ballFallinDownRawPath!: string;
+  isGoal = false;
+
+  ballFallinDownRawPathData!: {
+    path: string;
+    offsetX: number;
+    offsetY: number;
+  };
 
   constructor() {
     super();
@@ -102,9 +108,9 @@ export class Ball extends Container {
     // Adjust the path relative to the target's current position
     const scale: number = 2; // Define the scale factor
     const scaledAndOffsetPath: string = adjustSVGPath(
-      this.ballFallinDownRawPath,
-      this.x,
-      this.y,
+      this.ballFallinDownRawPathData.path,
+      this.x + this.ballFallinDownRawPathData.offsetX,
+      this.y + this.ballFallinDownRawPathData.offsetY,
       scale
     );
 
@@ -134,6 +140,8 @@ export class Ball extends Container {
   }
 
   public reset() {
+    this.isGoal = false;
+
     this.deactivateRopeEffect();
     this.x = window.innerWidth / 2;
     this.y = -window.innerHeight - 100;

@@ -21,7 +21,7 @@ export class BallGraphic {
     for (let i = 0; i < 2; i++) {
       const sprite = new Sprite(Texture.from(GameObjectEnums.ballTexture));
       sprite.anchor = 0.5;
-      sprite.scale = 0.18;
+      sprite.scale = 0.26;
       sprite.y = -i * sprite.height;
 
       this.container.addChild(sprite);
@@ -52,7 +52,7 @@ export class BallGraphic {
       )
       .stroke({
         color: "black",
-        width: 2.4,
+        width: 1,
       });
     this.container.addChild(this.borderGraphic);
   }

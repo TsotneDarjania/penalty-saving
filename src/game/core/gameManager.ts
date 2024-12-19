@@ -12,6 +12,7 @@ export class GameManager {
 
   result!: {
     goalKeeperJumpPoint: [number, number];
+    win: boolean;
   };
 
   constructor(public game: Game) {
@@ -35,7 +36,6 @@ export class GameManager {
       this.game.ui.progressBar.reset();
       return;
     } else {
-      console.log(this.step);
       this.game.ui.progressBar.makeFillAniamtion(
         this.step as 0 | 1 | 2 | 3 | 4
       );
@@ -79,10 +79,39 @@ export class GameManager {
         ]);
 
     this.result = await getResult(userSelectedPoint);
-    this.game.gameObjects.ball!.ballFallinDownRawPath =
-      this.game.dorTargetpoints.points.get(
-        createKey(this.result.goalKeeperJumpPoint)
-      )!.ball.isSave.fallingDawnPath;
+    console.log(this.result.win);
+    // get ball falling path
+    this.game.gameObjects.ball!.ballFallinDownRawPathData = {
+      path: this.result.win
+        ? this.game.dorTargetpoints.points.get(
+            createKey(this.result.goalKeeperJumpPoint)
+          )!.ball.isSave.fallingDawnPath
+        : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!
+            .ball.isNotSave.fallingDawnPath,
+      offsetX: this.result.win
+        ? this.game.dorTargetpoints.points.get(
+            createKey(this.result.goalKeeperJumpPoint)
+          )!.ball.fallingDawnPathData.offsetX
+        : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!
+            .ball.fallingDawnPathData.offsetX,
+      offsetY: this.result.win
+        ? this.game.dorTargetpoints.points.get(
+            createKey(this.result.goalKeeperJumpPoint)
+          )!.ball.fallingDawnPathData.offsetY
+        : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!
+            .ball.fallingDawnPathData.offsetY,
+    };
+
+    this.result.win
+      ? (this.game.gameObjects.ball!.isGoal = false)
+      : (this.game.gameObjects.ball!.isGoal = true);
+
+    this.result.win
+      ? this.game.dorTargetpoints.points.get(
+          createKey(this.result.goalKeeperJumpPoint)
+        )!.ball.isSave.fallingDawnPath
+      : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!.ball
+          .isNotSave.fallingDawnPath;
 
     this.shoot(userSelectedPoint);
   }
