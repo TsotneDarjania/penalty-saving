@@ -8,6 +8,8 @@ export class GameManager {
   isBallSelected = false;
   firstTimeSelectBall = true;
 
+  userSelectedPoint!: [number, number];
+
   step = 0;
 
   result!: {
@@ -56,6 +58,8 @@ export class GameManager {
 
   reset() {
     setTimeout(() => {
+      this.game.gameObjects.footballDoor!.playIdleAnimation();
+
       this.game.character.reset();
       this.game.gameObjects.ball!.reset();
 
@@ -68,7 +72,7 @@ export class GameManager {
     if (this.isShootCommand) return;
     this.isShootCommand = true;
 
-    const userSelectedPoint = this.game.dorTargetpoints.selectedPoint
+    this.userSelectedPoint = this.game.dorTargetpoints.selectedPoint
       ? (this.game.dorTargetpoints.selectedPoint!.split(",").map(Number) as [
           number,
           number
@@ -78,31 +82,33 @@ export class GameManager {
           number
         ]);
 
-    this.result = await getResult(userSelectedPoint);
-    console.log(this.result.win);
+    this.result = await getResult(this.userSelectedPoint);
     // get ball falling path
     this.game.gameObjects.ball!.ballFallinDownRawPathData = {
-      path: this.result.win
+      path: !this.result.win
         ? this.game.dorTargetpoints.points.get(
             createKey(this.result.goalKeeperJumpPoint)
           )!.ball.isSave.fallingDawnPath
-        : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!
-            .ball.isNotSave.fallingDawnPath,
-      offsetX: this.result.win
+        : this.game.dorTargetpoints.points.get(
+            createKey(this.userSelectedPoint)
+          )!.ball.isNotSave.fallingDawnPath,
+      offsetX: !this.result.win
         ? this.game.dorTargetpoints.points.get(
             createKey(this.result.goalKeeperJumpPoint)
           )!.ball.fallingDawnPathData.offsetX
-        : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!
-            .ball.fallingDawnPathData.offsetX,
-      offsetY: this.result.win
+        : this.game.dorTargetpoints.points.get(
+            createKey(this.userSelectedPoint)
+          )!.ball.fallingDawnPathData.offsetX,
+      offsetY: !this.result.win
         ? this.game.dorTargetpoints.points.get(
             createKey(this.result.goalKeeperJumpPoint)
           )!.ball.fallingDawnPathData.offsetY
-        : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!
-            .ball.fallingDawnPathData.offsetY,
+        : this.game.dorTargetpoints.points.get(
+            createKey(this.userSelectedPoint)
+          )!.ball.fallingDawnPathData.offsetY,
     };
 
-    this.result.win
+    !this.result.win
       ? (this.game.gameObjects.ball!.isGoal = false)
       : (this.game.gameObjects.ball!.isGoal = true);
 
@@ -110,10 +116,10 @@ export class GameManager {
       ? this.game.dorTargetpoints.points.get(
           createKey(this.result.goalKeeperJumpPoint)
         )!.ball.isSave.fallingDawnPath
-      : this.game.dorTargetpoints.points.get(createKey(userSelectedPoint))!.ball
-          .isNotSave.fallingDawnPath;
+      : this.game.dorTargetpoints.points.get(createKey(this.userSelectedPoint))!
+          .ball.isNotSave.fallingDawnPath;
 
-    this.shoot(userSelectedPoint);
+    this.shoot(this.userSelectedPoint);
   }
 
   listenUserEvents() {
@@ -167,6 +173,17 @@ export class GameManager {
       GameEventEnums.finishFallingOfBall,
       () => {
         this.reset();
+      }
+    );
+
+    // Finish Shoot
+    this.game.gameObjects.ball!.eventEmitter.on(
+      GameEventEnums.ballTouchGoalKeeperOrGrid,
+      () => {
+        this.result.win &&
+          this.game.gameObjects.footballDoor?.playGridAnimation(
+            this.userSelectedPoint
+          );
       }
     );
   }

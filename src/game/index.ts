@@ -1,15 +1,7 @@
-import {
-  Application,
-  Container,
-  ContainerChild,
-  Sprite,
-  Texture,
-} from "pixi.js";
+import { Application, Container, ContainerChild } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
-import { RopeEffect } from "../gameObjects/ropeEffect.ts";
 import { Character } from "../gameObjects/character.ts";
-import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
 import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
 import { calculatePercentage } from "../helper/index.ts";
@@ -58,13 +50,6 @@ export class Game extends Application {
 
     this.addGameObjects();
     this.addDorTargetPoints();
-    const ballRopeEffect = new RopeEffect(
-      Texture.from(GameObjectEnums.ballRopeEffect),
-      this,
-      false,
-      this.gameObjects.ball!
-    );
-    this.gameObjects.ball!.setRopeEffect = ballRopeEffect;
     this.addCharacter();
     this.addUI();
     this.addGameManager();

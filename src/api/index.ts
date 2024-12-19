@@ -5,16 +5,13 @@ export async function getResult(userSelectedPoint: [number, number]) {
   await new Promise<void>((res) => {
     setTimeout(() => {
       res();
-    }, 300);
+    }, 400);
   });
 
   const goalKeeperJumpPoint = [0, 0];
-  const win = getRandomIntInRange(0, 1) === 0 ? true : false;
+  const win = getRandomIntInRange(0, 1) === 0 ? false : true;
 
   if (win) {
-    goalKeeperJumpPoint[0] = userSelectedPoint[0];
-    goalKeeperJumpPoint[1] = userSelectedPoint[1];
-  } else {
     let randomX = getRandomIntInRange(0, 2);
     let randomY = getRandomIntInRange(0, 2);
 
@@ -28,6 +25,9 @@ export async function getResult(userSelectedPoint: [number, number]) {
 
     goalKeeperJumpPoint[0] = randomX;
     goalKeeperJumpPoint[1] = randomY;
+  } else {
+    goalKeeperJumpPoint[0] = userSelectedPoint[0];
+    goalKeeperJumpPoint[1] = userSelectedPoint[1];
   }
 
   return {

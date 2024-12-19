@@ -62,9 +62,9 @@ export class DorTargetPoints {
       });
     });
 
-    this.footballDor.dor.interactive = true;
-    this.footballDor.dor.cursor = "pointer";
-    this.footballDor.dor.on("click", (event) => {
+    this.footballDor.door.interactive = true;
+    this.footballDor.door.cursor = "pointer";
+    this.footballDor.door.on("click", (event) => {
       const mousePosition = event.global;
 
       const targetPoint = {
@@ -88,7 +88,7 @@ export class DorTargetPoints {
 
       this.eventEmitter.emit(GameEventEnums.selectedShootByDoorClick);
     });
-    this.footballDor.dor.on("pointerup", (event) => {
+    this.footballDor.door.on("pointerup", (event) => {
       const mousePosition = event.global;
 
       const targetPoint = {
@@ -118,10 +118,10 @@ export class DorTargetPoints {
     this.points.set(createKey([0, 0]), {
       x:
         this.footballDor.x -
-        calculatePercentage(36, this.footballDor.dor.width),
+        calculatePercentage(36, this.footballDor.door.width),
       y:
         this.footballDor.y +
-        calculatePercentage(34, this.footballDor.dor.height),
+        calculatePercentage(34, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "left",
         height: 0,
@@ -145,10 +145,10 @@ export class DorTargetPoints {
     this.points.set(createKey([0, 1]), {
       x:
         this.footballDor.x -
-        calculatePercentage(39, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.door.width),
       y:
         this.footballDor.y +
-        calculatePercentage(8, this.footballDor.dor.height),
+        calculatePercentage(8, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "left",
         height: 1,
@@ -171,10 +171,10 @@ export class DorTargetPoints {
     this.points.set(createKey([0, 2]), {
       x:
         this.footballDor.x -
-        calculatePercentage(39, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.door.width),
       y:
         this.footballDor.y -
-        calculatePercentage(19, this.footballDor.dor.height),
+        calculatePercentage(19, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "left",
         height: 2,
@@ -186,10 +186,10 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -9 -13 L -11 -12 L -12 -10 L -13 -7 M -101 -24",
+            "M -7 -12 L -10 -7 L -11 5 L -11 26 L -5 51 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: -15,
+          offsetX: 15,
           offsetY: 19,
         },
       },
@@ -199,7 +199,7 @@ export class DorTargetPoints {
       x: this.footballDor.x,
       y:
         this.footballDor.y +
-        calculatePercentage(36, this.footballDor.dor.height),
+        calculatePercentage(36, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "center",
         height: 0,
@@ -210,11 +210,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+            "M -7 -12 L -5 -13 L -3 -11 L -5 -9 L -4 -5 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 0,
-          offsetY: 0,
+          offsetX: 7,
+          offsetY: 11,
         },
       },
     });
@@ -223,7 +223,7 @@ export class DorTargetPoints {
       x: this.footballDor.x,
       y:
         this.footballDor.y +
-        +calculatePercentage(5, this.footballDor.dor.height),
+        +calculatePercentage(5, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "center",
         height: 1,
@@ -235,11 +235,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+            "M -7 -12 L -5 -13 L -3 -11 L -5 -4 L -4 22 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 0,
-          offsetY: 0,
+          offsetX: 16,
+          offsetY: 8,
         },
       },
     });
@@ -248,7 +248,7 @@ export class DorTargetPoints {
       x: this.footballDor.x,
       y:
         this.footballDor.y -
-        calculatePercentage(22, this.footballDor.dor.height),
+        calculatePercentage(22, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "center",
         height: 2,
@@ -260,11 +260,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -3 -18 L 7 -19 L 14 -11 L 33 62 M -101 -24",
+            "M -7 -12 L -9 -14 L -10 -11 L -12 11 L -12 50 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 0,
-          offsetY: 0,
+          offsetX: 16,
+          offsetY: 16,
         },
       },
     });
@@ -272,10 +272,10 @@ export class DorTargetPoints {
     this.points.set(createKey([2, 0]), {
       x:
         this.footballDor.x +
-        calculatePercentage(36, this.footballDor.dor.width),
+        calculatePercentage(36, this.footballDor.door.width),
       y:
         this.footballDor.y +
-        calculatePercentage(35, this.footballDor.dor.height),
+        calculatePercentage(35, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "right",
         height: 0,
@@ -286,12 +286,11 @@ export class DorTargetPoints {
             "M -7 -12 L 25 -24 L 51 -10 L 87 20 L 115 68 M -101 -24",
         },
         isNotSave: {
-          fallingDawnPath:
-            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+          fallingDawnPath: "M -7 -12 L -3 -13 L 0 -11 L 1 -5 L -2 1 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 0,
-          offsetY: 0,
+          offsetX: 15,
+          offsetY: 8,
         },
       },
     });
@@ -299,10 +298,10 @@ export class DorTargetPoints {
     this.points.set(createKey([2, 1]), {
       x:
         this.footballDor.x +
-        calculatePercentage(39, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.door.width),
       y:
         this.footballDor.y +
-        calculatePercentage(9, this.footballDor.dor.height),
+        calculatePercentage(9, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "right",
         height: 1,
@@ -314,11 +313,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+            "M -6 -14 L -4 -14 L -3 -11 L -2 3 L -8 28 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 0,
-          offsetY: 0,
+          offsetX: 20,
+          offsetY: 30,
         },
       },
     });
@@ -326,10 +325,10 @@ export class DorTargetPoints {
     this.points.set(createKey([2, 2]), {
       x:
         this.footballDor.x +
-        calculatePercentage(39, this.footballDor.dor.width),
+        calculatePercentage(39, this.footballDor.door.width),
       y:
         this.footballDor.y -
-        calculatePercentage(19, this.footballDor.dor.height),
+        calculatePercentage(19, this.footballDor.door.height),
       goalKeeperJumpData: {
         direction: "right",
         height: 2,
@@ -341,11 +340,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
+            "M -6 -14 L -4 -15 L -2 -13 L -3 1 L -5 45 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 0,
-          offsetY: 0,
+          offsetX: 14,
+          offsetY: 25,
         },
       },
     });
