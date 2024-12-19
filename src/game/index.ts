@@ -36,6 +36,7 @@ export class Game extends Application {
       background: this.backgroundColor,
       resizeTo: window,
       antialias: true,
+      resolution: window.devicePixelRatio || 1,
     });
     this.createResources();
     await this.gameResources.startLoadAssets();
@@ -56,7 +57,7 @@ export class Game extends Application {
   }
 
   private addGameObjects() {
-    this.gameObjects = new GameObjects(this.scene);
+    this.gameObjects = new GameObjects(this.scene, this.canvas.height);
   }
 
   private addDorTargetPoints() {
@@ -79,6 +80,6 @@ export class Game extends Application {
   }
 
   private addUI() {
-    this.ui = new UI(this.scene);
+    this.ui = new UI(this.scene, this);
   }
 }

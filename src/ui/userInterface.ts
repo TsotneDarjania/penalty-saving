@@ -1,5 +1,6 @@
 import { Container, Sprite, Texture } from "pixi.js";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
+import { Game } from "../game";
 
 export class UserInterface extends Container {
   menuButton!: Sprite;
@@ -7,7 +8,7 @@ export class UserInterface extends Container {
   lightingButton!: Sprite;
   coinButton!: Sprite;
 
-  constructor() {
+  constructor(public game: Game, public canvasHeight: number) {
     super();
 
     this.init();
@@ -25,7 +26,7 @@ export class UserInterface extends Container {
     this.menuButton.scale = 0.25;
     this.menuButton.anchor = 0.5;
     this.menuButton.x = window.innerWidth - this.menuButton.width / 2 - 10;
-    this.menuButton.y = window.innerHeight - this.menuButton.height / 2 - 10;
+    this.menuButton.y = this.canvasHeight - 140;
     this.addChild(this.menuButton);
   }
 
@@ -34,7 +35,7 @@ export class UserInterface extends Container {
     this.arrowButton.scale = 0.3;
     this.arrowButton.anchor = 0.5;
     this.arrowButton.x = window.innerWidth - this.arrowButton.width / 2 - 10;
-    this.arrowButton.y = window.innerHeight - this.arrowButton.height / 2 - 60;
+    this.arrowButton.y = this.canvasHeight - 90;
     this.addChild(this.arrowButton);
   }
 
@@ -43,8 +44,7 @@ export class UserInterface extends Container {
     this.lightingButton.scale = 0.3;
     this.lightingButton.anchor = 0.5;
     this.lightingButton.x = this.lightingButton.width / 2 + 10;
-    this.lightingButton.y =
-      window.innerHeight - this.lightingButton.height / 2 - 60;
+    this.lightingButton.y = this.canvasHeight - 140;
     this.addChild(this.lightingButton);
   }
 
@@ -53,7 +53,7 @@ export class UserInterface extends Container {
     this.coinButton.scale = 0.3;
     this.coinButton.anchor = 0.5;
     this.coinButton.x = this.coinButton.width / 2 + 10;
-    this.coinButton.y = window.innerHeight - this.coinButton.height / 2 - 10;
+    this.coinButton.y = this.canvasHeight - 90;
     this.addChild(this.coinButton);
   }
 }
