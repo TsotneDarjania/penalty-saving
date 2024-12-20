@@ -20,7 +20,7 @@ export class UI {
   addProgressBar() {
     this.progressBar = new ProgressBar();
     this.progressBar.x = window.innerWidth / 2;
-    this.progressBar.y = calculatePercentage(20, window.innerHeight);
+    this.progressBar.y = calculatePercentage(16, window.innerHeight);
     this.scene.addChild(this.progressBar);
   }
 

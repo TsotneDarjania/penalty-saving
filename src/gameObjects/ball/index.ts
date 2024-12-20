@@ -92,7 +92,7 @@ export class Ball extends Container {
 
     setTimeout(() => {
       this.eventEmitter.emit(GameEventEnums.isTimeToJumpGoalKeeper);
-    }, 200);
+    }, 50);
   }
 
   public selectForShoot(): void {
@@ -124,11 +124,11 @@ export class Ball extends Container {
     });
   }
 
-  public reset() {
+  public reset(ballX: number, ballY: number) {
     this.isGoal = false;
 
-    this.x = window.innerWidth / 2;
-    this.y = -window.innerHeight - 100;
+    this.x = ballX;
+    this.y = -1000;
 
     gsap.to(this.ballGraphic.container.scale, {
       duration: 0.1,
@@ -139,7 +139,7 @@ export class Ball extends Container {
 
     gsap.to(this, {
       duration: 0.8,
-      y: gameConfig.desktop.ball.positionY,
+      y: ballY,
       ease: "bounce.out",
     });
   }

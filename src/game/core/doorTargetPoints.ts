@@ -1,5 +1,5 @@
 import { Container, EventEmitter, Sprite, Texture } from "pixi.js";
-import { calculatePercentage, createKey, findClosestPoint } from "../../helper";
+import { createKey, findClosestPoint } from "../../helper";
 import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
 import { FootballDoor } from "../../gameObjects/footballDoor";
@@ -39,7 +39,11 @@ export class DorTargetPoints {
     }
   > = new Map();
 
-  constructor(public footballDor: FootballDoor, public scene: Container) {
+  constructor(
+    public footballDor: FootballDoor,
+    public scene: Container,
+    public stadiumBck: Sprite
+  ) {
     this.eventEmitter = new EventEmitter();
 
     this.generateTargetPoints();
@@ -115,13 +119,14 @@ export class DorTargetPoints {
   }
 
   generateTargetPoints() {
+    const scaledBgWidth =
+      this.stadiumBck.texture.width * this.stadiumBck.scale.x;
+    const scaledBgHeight =
+      this.stadiumBck.texture.height * this.stadiumBck.scale.y;
+
     this.points.set(createKey([0, 0]), {
-      x:
-        this.footballDor.x -
-        calculatePercentage(36, this.footballDor.door.width),
-      y:
-        this.footballDor.y +
-        calculatePercentage(34, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.21 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.51 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 0,
@@ -143,12 +148,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([0, 1]), {
-      x:
-        this.footballDor.x -
-        calculatePercentage(39, this.footballDor.door.width),
-      y:
-        this.footballDor.y +
-        calculatePercentage(8, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.2 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.445 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 1,
@@ -169,12 +170,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([0, 2]), {
-      x:
-        this.footballDor.x -
-        calculatePercentage(39, this.footballDor.door.width),
-      y:
-        this.footballDor.y -
-        calculatePercentage(19, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.19 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.38 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 2,
@@ -196,10 +193,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([1, 0]), {
-      x: this.footballDor.x,
-      y:
-        this.footballDor.y +
-        calculatePercentage(36, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.51 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 0,
@@ -220,10 +215,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([1, 1]), {
-      x: this.footballDor.x,
-      y:
-        this.footballDor.y +
-        +calculatePercentage(5, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.44 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 1,
@@ -245,10 +238,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([1, 2]), {
-      x: this.footballDor.x,
-      y:
-        this.footballDor.y -
-        calculatePercentage(22, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.36 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 2,
@@ -270,12 +261,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([2, 0]), {
-      x:
-        this.footballDor.x +
-        calculatePercentage(36, this.footballDor.door.width),
-      y:
-        this.footballDor.y +
-        calculatePercentage(35, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.78 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.51 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 0,
@@ -296,12 +283,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([2, 1]), {
-      x:
-        this.footballDor.x +
-        calculatePercentage(39, this.footballDor.door.width),
-      y:
-        this.footballDor.y +
-        calculatePercentage(9, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.79 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.445 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 1,
@@ -323,12 +306,8 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([2, 2]), {
-      x:
-        this.footballDor.x +
-        calculatePercentage(39, this.footballDor.door.width),
-      y:
-        this.footballDor.y -
-        calculatePercentage(19, this.footballDor.door.height),
+      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.79 * scaledBgWidth,
+      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.38 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 2,
@@ -351,11 +330,15 @@ export class DorTargetPoints {
   }
 
   addTargets() {
+    const scaleX = window.innerWidth / this.stadiumBck.width;
+    const scaleY = window.innerHeight / this.stadiumBck.height;
+    const scale = Math.max(scaleX, scaleY);
+
     this.points.forEach((point) => {
       const sprite = new Sprite(Texture.from(GameObjectEnums.target));
       sprite.x = point.x;
       sprite.y = point.y;
-      sprite.scale = 0.25;
+      sprite.scale.set(scale * 0.19);
 
       sprite.anchor = 0.5;
       sprite.alpha = 0;
@@ -378,8 +361,8 @@ export class DorTargetPoints {
 
     targetImages.forEach((image) => {
       gsap.to(image.scale, {
-        x: 0.28,
-        y: 0.28,
+        x: image.scale.x + 0.03,
+        y: image.scale.y + 0.03,
         repeat: -1,
         yoyo: true,
         duration: 0.2,

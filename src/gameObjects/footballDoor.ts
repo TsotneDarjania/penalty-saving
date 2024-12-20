@@ -37,7 +37,7 @@ export class FootballDoor extends Container {
     });
 
     this.spine.y = this.y + 97;
-    this.spine.scale = 0.5;
+    this.spine.scale = 0.47;
 
     this.door.addChild(this.spine);
 

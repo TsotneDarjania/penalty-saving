@@ -5,7 +5,7 @@ export class ShootManager {
 
   shoot(targetLocation: { x: number; y: number }) {
     gsap.to(this.ball, {
-      duration: 0.4,
+      duration: 0.3,
       x: targetLocation.x,
       y: targetLocation.y,
       ease: "power2.in",

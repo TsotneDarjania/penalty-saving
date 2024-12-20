@@ -28,7 +28,7 @@ export class GameObjects {
   addFootballDor() {
     this.footballDoor = new FootballDoor();
     this.footballDoor.x = window.innerWidth / 2;
-    this.footballDoor.y = calculatePercentage(44, window.innerHeight);
+    this.footballDoor.y = calculatePercentage(35, window.innerHeight);
 
     this.scene.addChild(this.footballDoor);
   }

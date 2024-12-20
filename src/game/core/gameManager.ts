@@ -45,10 +45,28 @@ export class GameManager {
 
   reset() {
     setTimeout(() => {
+      const scaledBgWidth =
+        this.game.stadiumBck.texture.width * this.game.stadiumBck.scale.x;
+      const scaledBgHeight =
+        this.game.stadiumBck.texture.height * this.game.stadiumBck.scale.y;
+
+      const footballDoorRelativeX = 0.5;
+      const footballDoorRelativeY = 0.86;
+
+      const ballX =
+        this.game.stadiumBck.x -
+        scaledBgWidth / 2 +
+        footballDoorRelativeX * scaledBgWidth;
+
+      const ballY =
+        this.game.stadiumBck.y -
+        scaledBgHeight / 2 +
+        footballDoorRelativeY * scaledBgHeight;
+
       this.game.gameObjects.footballDoor!.playIdleAnimation();
 
       this.game.character.reset();
-      this.game.gameObjects.ball!.reset();
+      this.game.gameObjects.ball!.reset(ballX, ballY);
 
       this.isShootCommand = false;
       this.isBallSelected = false;
@@ -179,6 +197,10 @@ export class GameManager {
         } else {
           this.game.ui.progressBar.reset();
         }
+
+        // const randomX = getRandomIntInRange(0, 2);
+        // const randomY = getRandomIntInRange(0, 2);
+        // this.game.dorTargetpoints.selectedPoint =
       }
     );
   }

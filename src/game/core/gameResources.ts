@@ -126,6 +126,11 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.coin,
         src: "../assets/image/coin.svg",
       },
+      // stadium background
+      {
+        alias: GameObjectEnums.stadiumBck,
+        src: "../assets/image/stadium-bck.png",
+      },
     ]);
 
     const fontFace = new FontFace(
