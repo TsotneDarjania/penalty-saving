@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite, Texture } from "pixi.js";
+import { BlurFilter, Container, Graphics, Sprite, Texture } from "pixi.js";
 import { Ball } from "..";
 import { GameObjectEnums } from "../../../enums/gameObjectEnums";
 import { gameConfig } from "../../../config/gameConfig";
@@ -44,6 +44,10 @@ export class BallGraphic {
   }
 
   private addCircleBorder() {
+    const filter = new BlurFilter({
+      strength: 3,
+    });
+
     this.borderGraphic = new Graphics()
       .circle(
         this.container.x,
@@ -52,8 +56,9 @@ export class BallGraphic {
       )
       .stroke({
         color: "black",
-        width: 1,
+        width: 2,
       });
+    this.borderGraphic.filters = [filter];
     this.container.addChild(this.borderGraphic);
   }
 }

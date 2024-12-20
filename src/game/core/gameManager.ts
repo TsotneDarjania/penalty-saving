@@ -10,11 +10,10 @@ export class GameManager {
 
   userSelectedPoint!: [number, number];
 
-  step = 0;
-
   result!: {
     goalKeeperJumpPoint: [number, number];
     win: boolean;
+    bonusFactor: number;
   };
 
   constructor(public game: Game) {
@@ -32,18 +31,6 @@ export class GameManager {
       x,
       y,
     });
-
-    if (this.step === 5) {
-      this.step = 0;
-      this.game.ui.progressBar.reset();
-      return;
-    } else {
-      this.game.ui.progressBar.makeFillAniamtion(
-        this.step as 0 | 1 | 2 | 3 | 4
-      );
-    }
-
-    this.step++;
   }
 
   selectBallForShoot() {
@@ -184,6 +171,14 @@ export class GameManager {
           this.game.gameObjects.footballDoor?.playGridAnimation(
             this.userSelectedPoint
           );
+
+        if (this.result.win) {
+          this.game.ui.progressBar.makeFillAniamtion(
+            (this.result.bonusFactor - 1) as 0 | 1 | 2 | 3 | 4
+          );
+        } else {
+          this.game.ui.progressBar.reset();
+        }
       }
     );
   }

@@ -10,7 +10,7 @@ export class BlurManager {
 
   private addBlurFilter() {
     this.blurFilter = new BlurFilter({
-      strength: 0,
+      strength: 0.2,
     });
     this.ball.filters = [this.blurFilter];
   }
@@ -29,7 +29,7 @@ export class BlurManager {
   public removeBlurEffect() {
     gsap.to(this.blurFilter, {
       duration: 0.3,
-      strength: 0,
+      strength: 0.1,
       ease: "power4.out",
       onUpdate: () => {
         this.ball.filters = [this.blurFilter];

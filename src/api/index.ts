@@ -1,5 +1,7 @@
 import { getRandomIntInRange } from "../helper";
 
+let bonusFactor = 1;
+
 export async function getResult(userSelectedPoint: [number, number]) {
   // Simulate response time from the server
   await new Promise<void>((res) => {
@@ -12,6 +14,11 @@ export async function getResult(userSelectedPoint: [number, number]) {
   const win = getRandomIntInRange(0, 1) === 0 ? false : true;
 
   if (win) {
+    bonusFactor++;
+    if (bonusFactor === 6) {
+      bonusFactor = 1;
+    }
+
     let randomX = getRandomIntInRange(0, 2);
     let randomY = getRandomIntInRange(0, 2);
 
@@ -26,6 +33,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
     goalKeeperJumpPoint[0] = randomX;
     goalKeeperJumpPoint[1] = randomY;
   } else {
+    bonusFactor = 1;
     goalKeeperJumpPoint[0] = userSelectedPoint[0];
     goalKeeperJumpPoint[1] = userSelectedPoint[1];
   }
@@ -33,8 +41,10 @@ export async function getResult(userSelectedPoint: [number, number]) {
   return {
     goalKeeperJumpPoint,
     win,
+    bonusFactor,
   } as {
     goalKeeperJumpPoint: [number, number];
     win: boolean;
+    bonusFactor: number;
   };
 }
