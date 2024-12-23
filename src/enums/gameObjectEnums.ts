@@ -20,4 +20,8 @@ export enum GameObjectEnums {
   lighting = "lighting",
   coin = "coin",
   stadiumBck = "stadiumBck",
+  staticBall = "staticBall",
+  ballShadow = "ballShadow",
+  winCircle = "winCircle",
+  loseCircle = "loseCircle",
 }

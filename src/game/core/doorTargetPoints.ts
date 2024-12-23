@@ -4,6 +4,7 @@ import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
 import { FootballDoor } from "../../gameObjects/footballDoor";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
+import { GameObjects } from "./gameObjects";
 
 export class DorTargetPoints {
   continueTargetAnimations = true;
@@ -42,7 +43,7 @@ export class DorTargetPoints {
   constructor(
     public footballDor: FootballDoor,
     public scene: Container,
-    public stadiumBck: Sprite
+    public gameObjects: GameObjects
   ) {
     this.eventEmitter = new EventEmitter();
 
@@ -119,14 +120,18 @@ export class DorTargetPoints {
   }
 
   generateTargetPoints() {
-    const scaledBgWidth =
-      this.stadiumBck.texture.width * this.stadiumBck.scale.x;
-    const scaledBgHeight =
-      this.stadiumBck.texture.height * this.stadiumBck.scale.y;
+    const scaledBgWidth = this.gameObjects.scaledBackgroundgWidth;
+    const scaledBgHeight = this.gameObjects.scaledBackgroundgHeight;
 
     this.points.set(createKey([0, 0]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.21 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.51 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x -
+        scaledBgWidth / 2 +
+        0.21 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.51 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 0,
@@ -148,8 +153,12 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([0, 1]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.2 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.445 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x - scaledBgWidth / 2 + 0.2 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.445 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 1,
@@ -170,8 +179,14 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([0, 2]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.19 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.38 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x -
+        scaledBgWidth / 2 +
+        0.19 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.38 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 2,
@@ -193,8 +208,12 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([1, 0]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.51 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.51 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 0,
@@ -215,8 +234,12 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([1, 1]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.44 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.44 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 1,
@@ -238,8 +261,12 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([1, 2]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.36 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x - scaledBgWidth / 2 + 0.5 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.36 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 2,
@@ -261,8 +288,14 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([2, 0]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.78 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.51 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x -
+        scaledBgWidth / 2 +
+        0.78 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.51 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 0,
@@ -283,8 +316,14 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([2, 1]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.79 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.445 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x -
+        scaledBgWidth / 2 +
+        0.79 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.445 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 1,
@@ -306,8 +345,14 @@ export class DorTargetPoints {
     });
 
     this.points.set(createKey([2, 2]), {
-      x: this.stadiumBck.x - scaledBgWidth / 2 + 0.79 * scaledBgWidth,
-      y: this.stadiumBck.y - scaledBgHeight / 2 + 0.38 * scaledBgHeight,
+      x:
+        this.gameObjects.stadiumBck.x -
+        scaledBgWidth / 2 +
+        0.79 * scaledBgWidth,
+      y:
+        this.gameObjects.stadiumBck.y -
+        scaledBgHeight / 2 +
+        0.38 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 2,
@@ -330,15 +375,11 @@ export class DorTargetPoints {
   }
 
   addTargets() {
-    const scaleX = window.innerWidth / this.stadiumBck.width;
-    const scaleY = window.innerHeight / this.stadiumBck.height;
-    const scale = Math.max(scaleX, scaleY);
-
     this.points.forEach((point) => {
       const sprite = new Sprite(Texture.from(GameObjectEnums.target));
       sprite.x = point.x;
       sprite.y = point.y;
-      sprite.scale.set(scale * 0.19);
+      sprite.scale.set(this.gameObjects.backgroundScale * 1);
 
       sprite.anchor = 0.5;
       sprite.alpha = 0;

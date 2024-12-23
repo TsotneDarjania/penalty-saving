@@ -1,8 +1,17 @@
 export const gameConfig = {
-  desktop: {
+  mobile: {
     ball: {
       radius: 43,
-      positionY: window.innerHeight - 72,
+      x: 0.5,
+      y: 0.85,
+      shadow: {
+        x: 0.5,
+        y: 0.916,
+      },
+    },
+    footballDoor: {
+      x: 0.5,
+      y: 0.41,
     },
   },
 };

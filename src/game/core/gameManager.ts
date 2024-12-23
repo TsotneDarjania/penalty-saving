@@ -1,7 +1,10 @@
+import { Sprite, Texture } from "pixi.js";
 import { Game } from "..";
 import { getResult } from "../../api";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
 import { createKey, getRandomIntInRange } from "../../helper";
+import { GameObjectEnums } from "../../enums/gameObjectEnums";
+import gsap from "gsap";
 
 export class GameManager {
   isShootCommand = false;
@@ -45,28 +48,10 @@ export class GameManager {
 
   reset() {
     setTimeout(() => {
-      const scaledBgWidth =
-        this.game.stadiumBck.texture.width * this.game.stadiumBck.scale.x;
-      const scaledBgHeight =
-        this.game.stadiumBck.texture.height * this.game.stadiumBck.scale.y;
-
-      const footballDoorRelativeX = 0.5;
-      const footballDoorRelativeY = 0.86;
-
-      const ballX =
-        this.game.stadiumBck.x -
-        scaledBgWidth / 2 +
-        footballDoorRelativeX * scaledBgWidth;
-
-      const ballY =
-        this.game.stadiumBck.y -
-        scaledBgHeight / 2 +
-        footballDoorRelativeY * scaledBgHeight;
-
       this.game.gameObjects.footballDoor!.playIdleAnimation();
 
       this.game.character.reset();
-      this.game.gameObjects.ball!.reset(ballX, ballY);
+      this.game.gameObjects.ball!.reset();
 
       this.isShootCommand = false;
       this.isBallSelected = false;
@@ -198,9 +183,19 @@ export class GameManager {
           this.game.ui.progressBar.reset();
         }
 
-        // const randomX = getRandomIntInRange(0, 2);
-        // const randomY = getRandomIntInRange(0, 2);
-        // this.game.dorTargetpoints.selectedPoint =
+        const circle = new Sprite(
+          this.result.win
+            ? Texture.from(GameObjectEnums.winCircle)
+            : Texture.from(GameObjectEnums.loseCircle)
+        );
+        this.game.scene.addChild(circle);
+        circle.anchor = 0.5;
+        circle.x = this.game.gameObjects.ball!.x;
+        circle.y = this.game.gameObjects.ball!.y;
+        circle.scale.x = 0;
+        circle.scale.y = 0;
+
+        this.showCircleAnimation(circle);
       }
     );
   }
@@ -211,5 +206,30 @@ export class GameManager {
     )?.goalKeeperJumpData;
 
     this.game.character.jump(jumpData!.direction, jumpData!.height);
+  }
+
+  showCircleAnimation(sprite: Sprite) {
+    gsap.to(sprite.scale, {
+      duration: 0.4,
+      x: this.game.gameObjects.ball!.ballGraphic.staticSprite.scale.x + 0.16,
+      y: this.game.gameObjects.ball!.ballGraphic.staticSprite.scale.y + 0.16,
+      onComplete: () => {
+        gsap.to(sprite, {
+          duration: 0.7,
+          alpha: 0,
+        });
+        gsap.to(sprite.scale, {
+          duration: 0.4,
+          x:
+            this.game.gameObjects.ball!.ballGraphic.staticSprite.scale.x + 0.23,
+          y:
+            this.game.gameObjects.ball!.ballGraphic.staticSprite.scale.y + 0.23,
+
+          onComplete: () => {
+            sprite.destroy();
+          },
+        });
+      },
+    });
   }
 }
