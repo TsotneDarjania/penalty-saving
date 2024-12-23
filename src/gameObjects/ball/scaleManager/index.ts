@@ -5,15 +5,38 @@ export class ScaleManager {
   constructor(public ball: Ball) {}
 
   increaseScaleForShoot() {
+    // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.2,
       x: 1.2,
       y: 1.2,
       ease: "power4.out",
     });
+
+    // For Shadow
+    gsap.to(this.ball.ballGraphic.shadow.scale, {
+      duration: 0.2,
+      x: this.ball.ballGraphic.shadow.scale.x + 0.06,
+      y: this.ball.ballGraphic.shadow.scale.y + 0.06,
+      ease: "power2",
+    });
   }
 
   startScaleAnimationDuringShoot() {
+    // For Shadow
+    gsap.to(this.ball.ballGraphic.shadow.scale, {
+      duration: 0.3,
+      x: this.ball.ballGraphic.shadow.scale.x - 0.2,
+      y: this.ball.ballGraphic.shadow.scale.y - 0.2,
+      ease: "power2",
+    });
+    gsap.to(this.ball.ballGraphic.shadow, {
+      duration: 0.4,
+      alpha: 0,
+      ease: "power2",
+    });
+
+    // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.15,
       x: 1.3,

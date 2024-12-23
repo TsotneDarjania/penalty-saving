@@ -17,7 +17,7 @@ export class SpinManager {
   public startSpin() {
     for (const sprite of this.sprites) {
       gsap.to(sprite, {
-        duration: 0.3,
+        duration: 0.15,
         y: sprite.y + sprite.height,
         ease: "power3.in",
         onComplete: () => {

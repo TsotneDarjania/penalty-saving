@@ -51,6 +51,16 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.ballTexture,
         src: "../assets/image/ball-texture.png",
       },
+      //Ball Static
+      {
+        alias: GameObjectEnums.staticBall,
+        src: "../assets/image/static-ball.png",
+      },
+      //Ball Shadow
+      {
+        alias: GameObjectEnums.ballShadow,
+        src: "../assets/image/ball-shadow.png",
+      },
       // Circle
       {
         alias: GameObjectEnums.circle,
@@ -130,6 +140,16 @@ export class GameResources extends AssetsClass {
       {
         alias: GameObjectEnums.stadiumBck,
         src: "../assets/image/stadium-bck.png",
+      },
+      // win circle
+      {
+        alias: GameObjectEnums.winCircle,
+        src: "../assets/image/win-circle.svg",
+      },
+      // lose circle
+      {
+        alias: GameObjectEnums.loseCircle,
+        src: "../assets/image/lose-circle.svg",
       },
     ]);
 

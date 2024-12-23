@@ -27,8 +27,13 @@ export class Ball extends Container {
     offsetY: number;
   };
 
-  constructor() {
+  constructor(
+    public initPositionX: number,
+    public initPositionY: number,
+    public scene: Container
+  ) {
     super();
+
     this.init();
   }
 
@@ -53,7 +58,7 @@ export class Ball extends Container {
   }
 
   private createGraphic() {
-    this.ballGraphic = new BallGraphic(this);
+    this.ballGraphic = new BallGraphic(this, this.scene);
     this.addChild(this.ballGraphic.container);
   }
 
@@ -96,6 +101,7 @@ export class Ball extends Container {
   }
 
   public selectForShoot(): void {
+    this.ballGraphic.onSpinMode();
     this.spinManager.startSpin();
     this.scaleManager.increaseScaleForShoot();
     this.blurManager.makeItBlur();
@@ -124,11 +130,24 @@ export class Ball extends Container {
     });
   }
 
-  public reset(ballX: number, ballY: number) {
+  public reset() {
     this.isGoal = false;
+    this.ballGraphic.offSpinMode();
 
-    this.x = ballX;
-    this.y = -1000;
+    this.x = this.initPositionX;
+    this.y = this.initPositionY - window.innerHeight * 1.5;
+
+    gsap.to(this.ballGraphic.shadow.scale, {
+      duration: 0.8,
+      x: this.ballGraphic.shadowInitScaleX,
+      y: this.ballGraphic.shadowInitScaleY,
+      ease: "bounce.out",
+    });
+    gsap.to(this.ballGraphic.shadow, {
+      duration: 0.4,
+      alpha: 1,
+      ease: "power2",
+    });
 
     gsap.to(this.ballGraphic.container.scale, {
       duration: 0.1,
@@ -139,7 +158,7 @@ export class Ball extends Container {
 
     gsap.to(this, {
       duration: 0.8,
-      y: ballY,
+      y: this.initPositionY,
       ease: "bounce.out",
     });
   }
