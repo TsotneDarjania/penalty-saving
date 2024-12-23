@@ -57,7 +57,7 @@ export class ProgressBar extends Container {
     super();
 
     this.addBackground();
-    this.addFill();
+    // this.addFill();
     this.addStars();
     this.addTexts();
     this.addMask();
@@ -73,7 +73,6 @@ export class ProgressBar extends Container {
 
   addFill() {
     this.fill = new Sprite(Texture.from(GameObjectEnums.progressGreen));
-    this.fill.scale = this.scale.x * 0.94;
     this.fill.y = -3;
 
     this.fill.anchor = 0.5;
@@ -190,7 +189,6 @@ export class ProgressBar extends Container {
     this.mask = new Graphics();
 
     this.mask.roundRect(-470, -70, 330, 50, 100);
-    this.mask.scale = this.scale.x * 1;
     this.mask.rotation = -0.3;
 
     this.mask.fill();
@@ -200,7 +198,7 @@ export class ProgressBar extends Container {
     this.maskInitialY = this.mask.y;
 
     this.addChild(this.mask);
-    this.fill.mask = this.mask;
+    // this.fill.mask = this.mask;
   }
 
   makeFillAniamtion(index: 0 | 1 | 2 | 3 | 4) {
