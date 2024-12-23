@@ -8,7 +8,7 @@ import { ScaleManager } from "./scaleManager";
 import { BlurManager } from "./blurManager";
 import gsap from "gsap";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
-import { gameConfig } from "../../config/gameConfig";
+
 gsap.registerPlugin(MotionPathPlugin);
 
 export class Ball extends Container {

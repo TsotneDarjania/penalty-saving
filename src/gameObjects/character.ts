@@ -1,5 +1,5 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
-import { Container, Sprite } from "pixi.js";
+import { Container } from "pixi.js";
 
 export class Character extends Container {
   spine!: Spine;
