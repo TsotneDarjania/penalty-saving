@@ -9,7 +9,6 @@ import {
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 import gsap from "gsap";
 import { Game } from "../game";
-import { TexturePool } from "pixi.js";
 
 export class ProgressBar extends Container {
   background!: Sprite;
@@ -57,7 +56,7 @@ export class ProgressBar extends Container {
   constructor(public game: Game) {
     super();
 
-    // this.addBackground();
+    this.addBackground();
     // this.addFill();
     this.addStars();
     this.addTexts();
@@ -68,9 +67,14 @@ export class ProgressBar extends Container {
 
   addBackground() {
     this.background = new Sprite(Texture.from(GameObjectEnums.progressGray));
-    TexturePool.textureOptions.scaleMode = "nearest";
 
     this.background.anchor = 0.5;
+
+    this.background.width = this.game.renderer.width * 0.93; // Adjust as needed
+    this.background.height =
+      this.background.width *
+      (this.background.height / this.background.width) *
+      1.1;
 
     this.addChild(this.background);
 
