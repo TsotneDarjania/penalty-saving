@@ -71,12 +71,8 @@ export class ProgressBar extends Container {
     TexturePool.textureOptions.scaleMode = "nearest";
 
     this.background.anchor = 0.5;
-    this.background.x = window.innerWidth / 2;
-    this.background.y =
-      this.game.gameObjects.stadiumBck.y -
-      this.game.gameObjects.scaledBackgroundgHeight / 2 +
-      0.2 * this.game.gameObjects.scaledBackgroundgHeight;
-    this.game.scene.addChild(this.background);
+
+    this.addChild(this.background);
 
     // this.background.scale.set(this.game.gameObjects.backgroundScale * 5);
   }
