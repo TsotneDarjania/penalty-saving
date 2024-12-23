@@ -74,6 +74,8 @@ export class ProgressBar extends Container {
       this.game.gameObjects.scaledBackgroundgHeight / 2 +
       0.2 * this.game.gameObjects.scaledBackgroundgHeight;
     this.game.scene.addChild(this.background);
+
+    this.background.scale.set(this.game.gameObjects.backgroundScale * 5);
   }
 
   addFill() {
