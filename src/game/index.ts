@@ -4,8 +4,8 @@ import { GameObjects } from "./core/gameObjects.ts";
 import { Character } from "../gameObjects/character.ts";
 import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
-import { calculatePercentage } from "../helper/index.ts";
 import { UI } from "../ui/index.ts";
+import { gameConfig } from "../config/gameConfig.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
@@ -74,10 +74,15 @@ export class Game extends Application {
 
   private addCharacter() {
     this.character = new Character(this.scene);
-    this.character.x = window.innerWidth / 2;
+    this.character.x =
+      this.gameObjects.stadiumBck.x -
+      this.gameObjects.scaledBackgroundgWidth / 2 +
+      gameConfig.mobile.character.x * this.gameObjects.scaledBackgroundgWidth;
+
     this.character.y =
-      this.gameObjects.footballDoor!.y +
-      calculatePercentage(45, this.gameObjects.footballDoor!.height);
+      this.gameObjects.stadiumBck.y -
+      this.gameObjects.scaledBackgroundgHeight / 2 +
+      gameConfig.mobile.character.y * this.gameObjects.scaledBackgroundgHeight;
 
     this.character.spine.scale.set(this.gameObjects.backgroundScale * 2.6);
   }

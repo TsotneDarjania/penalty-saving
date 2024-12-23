@@ -1,6 +1,6 @@
 import { getRandomIntInRange } from "../helper";
 
-let bonusFactor = 1;
+let bonusFactor = 0;
 
 export async function getResult(userSelectedPoint: [number, number]) {
   // Simulate response time from the server
@@ -11,7 +11,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
   });
 
   const goalKeeperJumpPoint = [0, 0];
-  const win = getRandomIntInRange(0, 1) === 0 ? false : true;
+  const win = getRandomIntInRange(0, 1) === 0 ? true : true;
 
   if (win) {
     bonusFactor++;

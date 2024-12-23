@@ -1,8 +1,8 @@
 import { Container } from "pixi.js";
 import { ProgressBar } from "./progressBar";
-import { calculatePercentage } from "../helper";
 import { UserInterface } from "./userInterface";
 import { Game } from "../game";
+import { gameConfig } from "../config/gameConfig";
 
 export class UI {
   progressBar!: ProgressBar;
@@ -18,9 +18,22 @@ export class UI {
   }
 
   addProgressBar() {
-    this.progressBar = new ProgressBar();
-    this.progressBar.x = window.innerWidth / 2;
-    this.progressBar.y = calculatePercentage(16, window.innerHeight);
+    this.progressBar = new ProgressBar(this.game);
+
+    this.progressBar.scale.set(this.game.gameObjects.backgroundScale * 5);
+
+    this.progressBar.x =
+      this.game.gameObjects.stadiumBck.x -
+      this.game.gameObjects.scaledBackgroundgWidth / 2 +
+      gameConfig.mobile.ball.shadow.x *
+        this.game.gameObjects.scaledBackgroundgWidth;
+
+    this.progressBar.y =
+      this.game.gameObjects.stadiumBck.y -
+      this.game.gameObjects.scaledBackgroundgHeight / 2 +
+      gameConfig.mobile.progressBar.y *
+        this.game.gameObjects.scaledBackgroundgHeight;
+
     this.scene.addChild(this.progressBar);
   }
 

@@ -1,6 +1,14 @@
-import { Container, Sprite, Texture, Text, Graphics } from "pixi.js";
+import {
+  Container,
+  Sprite,
+  Texture,
+  Text,
+  Graphics,
+  EventEmitter,
+} from "pixi.js";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 import gsap from "gsap";
+import { Game } from "../game";
 
 export class ProgressBar extends Container {
   background!: Sprite;
@@ -10,6 +18,12 @@ export class ProgressBar extends Container {
   texts: Text[] = [];
 
   mask!: Graphics;
+
+  maskInitialX!: number;
+  maskInitialY!: number;
+  maskInitialRotation!: number;
+
+  evenetEmitter!: EventEmitter;
 
   animationData = [
     {
@@ -24,22 +38,22 @@ export class ProgressBar extends Container {
     },
     {
       x: 60,
-      y: -13,
-      rotation: -0.3,
+      y: 13,
+      rotation: -0.2,
     },
     {
       x: 58,
-      y: 39,
+      y: 19,
       rotation: -0.1,
     },
     {
-      x: 50,
-      y: 30,
+      x: 80,
+      y: 25,
       rotation: 0,
     },
   ];
 
-  constructor() {
+  constructor(public game: Game) {
     super();
 
     this.addBackground();
@@ -47,6 +61,8 @@ export class ProgressBar extends Container {
     this.addStars();
     this.addTexts();
     this.addMask();
+
+    this.evenetEmitter = new EventEmitter();
   }
 
   addBackground() {
@@ -57,8 +73,9 @@ export class ProgressBar extends Container {
 
   addFill() {
     this.fill = new Sprite(Texture.from(GameObjectEnums.progressGreen));
-    this.fill.scale = 0.92;
+    this.fill.scale = this.scale.x * 0.94;
     this.fill.y = -3;
+
     this.fill.anchor = 0.5;
     this.addChild(this.fill);
   }
@@ -173,28 +190,44 @@ export class ProgressBar extends Container {
     this.mask = new Graphics();
 
     this.mask.roundRect(-470, -70, 330, 50, 100);
+    this.mask.scale = this.scale.x * 1;
     this.mask.rotation = -0.3;
 
     this.mask.fill();
+
+    this.maskInitialRotation = this.mask.rotation;
+    this.maskInitialX = this.mask.x;
+    this.maskInitialY = this.mask.y;
 
     this.addChild(this.mask);
     this.fill.mask = this.mask;
   }
 
   makeFillAniamtion(index: 0 | 1 | 2 | 3 | 4) {
+    console.log(index - 1);
     gsap.to(this.mask, {
-      x: this.mask.x + this.animationData[index].x,
-      y: this.mask.y + this.animationData[index].y,
-      rotation: this.animationData[index].rotation,
-      duration: 1,
+      x: this.mask.x + this.animationData[index - 1].x,
+      y: this.mask.y + this.animationData[index - 1].y,
+      rotation: this.animationData[index - 1].rotation,
+
       onUpdate: () => {
         this.mask.fill();
+      },
+      onComplete: () => {
+        setTimeout(() => {
+          if (index - 1 === 4) {
+            this.reset();
+          }
+        }, 1500);
       },
     });
   }
 
   reset() {
-    this.mask.destroy();
-    this.addMask();
+    this.mask.x = this.maskInitialX;
+    this.mask.y = this.maskInitialY;
+    this.mask.rotation = this.maskInitialRotation;
+
+    this.mask.fill();
   }
 }

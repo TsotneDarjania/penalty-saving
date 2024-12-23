@@ -177,7 +177,7 @@ export class GameManager {
 
         if (this.result.win) {
           this.game.ui.progressBar.makeFillAniamtion(
-            (this.result.bonusFactor - 1) as 0 | 1 | 2 | 3 | 4
+            this.result.bonusFactor as 0 | 1 | 2 | 3 | 4
           );
         } else {
           this.game.ui.progressBar.reset();
