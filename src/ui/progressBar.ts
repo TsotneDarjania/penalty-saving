@@ -57,7 +57,7 @@ export class ProgressBar extends Container {
   constructor(public game: Game) {
     super();
 
-    this.addBackground();
+    // this.addBackground();
     // this.addFill();
     this.addStars();
     this.addTexts();
