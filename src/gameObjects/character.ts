@@ -1,5 +1,5 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
-import { Container } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 
 export class Character extends Container {
   spine!: Spine;
@@ -20,7 +20,6 @@ export class Character extends Container {
     });
 
     this.spine.state.setAnimation(0, "Idle", true);
-    this.spine.scale = 0.5;
     this.addChild(this.spine);
   }
 

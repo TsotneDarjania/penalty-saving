@@ -148,6 +148,6 @@ export class Game extends Application {
     // Scale the ball relative to the background
     this.gameObjects.ball!.scale.set(scale * 6);
     this.gameObjects.footballDoor!.scale.set(scale * 5.4);
-    this.character.scale.set(scale * 4.9);
+    this.character.spine.scale.set(scale * 2.6);
   }
 }
