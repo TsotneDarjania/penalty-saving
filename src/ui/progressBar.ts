@@ -5,6 +5,7 @@ import {
   Text,
   Graphics,
   EventEmitter,
+  BlurFilter,
 } from "pixi.js";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 import gsap from "gsap";
@@ -57,7 +58,7 @@ export class ProgressBar extends Container {
     super();
 
     this.addBackground();
-    // this.addFill();
+    this.addFill();
     this.addStars();
     this.addTexts();
     this.addMask();
@@ -69,14 +70,10 @@ export class ProgressBar extends Container {
     this.background = new Sprite(Texture.from(GameObjectEnums.progressGray));
 
     this.background.anchor = 0.5;
-    this.background.x = 9;
-    this.background.y - 3;
-    this.background.scale = 0.28;
-    // this.background.width = this.game.renderer.width * 0.93; // Adjust as needed
-    // this.background.height =
-    //   this.background.width *
-    //   (this.background.height / this.background.width) *
-    //   1.1;
+    this.background.x = 11;
+    this.background.y = 2;
+    this.background.scale = 0.29;
+    this.background.rotation = 0.02;
 
     this.addChild(this.background);
 
@@ -84,8 +81,17 @@ export class ProgressBar extends Container {
   }
 
   addFill() {
+    const filter = new BlurFilter({
+      strength: 1.7,
+    });
+
     this.fill = new Sprite(Texture.from(GameObjectEnums.progressGreen));
-    this.fill.y = -3;
+    this.fill.y = -1;
+    this.fill.x = 10;
+    this.fill.rotation = 0.02;
+    this.fill.scale = 0.29;
+
+    this.fill.filters = [filter];
 
     this.fill.anchor = 0.5;
     this.addChild(this.fill);
@@ -210,7 +216,7 @@ export class ProgressBar extends Container {
     this.maskInitialY = this.mask.y;
 
     this.addChild(this.mask);
-    // this.fill.mask = this.mask;
+    this.fill.mask = this.mask;
   }
 
   makeFillAniamtion(index: 0 | 1 | 2 | 3 | 4) {
