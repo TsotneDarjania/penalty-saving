@@ -11,7 +11,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
   });
 
   const goalKeeperJumpPoint = [0, 0];
-  const win = getRandomIntInRange(0, 1) === 0 ? true : true;
+  const win = getRandomIntInRange(0, 1) === 0 ? true : false;
 
   if (win) {
     bonusFactor++;
