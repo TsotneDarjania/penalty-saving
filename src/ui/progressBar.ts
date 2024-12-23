@@ -69,12 +69,14 @@ export class ProgressBar extends Container {
     this.background = new Sprite(Texture.from(GameObjectEnums.progressGray));
 
     this.background.anchor = 0.5;
-
-    this.background.width = this.game.renderer.width * 0.93; // Adjust as needed
-    this.background.height =
-      this.background.width *
-      (this.background.height / this.background.width) *
-      1.1;
+    this.background.x = 9;
+    this.background.y - 3;
+    this.background.scale = 0.28;
+    // this.background.width = this.game.renderer.width * 0.93; // Adjust as needed
+    // this.background.height =
+    //   this.background.width *
+    //   (this.background.height / this.background.width) *
+    //   1.1;
 
     this.addChild(this.background);
 

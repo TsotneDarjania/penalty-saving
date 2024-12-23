@@ -84,7 +84,7 @@ export class GameResources extends AssetsClass {
       // Progress Gray
       {
         alias: GameObjectEnums.progressGray,
-        src: "../assets/image/progress-grey.svg",
+        src: "../assets/image/progress-grey.png",
       },
       // Progress Green
       {
