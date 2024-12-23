@@ -151,6 +151,11 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.loseCircle,
         src: "../assets/image/lose-circle.svg",
       },
+      // StadiumBck 2
+      {
+        alias: GameObjectEnums.stadiumBck2,
+        src: "../assets/image/stadium-bck-2.png",
+      },
     ]);
 
     const fontFace = new FontFace(

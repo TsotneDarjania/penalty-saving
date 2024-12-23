@@ -42,6 +42,16 @@ export class GameObjects {
       this.stadiumBck.texture.height * this.stadiumBck.scale.y;
 
     this.scene.addChild(this.stadiumBck);
+
+    const stadiumBck_2 = new Sprite(textureFrom(GameObjectEnums.stadiumBck2));
+
+    stadiumBck_2.x = window.innerWidth / 2;
+    stadiumBck_2.y = window.innerHeight / 2;
+    stadiumBck_2.scale.set(this.backgroundScale);
+    stadiumBck_2.anchor.set(0.5);
+    stadiumBck_2.zIndex = -3;
+
+    this.scene.addChild(stadiumBck_2);
   }
 
   private addBall() {
