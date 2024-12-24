@@ -1,4 +1,4 @@
-import { Assets, AssetsClass } from "pixi.js";
+import { Assets, AssetsClass, SCALE_MODES } from "pixi.js";
 import { GameObjectEnums } from "../../enums/gameObjectEnums.ts";
 
 export class GameResources extends AssetsClass {
@@ -281,7 +281,7 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.greenShadowCircle,
         src: "../assets/image/green-shadow-circle.png",
         data: {
-          scaleMode: "linear",
+          scaleMode: "nearest",
           autoGenerateMipmaps: true,
         },
       },
@@ -290,7 +290,7 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.ballCircleArrows,
         src: "../assets/image/ball-circle-arrows.svg",
         data: {
-          scaleMode: "linear",
+          scaleMode: "smooth",
           autoGenerateMipmaps: true,
         },
       },
