@@ -43,6 +43,14 @@ export class FootballDoor extends Container {
 
     this.spine.state.setAnimation(0, "Idle", true);
 
+    this.spine.state.addListener({
+      complete: (entry) => {
+        if (entry!.animation!.name !== "Idle") {
+          this.spine.state.setAnimation(0, "Idle", true);
+        }
+      },
+    });
+
     this.addChild(this.door);
   }
 

@@ -98,16 +98,17 @@ export class BallGraphic {
     );
     greenShadow.anchor = 0.5;
     this.ballSelector.addChild(greenShadow);
+
     const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-    arrows.scale.set(arrows.scale.x + 0.2, arrows.scale.y + 0.2);
+    arrows.scale.set(arrows.scale.x - 0.2, arrows.scale.y - 0.2);
     arrows.anchor = 0.5;
     this.ballSelector.addChild(arrows);
 
     gsap.to(arrows.scale, {
-      duration: 0.6,
+      duration: 0.3,
       yoyo: true,
-      x: arrows.scale.x + 0.1,
-      y: arrows.scale.y + 0.1,
+      x: arrows.scale.x + 0.06,
+      y: arrows.scale.y + 0.06,
       repeat: -1,
       ease: "none",
     });
