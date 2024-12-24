@@ -1,4 +1,4 @@
-import { Assets, AssetsClass, SCALE_MODES } from "pixi.js";
+import { Assets, AssetsClass } from "pixi.js";
 import { GameObjectEnums } from "../../enums/gameObjectEnums.ts";
 
 export class GameResources extends AssetsClass {
