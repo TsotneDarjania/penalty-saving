@@ -16,8 +16,8 @@ export class Spectators {
   minX = -1;
   maxX = 2;
 
-  minDuration = 0.3;
-  maxDuration = 0.4;
+  minDuration = 0.2;
+  maxDuration = 0.3;
 
   constructor(
     public scene: Container,
