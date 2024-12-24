@@ -27,4 +27,5 @@ export enum GameObjectEnums {
   stadiumBck2 = "stadiumBck2",
   greenShadowCircle = "greenShadowCircle",
   ballCircleArrows = "ballCircleArrows",
+  spectator = "spectator",
 }

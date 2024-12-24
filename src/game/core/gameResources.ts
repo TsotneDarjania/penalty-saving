@@ -294,6 +294,15 @@ export class GameResources extends AssetsClass {
           autoGenerateMipmaps: true,
         },
       },
+      // spectator
+      {
+        alias: GameObjectEnums.spectator,
+        src: "../assets/image/spectator.png",
+        data: {
+          scaleMode: "linear",
+          autoGenerateMipmaps: true,
+        },
+      },
     ]);
 
     const fontFace = new FontFace(

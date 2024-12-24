@@ -3,6 +3,7 @@ import { FootballDoor } from "../../gameObjects/footballDoor.ts";
 import { Ball } from "../../gameObjects/ball/index.ts";
 import { gameConfig } from "../../config/gameConfig.ts";
 import { GameObjectEnums } from "../../enums/gameObjectEnums.ts";
+import { Spectators } from "../../gameObjects/spectators.ts";
 
 export class GameObjects {
   ball: Ball | null = null;
@@ -14,6 +15,8 @@ export class GameObjects {
 
   backgroundScale!: number;
 
+  spectators!: Spectators;
+
   constructor(public scene: Container) {
     this.addInitialGameObjects();
   }
@@ -22,6 +25,7 @@ export class GameObjects {
     this.addBackground();
     this.addBall();
     this.addFootballDor();
+    this.addSpectators();
   }
 
   addBackground() {
@@ -112,5 +116,15 @@ export class GameObjects {
 
     this.footballDoor!.scale.set(this.backgroundScale * 5.4);
     this.scene.addChild(this.footballDoor);
+  }
+
+  private addSpectators() {
+    this.spectators = new Spectators(
+      this.scene,
+      this.scaledBackgroundgWidth,
+      this.scaledBackgroundgHeight,
+      this.backgroundScale,
+      this.stadiumBck
+    );
   }
 }

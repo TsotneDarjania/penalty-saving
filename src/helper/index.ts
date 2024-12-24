@@ -83,3 +83,10 @@ export function areArraysEqual(arr1: number[], arr2: number[]) {
 
   return true;
 }
+
+export function getRandomFloat(min: number, max: number): number {
+  if (min >= max) {
+    throw new Error("The 'min' value must be less than the 'max' value.");
+  }
+  return Math.random() * (max - min) + min;
+}
