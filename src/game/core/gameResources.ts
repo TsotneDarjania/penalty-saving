@@ -281,16 +281,16 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.greenShadowCircle,
         src: "../assets/image/green-shadow-circle.png",
         data: {
-          scaleMode: "nearest",
+          scaleMode: "linear",
           autoGenerateMipmaps: true,
         },
       },
       // ball circle arrows
       {
         alias: GameObjectEnums.ballCircleArrows,
-        src: "../assets/image/ball-circle-arrows.svg",
+        src: "../assets/image/ball-circle-arrows.png",
         data: {
-          scaleMode: "nearest",
+          scaleMode: "linear",
           autoGenerateMipmaps: true,
         },
       },

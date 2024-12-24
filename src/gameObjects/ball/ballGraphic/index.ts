@@ -40,7 +40,7 @@ export class BallGraphic {
 
     this.staticSprite = new Sprite(Texture.from(GameObjectEnums.staticBall));
     this.staticSprite.anchor = 0.5;
-    this.staticSprite.scale = 0.34;
+    this.staticSprite.scale = 0.165;
 
     this.container.addChild(this.staticSprite);
     this.staticSprite.filters = [filter];
@@ -99,19 +99,18 @@ export class BallGraphic {
     greenShadow.anchor = 0.5;
     this.ballSelector.addChild(greenShadow);
     const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-    // arrows.scale.x = arrows.scale.x - 0.2;
-    // arrows.scale.x = arrows.scale.y - 0.2;
+    arrows.scale = 0.07;
     arrows.anchor = 0.5;
     this.ballSelector.addChild(arrows);
 
-    // gsap.to(arrows.scale, {
-    //   duration: 0.3,
-    //   yoyo: true,
-    //   x: arrows.scale.x + 0.06,
-    //   y: arrows.scale.y + 0.06,
-    //   repeat: -1,
-    //   ease: "none",
-    // });
+    gsap.to(arrows.scale, {
+      duration: 0.3,
+      yoyo: true,
+      x: arrows.scale.x + 0.005,
+      y: arrows.scale.y + 0.005,
+      repeat: -1,
+      ease: "none",
+    });
 
     this.ballSelector.scale = this.ball.backgroundScale * 8;
 

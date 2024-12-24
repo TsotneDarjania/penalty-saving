@@ -56,18 +56,6 @@ export class Game extends Application {
   }
 
   private startGame() {
-    const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-
-    this.scene.addChild(arrows);
-
-    // const arrows2 = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-    // arrows2.anchor = 0.5;
-    // arrows2.scale = 0.6;
-    // arrows2.x = window.innerWidth / 2;
-    // arrows2.y = 250;
-
-    // this.scene.addChild(arrows2);
-
     this.addGameObjects();
 
     this.addCharacter();
