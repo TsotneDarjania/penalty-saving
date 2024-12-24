@@ -4,17 +4,20 @@ import { getRandomFloat } from "../helper";
 import gsap from "gsap";
 
 export class Spectators {
-  count = 220;
+  count = 170;
   spectators: Sprite[] = [];
 
   minY!: number;
   maxY!: number;
 
   minScale = 0.2;
-  maxScale = 1.1;
+  maxScale = 0.8;
 
-  minDuration = 0.6;
-  maxDuration = 1.2;
+  minX = -1;
+  maxX = 2;
+
+  minDuration = 0.3;
+  maxDuration = 0.4;
 
   constructor(
     public scene: Container,
@@ -39,7 +42,7 @@ export class Spectators {
       spectator.x =
         this.stadiumBck.x -
         this.scaledBackgroundgWidth / 2 +
-        getRandomFloat(-0.9, 1.9) * this.scaledBackgroundgWidth;
+        getRandomFloat(this.minX, this.maxX) * this.scaledBackgroundgWidth;
       spectator.y =
         this.stadiumBck.y -
         this.scaledBackgroundgHeight / 2 +
@@ -59,12 +62,12 @@ export class Spectators {
       gsap.to(spectator, {
         delay: getRandomFloat(0, 0.7),
         duration: getRandomFloat(this.minDuration, this.maxDuration),
-        ease: "power1.inOut",
+        ease: "none",
         alpha: 1,
         onComplete: () => {
           gsap.to(spectator, {
             duration: getRandomFloat(this.minDuration, this.maxDuration),
-            ease: "power1.inOut",
+            ease: "none",
             alpha: 0,
             onComplete: () => {
               this.doAnimationAgain(spectator);
@@ -79,7 +82,7 @@ export class Spectators {
     spectator.x =
       this.stadiumBck.x -
       this.scaledBackgroundgWidth / 2 +
-      getRandomFloat(-0.4, 1.4) * this.scaledBackgroundgWidth;
+      getRandomFloat(this.minX, this.maxX) * this.scaledBackgroundgWidth;
     spectator.y =
       this.stadiumBck.y -
       this.scaledBackgroundgHeight / 2 +
