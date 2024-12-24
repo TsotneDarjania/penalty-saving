@@ -1,4 +1,10 @@
-import { Application, Container, ContainerChild } from "pixi.js";
+import {
+  Application,
+  Container,
+  ContainerChild,
+  Sprite,
+  Texture,
+} from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { Character } from "../gameObjects/character.ts";
@@ -6,6 +12,7 @@ import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
 import { UI } from "../ui/index.ts";
 import { gameConfig } from "../config/gameConfig.ts";
+import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
@@ -48,6 +55,18 @@ export class Game extends Application {
   }
 
   private startGame() {
+    const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
+
+    this.scene.addChild(arrows);
+
+    const arrows2 = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
+    arrows2.anchor = 0.5;
+    arrows2.scale = 0.6;
+    arrows2.x = window.innerWidth / 2;
+    arrows2.y = 250;
+
+    this.scene.addChild(arrows2);
+
     this.addGameObjects();
 
     this.addCharacter();

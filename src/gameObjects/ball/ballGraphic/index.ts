@@ -98,22 +98,23 @@ export class BallGraphic {
     );
     greenShadow.anchor = 0.5;
     this.ballSelector.addChild(greenShadow);
-
     const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-    arrows.scale.set(arrows.scale.x - 0.2, arrows.scale.y - 0.2);
+    // arrows.scale.x = arrows.scale.x - 0.2;
+    // arrows.scale.x = arrows.scale.y - 0.2;
     arrows.anchor = 0.5;
     this.ballSelector.addChild(arrows);
 
-    gsap.to(arrows.scale, {
-      duration: 0.3,
-      yoyo: true,
-      x: arrows.scale.x + 0.06,
-      y: arrows.scale.y + 0.06,
-      repeat: -1,
-      ease: "none",
-    });
+    // gsap.to(arrows.scale, {
+    //   duration: 0.3,
+    //   yoyo: true,
+    //   x: arrows.scale.x + 0.06,
+    //   y: arrows.scale.y + 0.06,
+    //   repeat: -1,
+    //   ease: "none",
+    // });
 
-    this.ballSelector.scale.set(this.ball.backgroundScale * 8);
+    this.ballSelector.scale = this.ball.backgroundScale * 8;
+
     this.ballSelector.x = this.ball.initPositionX;
     this.ballSelector.y = this.ball.initPositionY - 0.5;
     this.scene.addChild(this.ballSelector);
