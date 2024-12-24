@@ -1,10 +1,4 @@
-import {
-  Application,
-  Container,
-  ContainerChild,
-  Sprite,
-  Texture,
-} from "pixi.js";
+import { Application, Container, ContainerChild } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { Character } from "../gameObjects/character.ts";
