@@ -5,4 +5,5 @@ export enum GameEventEnums {
   isTimeToJumpGoalKeeper = "isTimeToJumpGoalKeeper",
   finishFallingOfBall = "FinishFallingOfBall",
   ballTouchGoalKeeperOrGrid = "ballTouchGoalKeeperOrGrid",
+  ballIsReadyForShoot = "BallIsReadyForShoot",
 }

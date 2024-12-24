@@ -2,6 +2,8 @@ import { BlurFilter, Container, Graphics, Sprite, Texture } from "pixi.js";
 import { Ball } from "..";
 import { GameObjectEnums } from "../../../enums/gameObjectEnums";
 import { gameConfig } from "../../../config/gameConfig";
+import gsap from "gsap";
+import { getRandomIntInRange } from "../../../helper";
 
 export class BallGraphic {
   container!: Container;
@@ -9,11 +11,15 @@ export class BallGraphic {
 
   borderGraphic!: Graphics;
 
+  ballSelector!: Container;
+
   staticSprite!: Sprite;
   shadow!: Sprite;
 
   shadowInitScaleX!: number;
   shadowInitScaleY!: number;
+
+  selectorAnimation!: gsap.core.Tween;
 
   constructor(public ball: Ball, public scene: Container) {
     this.container = new Container();
@@ -23,6 +29,8 @@ export class BallGraphic {
     this.addStaticSprite();
     this.addShadow();
     this.offSpinMode();
+    this.addBallSelector();
+    this.addSelector();
   }
 
   private addStaticSprite() {
@@ -32,7 +40,7 @@ export class BallGraphic {
 
     this.staticSprite = new Sprite(Texture.from(GameObjectEnums.staticBall));
     this.staticSprite.anchor = 0.5;
-    this.staticSprite.scale = 0.17;
+    this.staticSprite.scale = 0.34;
 
     this.container.addChild(this.staticSprite);
     this.staticSprite.filters = [filter];
@@ -82,6 +90,51 @@ export class BallGraphic {
     this.container.addChild(this.borderGraphic);
   }
 
+  private addBallSelector() {
+    this.ballSelector = new Container();
+
+    const greenShadow = new Sprite(
+      Texture.from(GameObjectEnums.greenShadowCircle)
+    );
+    greenShadow.anchor = 0.5;
+    this.ballSelector.addChild(greenShadow);
+    const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
+    arrows.scale.set(arrows.scale.x + 0.2, arrows.scale.y + 0.2);
+    arrows.anchor = 0.5;
+    this.ballSelector.addChild(arrows);
+
+    gsap.to(arrows.scale, {
+      duration: 0.6,
+      yoyo: true,
+      x: arrows.scale.x + 0.1,
+      y: arrows.scale.y + 0.1,
+      repeat: -1,
+      ease: "none",
+    });
+
+    this.ballSelector.scale.set(this.ball.backgroundScale * 8);
+    this.ballSelector.x = this.ball.initPositionX;
+    this.ballSelector.y = this.ball.initPositionY - 0.5;
+    this.scene.addChild(this.ballSelector);
+  }
+
+  addSelector() {
+    this.ballSelector.rotation = getRandomIntInRange(0, 10);
+
+    gsap.to(this.ballSelector, {
+      alpha: 1,
+      duration: 0.5,
+    });
+
+    this.selectorAnimation = gsap.to(this.ballSelector, {
+      duration: 16,
+      rotation: this.ballSelector.rotation + 6,
+      repeat: -1,
+      yoyo: true,
+      ease: "none",
+    });
+  }
+
   public onSpinMode() {
     this.container.getChildAt(0).alpha = 1;
     this.container.getChildAt(1).alpha = 1;
@@ -92,5 +145,17 @@ export class BallGraphic {
     this.container.getChildAt(0).alpha = 0;
     this.container.getChildAt(1).alpha = 0;
     this.staticSprite.alpha = 1;
+  }
+
+  public removeSelector() {
+    gsap.to(this.ballSelector, {
+      alpha: 0,
+      duration: 0.5,
+      onComplete: () => {
+        if (this.selectorAnimation) {
+          this.selectorAnimation.kill(); // Stops the animation
+        }
+      },
+    });
   }
 }

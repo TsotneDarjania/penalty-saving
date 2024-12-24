@@ -30,7 +30,8 @@ export class Ball extends Container {
   constructor(
     public initPositionX: number,
     public initPositionY: number,
-    public scene: Container
+    public scene: Container,
+    public backgroundScale: number
   ) {
     super();
 
@@ -160,6 +161,9 @@ export class Ball extends Container {
       duration: 0.8,
       y: this.initPositionY,
       ease: "bounce.out",
+      onComplete: () => {
+        this.eventEmitter.emit(GameEventEnums.ballIsReadyForShoot);
+      },
     });
   }
 }

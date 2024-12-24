@@ -52,10 +52,14 @@ export class GameManager {
 
       this.game.character.reset();
       this.game.gameObjects.ball!.reset();
-
-      this.isShootCommand = false;
-      this.isBallSelected = false;
     }, 500);
+  }
+
+  makeReadyForShoot() {
+    this.isShootCommand = false;
+    this.isBallSelected = false;
+
+    this.game.gameObjects.ball!.ballGraphic.addSelector();
   }
 
   async shootCommand() {
@@ -163,6 +167,13 @@ export class GameManager {
       GameEventEnums.finishFallingOfBall,
       () => {
         this.reset();
+      }
+    );
+
+    this.game.gameObjects.ball!.eventEmitter.on(
+      GameEventEnums.ballIsReadyForShoot,
+      () => {
+        this.makeReadyForShoot();
       }
     );
 

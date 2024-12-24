@@ -25,4 +25,6 @@ export enum GameObjectEnums {
   winCircle = "winCircle",
   loseCircle = "loseCircle",
   stadiumBck2 = "stadiumBck2",
+  greenShadowCircle = "greenShadowCircle",
+  ballCircleArrows = "ballCircleArrows",
 }

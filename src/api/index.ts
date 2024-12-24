@@ -7,7 +7,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
   await new Promise<void>((res) => {
     setTimeout(() => {
       res();
-    }, 400);
+    }, 0);
   });
 
   const goalKeeperJumpPoint = [0, 0];
@@ -33,7 +33,7 @@ export async function getResult(userSelectedPoint: [number, number]) {
     goalKeeperJumpPoint[0] = randomX;
     goalKeeperJumpPoint[1] = randomY;
   } else {
-    bonusFactor = 1;
+    bonusFactor = 0;
     goalKeeperJumpPoint[0] = userSelectedPoint[0];
     goalKeeperJumpPoint[1] = userSelectedPoint[1];
   }

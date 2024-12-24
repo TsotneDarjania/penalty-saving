@@ -5,6 +5,14 @@ export class ScaleManager {
   constructor(public ball: Ball) {}
 
   increaseScaleForShoot() {
+    // For Selector
+    gsap.to(this.ball.ballGraphic.ballSelector.scale, {
+      duration: 0.3,
+      x: this.ball.ballGraphic.ballSelector.scale.x + 0.2,
+      y: this.ball.ballGraphic.ballSelector.scale.y + 0.2,
+      ease: "power2",
+    });
+
     // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.2,
@@ -61,6 +69,11 @@ export class ScaleManager {
                   y: this.ball.isGoal ? 0.3 : 0.45,
                   ease: "power2",
                 });
+                // Reset Selector
+                this.ball.ballGraphic.ballSelector.scale.x =
+                  this.ball.ballGraphic.ballSelector.scale.x - 0.2;
+                this.ball.ballGraphic.ballSelector.scale.y =
+                  this.ball.ballGraphic.ballSelector.scale.y - 0.2;
               },
             });
           },

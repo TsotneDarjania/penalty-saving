@@ -75,7 +75,12 @@ export class GameObjects {
       this.scaledBackgroundgHeight / 2 +
       gameConfig.mobile.ball.shadow.y * this.scaledBackgroundgHeight;
 
-    this.ball = new Ball(ballInitPositionX, ballInitPositionY, this.scene);
+    this.ball = new Ball(
+      ballInitPositionX,
+      ballInitPositionY,
+      this.scene,
+      this.backgroundScale
+    );
 
     this.ball.x = ballInitPositionX;
     this.ball.y = ballInitPositionY;

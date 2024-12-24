@@ -33,23 +33,23 @@ export class ProgressBar extends Container {
       rotation: -0.3,
     },
     {
-      x: 51,
-      y: -13,
+      x: 55,
+      y: -14,
       rotation: -0.3,
     },
     {
-      x: 60,
-      y: 13,
+      x: 55,
+      y: 7,
       rotation: -0.2,
     },
     {
-      x: 58,
-      y: 19,
+      x: 61,
+      y: 18,
       rotation: -0.1,
     },
     {
-      x: 80,
-      y: 25,
+      x: 82,
+      y: 35,
       rotation: 0,
     },
   ];
@@ -76,8 +76,6 @@ export class ProgressBar extends Container {
     this.background.rotation = 0.02;
 
     this.addChild(this.background);
-
-    // this.background.scale.set(this.game.gameObjects.backgroundScale * 5);
   }
 
   addFill() {
@@ -220,7 +218,6 @@ export class ProgressBar extends Container {
   }
 
   makeFillAniamtion(index: 0 | 1 | 2 | 3 | 4) {
-    console.log(index - 1);
     gsap.to(this.mask, {
       x: this.mask.x + this.animationData[index - 1].x,
       y: this.mask.y + this.animationData[index - 1].y,
@@ -243,7 +240,5 @@ export class ProgressBar extends Container {
     this.mask.x = this.maskInitialX;
     this.mask.y = this.maskInitialY;
     this.mask.rotation = this.maskInitialRotation;
-
-    this.mask.fill();
   }
 }
