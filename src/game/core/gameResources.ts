@@ -290,7 +290,7 @@ export class GameResources extends AssetsClass {
         alias: GameObjectEnums.ballCircleArrows,
         src: "../assets/image/ball-circle-arrows.svg",
         data: {
-          scaleMode: "smooth",
+          scaleMode: "nearest",
           autoGenerateMipmaps: true,
         },
       },
