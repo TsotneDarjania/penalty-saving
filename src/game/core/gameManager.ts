@@ -48,11 +48,9 @@ export class GameManager {
 
   reset() {
     setTimeout(() => {
-      this.game.gameObjects.footballDoor!.playIdleAnimation();
-
       this.game.character.reset();
       this.game.gameObjects.ball!.reset();
-    }, 500);
+    }, 100);
   }
 
   makeReadyForShoot() {

@@ -164,7 +164,7 @@ export class GameResources extends AssetsClass {
       // ball circle arrows
       {
         alias: GameObjectEnums.ballCircleArrows,
-        src: "../assets/image/ball-circle-arrows.png",
+        src: "../assets/image/ball-circle-arrows.svg",
       },
     ]);
 

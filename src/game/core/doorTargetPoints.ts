@@ -131,7 +131,7 @@ export class DorTargetPoints {
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.51 * scaledBgHeight,
+        0.52 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 0,
@@ -154,11 +154,13 @@ export class DorTargetPoints {
 
     this.points.set(createKey([0, 1]), {
       x:
-        this.gameObjects.stadiumBck.x - scaledBgWidth / 2 + 0.2 * scaledBgWidth,
+        this.gameObjects.stadiumBck.x -
+        scaledBgWidth / 2 +
+        0.18 * scaledBgWidth,
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.445 * scaledBgHeight,
+        0.45 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "left",
         height: 1,
@@ -213,7 +215,7 @@ export class DorTargetPoints {
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.51 * scaledBgHeight,
+        0.526 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 0,
@@ -291,11 +293,11 @@ export class DorTargetPoints {
       x:
         this.gameObjects.stadiumBck.x -
         scaledBgWidth / 2 +
-        0.78 * scaledBgWidth,
+        0.79 * scaledBgWidth,
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.51 * scaledBgHeight,
+        0.52 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "right",
         height: 0,
@@ -319,7 +321,7 @@ export class DorTargetPoints {
       x:
         this.gameObjects.stadiumBck.x -
         scaledBgWidth / 2 +
-        0.79 * scaledBgWidth,
+        0.82 * scaledBgWidth,
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
@@ -348,7 +350,7 @@ export class DorTargetPoints {
       x:
         this.gameObjects.stadiumBck.x -
         scaledBgWidth / 2 +
-        0.79 * scaledBgWidth,
+        0.815 * scaledBgWidth,
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
