@@ -45,6 +45,7 @@ export class Game extends Application {
       antialias: true,
       resolution: window.devicePixelRatio || 1,
       autoDensity: true,
+      roundPixels: true,
     });
     this.createResources();
     await this.gameResources.startLoadAssets();
