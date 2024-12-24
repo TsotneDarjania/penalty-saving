@@ -12,7 +12,6 @@ import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
 import { UI } from "../ui/index.ts";
 import { gameConfig } from "../config/gameConfig.ts";
-import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
 
 export class Game extends Application {
   public scene!: Container<ContainerChild>;
