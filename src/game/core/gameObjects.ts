@@ -91,6 +91,8 @@ export class GameObjects {
 
     this.ball.ballGraphic.shadow.x = ballShadowPositionX;
     this.ball.ballGraphic.shadow.y = ballShadowPositionY;
+    this.ball.ballGraphic.sahdowInitialPositionX = ballShadowPositionX;
+    this.ball.ballGraphic.sahdowInitialPositionY = ballShadowPositionY;
 
     this.ball.scale.set(this.backgroundScale * 6);
     this.ball.ballGraphic.shadow.scale.set(this.backgroundScale * 1.15);

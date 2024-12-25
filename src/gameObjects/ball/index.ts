@@ -110,7 +110,7 @@ export class Ball extends Container {
 
   private fallDown() {
     // Adjust the path relative to the target's current position
-    const scale: number = 2; // Define the scale factor
+    const scale: number = this.backgroundScale * 14; // Define the scale factor
     const scaledAndOffsetPath: string = adjustSVGPath(
       this.ballFallinDownRawPathData.path,
       this.x + this.ballFallinDownRawPathData.offsetX,
@@ -118,11 +118,18 @@ export class Ball extends Container {
       scale
     );
 
+    const pathPoints = MotionPathPlugin.stringToRawPath(scaledAndOffsetPath);
+    const lastPoint = pathPoints[pathPoints.length - 1];
+
     gsap.to(this, {
       duration: 0.7,
       motionPath: {
         path: scaledAndOffsetPath,
         curviness: 1.5, // Controls the smoothness of the curve
+      },
+      onUpdate: () => {
+        this.ballGraphic.shadow.x = lastPoint[lastPoint.length - 2];
+        this.ballGraphic.shadow.y = lastPoint[lastPoint.length - 1] + 10;
       },
       ease: "bounce.out",
       onComplete: () => {
@@ -137,6 +144,11 @@ export class Ball extends Container {
 
     this.x = this.initPositionX;
     this.y = this.initPositionY - window.innerHeight * 1.5;
+
+    this.ballGraphic.shadow.alpha = 0;
+    this.ballGraphic.shadow.scale = 0;
+    this.ballGraphic.shadow.x = this.ballGraphic.sahdowInitialPositionX;
+    this.ballGraphic.shadow.y = this.ballGraphic.sahdowInitialPositionY;
 
     gsap.to(this.ballGraphic.shadow.scale, {
       duration: 0.8,

@@ -223,7 +223,8 @@ export class DorTargetPoints {
       },
       ball: {
         isSave: {
-          fallingDawnPath: "M -7 -12 L -4 -3 L -6 7 L -7 17 L -8 27 M -101 -24",
+          fallingDawnPath:
+            "M -8 -17 L -7 -19 L -6 -18 L -5 -15 L -4 -7 M -101 -24",
         },
         isNotSave: {
           fallingDawnPath:
@@ -242,7 +243,7 @@ export class DorTargetPoints {
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.44 * scaledBgHeight,
+        0.46 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 1,
@@ -250,7 +251,7 @@ export class DorTargetPoints {
       ball: {
         isSave: {
           fallingDawnPath:
-            "M -7 -12 L -15 -10 L -25 0 L -29 17 L -30 52 M -101 -24",
+            "M -8 -17 L -10 -19 L -13 -16 L -16 -9 L -20 16 M -101 -24",
         },
         isNotSave: {
           fallingDawnPath:
@@ -258,7 +259,7 @@ export class DorTargetPoints {
         },
         fallingDawnPathData: {
           offsetX: 16,
-          offsetY: 35,
+          offsetY: 45,
         },
       },
     });
@@ -277,7 +278,7 @@ export class DorTargetPoints {
       ball: {
         isSave: {
           fallingDawnPath:
-            "M -7 -12 L -3 -18 L 7 -19 L 14 -11 L 33 62 M -101 -24",
+            "M -8 -17 L -10 -19 L -15 -16 L -20 -4 L -29 45 M -101 -24",
         },
         isNotSave: {
           fallingDawnPath:

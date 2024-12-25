@@ -33,7 +33,7 @@ export class ScaleManager {
   startScaleAnimationDuringShoot() {
     // For Shadow
     gsap.to(this.ball.ballGraphic.shadow.scale, {
-      duration: 0.3,
+      duration: 0.2,
       x: this.ball.ballGraphic.shadow.scale.x - 0.2,
       y: this.ball.ballGraphic.shadow.scale.y - 0.2,
       ease: "power2",
@@ -42,6 +42,15 @@ export class ScaleManager {
       duration: 0.2,
       alpha: 0,
       ease: "power2",
+      onComplete: () => {
+        this.ball.ballGraphic.shadow.alpha = 1;
+        gsap.to(this.ball.ballGraphic.shadow.scale, {
+          duration: 0.5,
+          x: this.ball.backgroundScale * 0.4,
+          y: this.ball.backgroundScale * 0.4,
+          ease: "bounce.out",
+        });
+      },
     });
 
     // For Ball

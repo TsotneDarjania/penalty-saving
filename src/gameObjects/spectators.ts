@@ -60,7 +60,7 @@ export class Spectators {
   startAnimations() {
     let delay = 0;
     this.spectators.forEach((spectator) => {
-      delay += getRandomFloat(0, 0.1);
+      delay += getRandomFloat(0, 0.04);
       gsap.to(spectator, {
         delay: delay,
         duration: getRandomFloat(this.minDuration, this.maxDuration),
