@@ -13,19 +13,20 @@ export class Trail {
     window.addEventListener("pointermove", (mouse) => {
       const texture = Texture.from(GameObjectEnums.mouseRopeEffect);
 
-      for (let i = 0; i < 150; ++i) {
+      for (let i = 0; i < 100; ++i) {
         let particle = new Sprite({
           texture,
-          scale: this.game.gameObjects.backgroundScale * 0.4,
+          scale: this.game.gameObjects.backgroundScale * 0.37,
           x: mouse.x,
           y: mouse.y,
         });
+        particle.anchor = 0.5;
 
         this.particleContainer.addChild(particle);
 
         gsap.to(particle, {
           alpha: 0,
-          duration: 0.4,
+          duration: 0.3,
           onComplete: () => {
             particle.destroy();
           },
@@ -33,7 +34,7 @@ export class Trail {
         gsap.to(particle.scale, {
           x: 0,
           y: 0,
-          duration: 0.4,
+          duration: 0.3,
         });
       }
     });
