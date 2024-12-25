@@ -125,7 +125,7 @@ export class BallGraphic {
 
     gsap.to(this.ballSelector, {
       alpha: 1,
-      duration: 0.5,
+      duration: 0.3,
     });
 
     this.selectorAnimation = gsap.to(this.ballSelector, {
@@ -152,10 +152,10 @@ export class BallGraphic {
   public removeSelector() {
     gsap.to(this.ballSelector, {
       alpha: 0,
-      duration: 0.2,
+      duration: 0.3,
       onComplete: () => {
         if (this.selectorAnimation) {
-          this.selectorAnimation.kill(); // Stops the animation
+          this.selectorAnimation.kill();
         }
       },
     });

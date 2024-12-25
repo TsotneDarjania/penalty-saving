@@ -5,6 +5,7 @@ export class ShootManager {
 
   shoot(targetLocation: { x: number; y: number }) {
     this.ball.ballGraphic.removeSelector();
+
     gsap.to(this.ball, {
       duration: 0.3,
       x: targetLocation.x,
