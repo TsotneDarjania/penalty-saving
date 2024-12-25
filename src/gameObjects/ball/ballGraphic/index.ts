@@ -40,7 +40,7 @@ export class BallGraphic {
 
     this.staticSprite = new Sprite(Texture.from(GameObjectEnums.staticBall));
     this.staticSprite.anchor = 0.5;
-    this.staticSprite.scale = 0.165;
+    this.staticSprite.scale = 0.15;
 
     this.container.addChild(this.staticSprite);
     this.staticSprite.filters = [filter];
@@ -84,7 +84,7 @@ export class BallGraphic {
       .circle(this.container.x, this.container.y, gameConfig.mobile.ball.radius)
       .stroke({
         color: "black",
-        width: 1,
+        width: 0,
       });
     this.borderGraphic.filters = [filter];
     this.container.addChild(this.borderGraphic);
@@ -97,9 +97,10 @@ export class BallGraphic {
       Texture.from(GameObjectEnums.greenShadowCircle)
     );
     greenShadow.anchor = 0.5;
+    greenShadow.scale = 0.9;
     this.ballSelector.addChild(greenShadow);
     const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-    arrows.scale = 0.07;
+    arrows.scale = 0.06;
     arrows.anchor = 0.5;
     this.ballSelector.addChild(arrows);
 
