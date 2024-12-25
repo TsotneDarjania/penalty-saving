@@ -303,6 +303,15 @@ export class GameResources extends AssetsClass {
           autoGenerateMipmaps: true,
         },
       },
+      // mouse rope effect
+      {
+        alias: GameObjectEnums.mouseRopeEffect,
+        src: "../assets/image/mouse-rope-effect.png",
+        data: {
+          scaleMode: "linear",
+          autoGenerateMipmaps: true,
+        },
+      },
     ]);
 
     const fontFace = new FontFace(

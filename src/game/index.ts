@@ -41,6 +41,7 @@ export class Game extends Application {
       roundPixels: true,
     });
     this.createResources();
+
     await this.gameResources.startLoadAssets();
   }
 

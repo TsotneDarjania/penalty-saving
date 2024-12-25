@@ -5,11 +5,14 @@ import { GameEventEnums } from "../../enums/gameEvenetEnums";
 import { createKey, getRandomIntInRange } from "../../helper";
 import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
+import { Trail } from "../../gameObjects/trail";
 
 export class GameManager {
   isShootCommand = false;
   isBallSelected = false;
   firstTimeSelectBall = true;
+
+  mouseTrail!: Trail;
 
   userSelectedPoint!: [number, number];
 
@@ -21,6 +24,7 @@ export class GameManager {
 
   constructor(public game: Game) {
     this.listenUserEvents();
+    this.addMouseTrail();
   }
 
   shoot(point: [number, number]) {
@@ -47,6 +51,7 @@ export class GameManager {
   }
 
   reset() {
+    this.game.dorTargetpoints.selectedPoint = undefined;
     setTimeout(() => {
       this.game.character.reset();
       this.game.gameObjects.ball!.reset();
@@ -240,5 +245,9 @@ export class GameManager {
         });
       },
     });
+  }
+
+  addMouseTrail() {
+    this.mouseTrail = new Trail(this.game.scene, this.game);
   }
 }

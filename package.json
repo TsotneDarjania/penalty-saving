@@ -10,7 +10,6 @@
   "dependencies": {
     "@esotericsoftware/spine-pixi-v8": "^4.2.68",
     "@pixi/filter-bulge-pinch": "^5.1.1",
-    "@pixi/particle-emitter": "^5.0.8",
     "pixi-filters": "^6.0.5",
     "pixi.js": "^8.6.4"
   },

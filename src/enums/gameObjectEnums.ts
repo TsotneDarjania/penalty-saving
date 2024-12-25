@@ -28,4 +28,5 @@ export enum GameObjectEnums {
   greenShadowCircle = "greenShadowCircle",
   ballCircleArrows = "ballCircleArrows",
   spectator = "spectator",
+  mouseRopeEffect = "mouseRopeEffect",
 }

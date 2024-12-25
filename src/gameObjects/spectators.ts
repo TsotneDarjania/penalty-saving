@@ -4,14 +4,14 @@ import { getRandomFloat } from "../helper";
 import gsap from "gsap";
 
 export class Spectators {
-  count = 170;
+  count = 1270;
   spectators: Sprite[] = [];
 
   minY!: number;
   maxY!: number;
 
-  minScale = 0.2;
-  maxScale = 0.8;
+  minScale = 0.4;
+  maxScale = 1.2;
 
   minX = -1;
   maxX = 2;
@@ -58,9 +58,11 @@ export class Spectators {
   }
 
   startAnimations() {
+    let delay = 0;
     this.spectators.forEach((spectator) => {
+      delay += getRandomFloat(0, 0.1);
       gsap.to(spectator, {
-        delay: getRandomFloat(0, 0.7),
+        delay: delay,
         duration: getRandomFloat(this.minDuration, this.maxDuration),
         ease: "none",
         alpha: 1,
@@ -70,7 +72,7 @@ export class Spectators {
             ease: "none",
             alpha: 0,
             onComplete: () => {
-              this.doAnimationAgain(spectator);
+              this.doAnimationAgain(spectator, delay);
             },
           });
         },
@@ -78,7 +80,7 @@ export class Spectators {
     });
   }
 
-  doAnimationAgain(spectator: Sprite) {
+  doAnimationAgain(spectator: Sprite, delay: number) {
     spectator.x =
       this.stadiumBck.x -
       this.scaledBackgroundgWidth / 2 +
@@ -90,6 +92,7 @@ export class Spectators {
     spectator.alpha = 0;
 
     gsap.to(spectator, {
+      delay,
       duration: getRandomFloat(this.minDuration, this.maxDuration),
       ease: "power1.inOut",
       alpha: 1,
@@ -99,7 +102,7 @@ export class Spectators {
           ease: "power1.inOut",
           alpha: 0,
           onComplete: () => {
-            this.doAnimationAgain(spectator);
+            this.doAnimationAgain(spectator, delay);
           },
         });
       },
