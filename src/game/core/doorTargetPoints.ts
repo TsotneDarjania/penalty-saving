@@ -143,7 +143,7 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -9 -13 L -11 -12 L -13 -9 L -12 -3 M -101 -24",
+            "M -8 -14 L -6 -15 L -5 -13 L -6 -11 L -7 -10 M -101 -24",
         },
         fallingDawnPathData: {
           offsetX: 9,
@@ -171,11 +171,12 @@ export class DorTargetPoints {
             "M 5 -10 L -17 6 L -36 36 L -56 82 L -79 101 M -101 -24",
         },
         isNotSave: {
-          fallingDawnPath: "M -7 -12 L -7 -8 L -7 -2 L -7 8 L -5 22 M -101 -24",
+          fallingDawnPath:
+            "M -8 -17 L -10 -14 L -9 -9 L -8 -6 L -8 -1 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 23,
-          offsetY: 16,
+          offsetX: 17,
+          offsetY: 41,
         },
       },
     });
@@ -200,11 +201,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -10 -7 L -11 5 L -11 26 L -5 51 M -101 -24",
+            "M -8 -17 L -9 -19 L -10 -15 L -9 -6 L -6 21 M -101 -24",
         },
         fallingDawnPathData: {
           offsetX: 15,
-          offsetY: 19,
+          offsetY: 36,
         },
       },
     });
@@ -226,11 +227,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -5 -13 L -3 -11 L -5 -9 L -4 -5 M -101 -24",
+            "M -8 -17 L -7 -19 L -6 -16 L -7 -14 L -7 -11 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 7,
-          offsetY: 11,
+          offsetX: 17,
+          offsetY: 21,
         },
       },
     });
@@ -253,11 +254,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -5 -13 L -3 -11 L -5 -4 L -4 22 M -101 -24",
+            "M -8 -17 L -7 -19 L -6 -15 L -6 -9 L -8 -2 M -101 -24",
         },
         fallingDawnPathData: {
           offsetX: 16,
-          offsetY: 8,
+          offsetY: 35,
         },
       },
     });
@@ -280,11 +281,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -7 -12 L -9 -14 L -10 -11 L -12 11 L -12 50 M -101 -24",
+            "M -8 -17 L -9 -19 L -10 -15 L -8 2 L -9 24 M -101 -24",
         },
         fallingDawnPathData: {
           offsetX: 16,
-          offsetY: 16,
+          offsetY: 30,
         },
       },
     });
@@ -308,11 +309,12 @@ export class DorTargetPoints {
             "M -7 -12 L 25 -24 L 51 -10 L 87 20 L 115 68 M -101 -24",
         },
         isNotSave: {
-          fallingDawnPath: "M -7 -12 L -3 -13 L 0 -11 L 1 -5 L -2 1 M -101 -24",
+          fallingDawnPath:
+            "M -8 -17 L -7 -19 L -6 -16 L -7 -14 L -6 -11 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 15,
-          offsetY: 8,
+          offsetX: 18,
+          offsetY: 28,
         },
       },
     });
@@ -337,11 +339,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -6 -14 L -4 -14 L -3 -11 L -2 3 L -8 28 M -101 -24",
+            "M -8 -17 L -7 -19 L -6 -16 L -6 -8 L -9 -1 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 20,
-          offsetY: 30,
+          offsetX: 18,
+          offsetY: 38,
         },
       },
     });
@@ -366,11 +368,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -6 -14 L -4 -15 L -2 -13 L -3 1 L -5 45 M -101 -24",
+            "M -8 -17 L -7 -19 L -6 -18 L -5 -15 L -9 21 M -101 -24",
         },
         fallingDawnPathData: {
           offsetX: 14,
-          offsetY: 25,
+          offsetY: 35,
         },
       },
     });

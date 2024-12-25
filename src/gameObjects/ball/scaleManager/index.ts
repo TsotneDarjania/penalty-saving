@@ -8,8 +8,8 @@ export class ScaleManager {
     // For Selector
     gsap.to(this.ball.ballGraphic.ballSelector.scale, {
       duration: 0.3,
-      x: this.ball.ballGraphic.ballSelector.scale.x + 0.2,
-      y: this.ball.ballGraphic.ballSelector.scale.y + 0.2,
+      x: this.ball.backgroundScale * 10,
+      y: this.ball.backgroundScale * 10,
       ease: "power2",
     });
 
@@ -46,34 +46,29 @@ export class ScaleManager {
 
     // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
-      duration: 0.15,
+      duration: 0.1,
       x: 1.3,
       y: 1.5,
       ease: "power2",
       onComplete: () => {
         gsap.to(this.ball.ballGraphic.container.scale, {
-          duration: 0.1,
+          duration: 0.06,
           x: 1,
           y: 1.2,
           ease: "power2",
           onComplete: () => {
             gsap.to(this.ball.ballGraphic.container.scale, {
-              duration: 0.1,
+              duration: 0.06,
               x: 0.3,
               y: 0.7,
               ease: "power2",
               onComplete: () => {
                 gsap.to(this.ball.ballGraphic.container.scale, {
-                  duration: 0.1,
-                  x: this.ball.isGoal ? 0.3 : 0.45,
-                  y: this.ball.isGoal ? 0.3 : 0.45,
+                  duration: 0.06,
+                  x: this.ball.isGoal ? 0.26 : 0.35,
+                  y: this.ball.isGoal ? 0.26 : 0.35,
                   ease: "power2",
                 });
-                // Reset Selector
-                this.ball.ballGraphic.ballSelector.scale.x =
-                  this.ball.ballGraphic.ballSelector.scale.x - 0.2;
-                this.ball.ballGraphic.ballSelector.scale.y =
-                  this.ball.ballGraphic.ballSelector.scale.y - 0.2;
               },
             });
           },

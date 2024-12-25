@@ -121,6 +121,8 @@ export class BallGraphic {
   }
 
   addSelector() {
+    this.ballSelector.scale = this.ball.backgroundScale * 8;
+
     this.ballSelector.rotation = getRandomIntInRange(0, 10);
 
     gsap.to(this.ballSelector, {

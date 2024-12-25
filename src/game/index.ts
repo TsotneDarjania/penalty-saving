@@ -86,7 +86,7 @@ export class Game extends Application {
       this.gameObjects.scaledBackgroundgHeight / 2 +
       gameConfig.mobile.character.y * this.gameObjects.scaledBackgroundgHeight;
 
-    this.character.spine.scale.set(this.gameObjects.backgroundScale * 2.6);
+    this.character.spine.scale.set(this.gameObjects.backgroundScale * 2.3);
   }
 
   private addUI() {

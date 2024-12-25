@@ -7,7 +7,7 @@ export class ShootManager {
     this.ball.ballGraphic.removeSelector();
 
     gsap.to(this.ball, {
-      duration: 0.3,
+      duration: 0.2,
       x: targetLocation.x,
       y: targetLocation.y,
       ease: "power2.in",
