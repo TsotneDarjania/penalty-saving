@@ -4,7 +4,7 @@ import { getRandomFloat } from "../helper";
 import gsap from "gsap";
 
 export class Spectators {
-  count = 1270;
+  count = 170;
   spectators: Sprite[] = [];
 
   minY!: number;
