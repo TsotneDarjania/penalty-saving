@@ -16,7 +16,7 @@ export class Trail {
       for (let i = 0; i < 150; ++i) {
         let particle = new Sprite({
           texture,
-          scale: 0.05,
+          scale: this.game.gameObjects.backgroundScale * 0.4,
           x: mouse.x,
           y: mouse.y,
         });
