@@ -14,7 +14,7 @@ export class UI {
 
   init() {
     this.addProgressBar();
-    this.addUserInterface();
+    // this.addUserInterface();
   }
 
   addProgressBar() {
