@@ -39,7 +39,7 @@ export class ScaleManager {
       ease: "power2",
     });
     gsap.to(this.ball.ballGraphic.shadow, {
-      duration: 0.4,
+      duration: 0.2,
       alpha: 0,
       ease: "power2",
     });
