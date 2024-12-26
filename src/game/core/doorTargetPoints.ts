@@ -172,11 +172,11 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -22 -28 L -22 -19 L -21 -7 L -19 -1 L -16 4 M -101 -24",
+            "M -8 -17 L -10 -14 L -9 -9 L -8 -6 L -8 -1 M -101 -24",
         },
         fallingDawnPathData: {
-          offsetX: 55,
-          offsetY: 75,
+          offsetX: 17,
+          offsetY: 41,
         },
       },
     });
