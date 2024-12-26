@@ -4,11 +4,14 @@ import { Ball } from "../../gameObjects/ball/index.ts";
 import { gameConfig } from "../../config/gameConfig.ts";
 import { GameObjectEnums } from "../../enums/gameObjectEnums.ts";
 import { Spectators } from "../../gameObjects/spectators.ts";
+import { BallTrail } from "../../gameObjects/ballTrail.ts";
+import { Game } from "../index.ts";
 
 export class GameObjects {
   ball: Ball | null = null;
   footballDoor: FootballDoor | null = null;
   stadiumBck!: Sprite;
+  ballTrail!: BallTrail;
 
   scaledBackgroundgWidth!: number;
   scaledBackgroundgHeight!: number;
@@ -17,7 +20,7 @@ export class GameObjects {
 
   spectators!: Spectators;
 
-  constructor(public scene: Container) {
+  constructor(public scene: Container, public game: Game) {
     this.addInitialGameObjects();
   }
 
@@ -26,6 +29,7 @@ export class GameObjects {
     this.addBall();
     this.addFootballDor();
     this.addSpectators();
+    this.addBallTrailEffect();
   }
 
   addBackground() {
@@ -83,7 +87,8 @@ export class GameObjects {
       ballInitPositionX,
       ballInitPositionY,
       this.scene,
-      this.backgroundScale
+      this.backgroundScale,
+      this
     );
 
     this.ball.x = ballInitPositionX;
@@ -94,8 +99,8 @@ export class GameObjects {
     this.ball.ballGraphic.sahdowInitialPositionX = ballShadowPositionX;
     this.ball.ballGraphic.sahdowInitialPositionY = ballShadowPositionY;
 
-    this.ball.scale.set(this.backgroundScale * 6);
-    this.ball.ballGraphic.shadow.scale.set(this.backgroundScale * 1.15);
+    this.ball.scale.set(this.backgroundScale * 7.5);
+    this.ball.ballGraphic.shadow.scale.set(this.backgroundScale * 1.25);
     this.ball.ballGraphic.shadowInitScaleX =
       this.ball.ballGraphic.shadow.scale.x;
     this.ball.ballGraphic.shadowInitScaleY =
@@ -128,5 +133,9 @@ export class GameObjects {
       this.backgroundScale,
       this.stadiumBck
     );
+  }
+
+  private addBallTrailEffect() {
+    this.ballTrail = new BallTrail(this.scene, this.game);
   }
 }

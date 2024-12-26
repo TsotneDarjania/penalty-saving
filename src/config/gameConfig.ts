@@ -1,7 +1,7 @@
 export const gameConfig = {
   mobile: {
     ball: {
-      radius: 43,
+      radius: 42,
       x: 0.5,
       y: 0.85,
       shadow: {

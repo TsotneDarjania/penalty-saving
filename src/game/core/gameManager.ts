@@ -5,14 +5,14 @@ import { GameEventEnums } from "../../enums/gameEvenetEnums";
 import { createKey, getRandomIntInRange } from "../../helper";
 import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
-import { Trail } from "../../gameObjects/trail";
+import { MouseTrail } from "../../gameObjects/trail";
 
 export class GameManager {
   isShootCommand = false;
   isBallSelected = false;
   firstTimeSelectBall = true;
 
-  mouseTrail!: Trail;
+  mouseTrail!: MouseTrail;
 
   userSelectedPoint!: [number, number];
 
@@ -248,6 +248,6 @@ export class GameManager {
   }
 
   addMouseTrail() {
-    this.mouseTrail = new Trail(this.game.scene, this.game);
+    this.mouseTrail = new MouseTrail(this.game.scene, this.game);
   }
 }

@@ -7,17 +7,17 @@ export class ScaleManager {
   increaseScaleForShoot() {
     // For Selector
     gsap.to(this.ball.ballGraphic.ballSelector.scale, {
-      duration: 0.3,
-      x: this.ball.backgroundScale * 10,
-      y: this.ball.backgroundScale * 10,
+      duration: 0.2,
+      x: this.ball.backgroundScale * 11,
+      y: this.ball.backgroundScale * 11,
       ease: "power2",
     });
 
     // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.2,
-      x: 1.2,
-      y: 1.2,
+      x: this.ball.backgroundScale * 7.6,
+      y: this.ball.backgroundScale * 7.6,
       ease: "power4.out",
     });
 

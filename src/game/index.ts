@@ -59,7 +59,7 @@ export class Game extends Application {
   }
 
   private addGameObjects() {
-    this.gameObjects = new GameObjects(this.scene);
+    this.gameObjects = new GameObjects(this.scene, this);
   }
 
   private addDorTargetPoints() {

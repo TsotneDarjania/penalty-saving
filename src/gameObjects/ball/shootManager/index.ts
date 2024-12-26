@@ -11,6 +11,9 @@ export class ShootManager {
       x: targetLocation.x,
       y: targetLocation.y,
       ease: "power2.in",
+      onUpdate: () => {
+        this.ball.gameObjects.ballTrail.drawParticles(this.ball.x, this.ball.y);
+      },
       onComplete: () => {
         this.ball.eventEmitter.emit("FinishShoot");
       },

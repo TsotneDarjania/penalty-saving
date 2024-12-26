@@ -8,6 +8,7 @@ import { ScaleManager } from "./scaleManager";
 import { BlurManager } from "./blurManager";
 import gsap from "gsap";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
+import { GameObjects } from "../../game/core/gameObjects";
 
 gsap.registerPlugin(MotionPathPlugin);
 
@@ -31,7 +32,8 @@ export class Ball extends Container {
     public initPositionX: number,
     public initPositionY: number,
     public scene: Container,
-    public backgroundScale: number
+    public backgroundScale: number,
+    public gameObjects: GameObjects
   ) {
     super();
 

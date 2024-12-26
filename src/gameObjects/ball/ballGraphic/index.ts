@@ -70,7 +70,6 @@ export class BallGraphic {
     let mask = new Graphics()
       .circle(this.container.x, this.container.y, gameConfig.mobile.ball.radius)
       .fill();
-
     this.container.mask = mask;
     this.maskContainer = new Container();
     this.maskContainer.addChild(mask);
@@ -102,7 +101,7 @@ export class BallGraphic {
     greenShadow.scale = 0.9;
     this.ballSelector.addChild(greenShadow);
     const arrows = new Sprite(Texture.from(GameObjectEnums.ballCircleArrows));
-    arrows.scale = 0.06;
+    arrows.scale = 0.07;
     arrows.anchor = 0.5;
     this.ballSelector.addChild(arrows);
 
@@ -123,7 +122,7 @@ export class BallGraphic {
   }
 
   addSelector() {
-    this.ballSelector.scale = this.ball.backgroundScale * 8;
+    this.ballSelector.scale = this.ball.backgroundScale * 9;
     this.ballSelector.rotation = getRandomIntInRange(0, 10);
 
     gsap.to(this.ballSelector, {

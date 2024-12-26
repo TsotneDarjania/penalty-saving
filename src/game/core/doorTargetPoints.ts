@@ -216,7 +216,7 @@ export class DorTargetPoints {
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.526 * scaledBgHeight,
+        0.53 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 0,
@@ -243,7 +243,7 @@ export class DorTargetPoints {
       y:
         this.gameObjects.stadiumBck.y -
         scaledBgHeight / 2 +
-        0.46 * scaledBgHeight,
+        0.47 * scaledBgHeight,
       goalKeeperJumpData: {
         direction: "center",
         height: 1,
@@ -259,7 +259,7 @@ export class DorTargetPoints {
         },
         fallingDawnPathData: {
           offsetX: 16,
-          offsetY: 45,
+          offsetY: 52,
         },
       },
     });
