@@ -340,7 +340,7 @@ export class DorTargetPoints {
         },
         isNotSave: {
           fallingDawnPath:
-            "M -8 -17 L -7 -19 L -6 -16 L -6 -8 L -9 -1 M -101 -24",
+            "M -8 -17 L -6 -15 L -6 -9 L -6 -1 L -9 15 M -101 -24",
         },
         fallingDawnPathData: {
           offsetX: 18,

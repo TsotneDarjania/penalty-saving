@@ -5,7 +5,7 @@ import { GameEventEnums } from "../../enums/gameEvenetEnums";
 import { createKey, getRandomIntInRange } from "../../helper";
 import { GameObjectEnums } from "../../enums/gameObjectEnums";
 import gsap from "gsap";
-import { MouseTrail } from "../../gameObjects/trail";
+import { MouseTrail } from "../../gameObjects/mouseTrail";
 
 export class GameManager {
   isShootCommand = false;
