@@ -31,6 +31,7 @@ export class Ball extends Container {
   constructor(
     public initPositionX: number,
     public initPositionY: number,
+
     public scene: Container,
     public backgroundScale: number,
     public gameObjects: GameObjects

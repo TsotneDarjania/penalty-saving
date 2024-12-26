@@ -11,9 +11,7 @@ export class BallTrail {
   }
 
   drawParticles(x: number, y: number) {
-    console.log("a");
     const texture = Texture.from(GameObjectEnums.mouseRopeEffect);
-
     let particle = new Particle({
       texture,
       x,
@@ -24,12 +22,13 @@ export class BallTrail {
       anchorX: 0.5,
       anchorY: 0.5,
     });
-
     gsap.to(particle, {
       duration: 0.5,
       alpha: 0,
+      onComplete: () => {
+        this.particleContainer.removeParticle(particle);
+      },
     });
-
     this.particleContainer.addParticle(particle);
   }
 
@@ -43,9 +42,7 @@ export class BallTrail {
         tint: true,
       },
     });
-
     this.scene.addChild(this.particleContainer);
-
     this.game.ticker.add(() => {
       this.particleContainer.update();
     });

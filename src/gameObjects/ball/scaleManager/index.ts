@@ -8,16 +8,16 @@ export class ScaleManager {
     // For Selector
     gsap.to(this.ball.ballGraphic.ballSelector.scale, {
       duration: 0.2,
-      x: this.ball.backgroundScale * 10.4,
-      y: this.ball.backgroundScale * 10.4,
+      x: this.ball.scale.x + 0.8,
+      y: this.ball.scale.y + 0.8,
       ease: "power2",
     });
 
     // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.2,
-      x: this.ball.backgroundScale * 7,
-      y: this.ball.backgroundScale * 7,
+      x: this.ball.ballGraphic.container.scale.x + 0.1,
+      y: this.ball.ballGraphic.container.scale.y + 0.1,
       ease: "power4.out",
     });
 

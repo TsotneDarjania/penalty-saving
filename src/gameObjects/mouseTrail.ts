@@ -29,7 +29,9 @@ export class MouseTrail {
         gsap.to(particle, {
           duration: 0.26,
           alpha: 0,
-
+          onComplete: () => {
+            this.particleContainer.removeParticle(particle);
+          },
           tint: 0xffffff, // Animates the color to red
         });
 

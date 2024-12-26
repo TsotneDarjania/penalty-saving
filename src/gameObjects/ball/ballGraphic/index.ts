@@ -4,6 +4,7 @@ import { GameObjectEnums } from "../../../enums/gameObjectEnums";
 import { gameConfig } from "../../../config/gameConfig";
 import gsap from "gsap";
 import { getRandomIntInRange } from "../../../helper";
+import { BulgePinchFilter } from "pixi-filters";
 
 export class BallGraphic {
   container!: Container;
@@ -36,8 +37,9 @@ export class BallGraphic {
   }
 
   private addStaticSprite() {
-    const filter = new BlurFilter({
-      strength: 0.2,
+    const filter = new BulgePinchFilter({
+      strength: 0.4,
+      radius: 23,
     });
 
     this.staticSprite = new Sprite(Texture.from(GameObjectEnums.staticBall));
