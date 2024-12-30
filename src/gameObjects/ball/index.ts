@@ -1,4 +1,4 @@
-import { Container, EventEmitter } from "pixi.js";
+import { Container, EventEmitter, Point } from "pixi.js";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { BallGraphic } from "./ballGraphic";
 import { SpinManager } from "./spinManager";
@@ -8,7 +8,7 @@ import { ScaleManager } from "./scaleManager";
 import { BlurManager } from "./blurManager";
 import gsap from "gsap";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
-import { GameObjects } from "../../game/core/gameObjects";
+import { getScaleX, getY } from "../../config/runtimeHelper";
 
 gsap.registerPlugin(MotionPathPlugin);
 
@@ -29,14 +29,15 @@ export class Ball extends Container {
   };
 
   constructor(
-    public initPositionX: number,
-    public initPositionY: number,
-
-    public scene: Container,
-    public backgroundScale: number,
-    public gameObjects: GameObjects
+    public initialX: number,
+    public initialY: number,
+    public initialScale: number
   ) {
     super();
+
+    this.x = initialX;
+    this.y = initialY;
+    this.scale = initialScale;
 
     this.init();
   }
@@ -57,12 +58,19 @@ export class Ball extends Container {
       this.spinManager.stopRotation();
       this.blurManager.removeBlurEffect();
       this.eventEmitter.emit(GameEventEnums.ballTouchGoalKeeperOrGrid);
+
+      gsap.to(this.ballGraphic.shadow.scale, {
+        duration: 0.8,
+        x: getScaleX(0.3),
+        y: getScaleX(0.3),
+        ease: "bounce.out",
+      });
       this.fallDown();
     });
   }
 
   private createGraphic() {
-    this.ballGraphic = new BallGraphic(this, this.scene);
+    this.ballGraphic = new BallGraphic(this);
     this.addChild(this.ballGraphic.container);
   }
 
@@ -98,6 +106,8 @@ export class Ball extends Container {
       y: points.y,
     });
     this.scaleManager.startScaleAnimationDuringShoot();
+    this.ballGraphic.removeSelector();
+    this.ballGraphic.removeShadow();
 
     setTimeout(() => {
       this.eventEmitter.emit(GameEventEnums.isTimeToJumpGoalKeeper);
@@ -113,18 +123,18 @@ export class Ball extends Container {
 
   private fallDown() {
     // Adjust the path relative to the target's current position
-    const scale: number = this.backgroundScale * 14; // Define the scale factor
+    const scale: number = 2; // Define the scale factor
     const scaledAndOffsetPath: string = adjustSVGPath(
       this.ballFallinDownRawPathData.path,
-      this.x + this.ballFallinDownRawPathData.offsetX,
-      this.y + this.ballFallinDownRawPathData.offsetY,
+      this.ballGraphic.container.x + this.ballFallinDownRawPathData.offsetX,
+      this.ballGraphic.container.y + this.ballFallinDownRawPathData.offsetY,
       scale
     );
 
     const pathPoints = MotionPathPlugin.stringToRawPath(scaledAndOffsetPath);
     const lastPoint = pathPoints[pathPoints.length - 1];
 
-    gsap.to(this, {
+    gsap.to(this.ballGraphic.container, {
       duration: 0.7,
       motionPath: {
         path: scaledAndOffsetPath,
@@ -132,10 +142,11 @@ export class Ball extends Container {
       },
       onUpdate: () => {
         this.ballGraphic.shadow.x = lastPoint[lastPoint.length - 2];
-        this.ballGraphic.shadow.y = lastPoint[lastPoint.length - 1] + 10;
+        this.ballGraphic.shadow.y = lastPoint[lastPoint.length - 1] + 12;
       },
       ease: "bounce.out",
       onComplete: () => {
+        this.ballGraphic.shadow.alpha = 0;
         this.eventEmitter.emit(GameEventEnums.finishFallingOfBall);
       },
     });
@@ -145,20 +156,14 @@ export class Ball extends Container {
     this.isGoal = false;
     this.ballGraphic.offSpinMode();
 
-    this.x = this.initPositionX;
-    this.y = this.initPositionY - window.innerHeight * 1.5;
+    const ballStartPoint = this.toLocal(new Point(this.initialX, getY(0)));
+    const ballDestinationPoints = this.toLocal(
+      new Point(this.initialX, this.initialY)
+    );
 
-    this.ballGraphic.shadow.alpha = 0;
-    this.ballGraphic.shadow.scale = 0;
-    this.ballGraphic.shadow.x = this.ballGraphic.sahdowInitialPositionX;
-    this.ballGraphic.shadow.y = this.ballGraphic.sahdowInitialPositionY;
+    this.ballGraphic.container.x = ballDestinationPoints.x;
+    this.ballGraphic.container.y = ballStartPoint.y;
 
-    gsap.to(this.ballGraphic.shadow.scale, {
-      duration: 0.8,
-      x: this.ballGraphic.shadowInitScaleX,
-      y: this.ballGraphic.shadowInitScaleY,
-      ease: "bounce.out",
-    });
     gsap.to(this.ballGraphic.shadow, {
       duration: 0.4,
       alpha: 1,
@@ -172,11 +177,21 @@ export class Ball extends Container {
       ease: "power2",
     });
 
-    gsap.to(this, {
+    this.ballGraphic.shadow.x = this.ballGraphic.initialShadowX;
+    this.ballGraphic.shadow.y = this.ballGraphic.initialShadowY;
+    gsap.to(this.ballGraphic.shadow.scale, {
       duration: 0.8,
-      y: this.initPositionY,
+      x: this.ballGraphic.shadowInitialScale,
+      y: this.ballGraphic.shadowInitialScale,
+      ease: "bounce.out",
+    });
+
+    gsap.to(this.ballGraphic.container, {
+      duration: 0.8,
+      y: ballDestinationPoints.y,
       ease: "bounce.out",
       onComplete: () => {
+        this.ballGraphic.ballSelector.reset();
         this.eventEmitter.emit(GameEventEnums.ballIsReadyForShoot);
       },
     });

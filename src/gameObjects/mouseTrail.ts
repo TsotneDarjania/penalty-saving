@@ -1,12 +1,13 @@
-import { Container, Particle, ParticleContainer, Texture } from "pixi.js";
+import { Particle, ParticleContainer, Texture } from "pixi.js";
 import { Game } from "../game";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 import gsap from "gsap";
+import { Scene } from "../game/core/scene";
 
 export class MouseTrail {
   particleContainer!: ParticleContainer;
 
-  constructor(public scene: Container, public game: Game) {
+  constructor(public scene: Scene, public game: Game) {
     this.init();
 
     const texture = Texture.from(GameObjectEnums.mouseRopeEffect);
@@ -51,7 +52,7 @@ export class MouseTrail {
       },
     });
 
-    this.scene.addChild(this.particleContainer);
+    this.scene.add(this.particleContainer);
 
     this.game.ticker.add(() => {
       this.particleContainer.update();

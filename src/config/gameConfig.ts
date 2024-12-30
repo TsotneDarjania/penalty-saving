@@ -1,7 +1,7 @@
 export const gameConfig = {
   mobile: {
     ball: {
-      radius: 42,
+      maskSize: 42,
       x: 0.5,
       y: 0.85,
       shadow: {
