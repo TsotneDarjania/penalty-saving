@@ -111,15 +111,8 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":516,"h":515},
 	"sourceSize": {"w":516,"h":515}
+}
 },
-"target.svg":
-{
-	"frame": {"x":513,"y":162,"w":182,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":182,"h":182},
-	"sourceSize": {"w":182,"h":182}
-}},
 "animations": {
 	"star": ["star-1.svg","star-2.svg","star-3.svg","star-4.svg","star-5.svg"]
 },

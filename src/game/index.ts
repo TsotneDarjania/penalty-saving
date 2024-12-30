@@ -1,4 +1,4 @@
-import { Application, Graphics } from "pixi.js";
+import { Application, Graphics, Sprite, Texture } from "pixi.js";
 import { GameResources } from "./core/gameResources.ts";
 import { GameObjects } from "./core/gameObjects.ts";
 import { Character } from "../gameObjects/character.ts";
@@ -6,8 +6,15 @@ import { DorTargetPoints } from "./core/doorTargetPoints.ts";
 import { GameManager } from "./core/gameManager.ts";
 import { UI } from "../ui/index.ts";
 import { Scene } from "./core/scene.ts";
-import { getX, getY, setBallTrail } from "../config/runtimeHelper.ts";
+import {
+  getScaleX,
+  getX,
+  getY,
+  setBallTrail,
+} from "../config/runtimeHelper.ts";
 import { BallTrail } from "../gameObjects/ballTrail.ts";
+import { GameObjectEnums } from "../enums/gameObjectEnums.ts";
+import gsap from "gsap";
 
 export class Game extends Application {
   public scene!: Scene;
@@ -57,6 +64,7 @@ export class Game extends Application {
 
   private startGame() {
     this.addGameObjects();
+    this.addClouds();
     this.addBallTrailEffect();
     this.addCharacter();
     this.addUI();
@@ -102,5 +110,34 @@ export class Game extends Application {
 
   private addUI() {
     this.ui = new UI(this.scene, this);
+  }
+
+  private addClouds() {
+    const cloudLeft = new Sprite(Texture.from(GameObjectEnums.cloud));
+    cloudLeft.anchor = 0.5;
+    cloudLeft.x = getX(0);
+    cloudLeft.y = getY(0.1);
+    cloudLeft.scale = getScaleX(1);
+
+    cloudLeft.zIndex = 10;
+
+    gsap.to(cloudLeft.scale, {
+      duration: 400,
+      x: getScaleX(2),
+      y: getScaleX(2),
+      yoyo: true,
+      repeat: -1,
+      ease: "none",
+    });
+    gsap.to(cloudLeft, {
+      duration: 400,
+      x: getX(0.2),
+      y: getY(0.2),
+      yoyo: true,
+      repeat: -1,
+      ease: "none",
+    });
+
+    this.scene.add(cloudLeft);
   }
 }

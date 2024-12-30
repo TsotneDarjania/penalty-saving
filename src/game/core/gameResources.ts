@@ -95,6 +95,24 @@ export class GameResources extends AssetsClass {
           autoGenerateMipmaps: true,
         },
       },
+      // Cloud
+      {
+        alias: GameObjectEnums.cloud,
+        src: "../assets/image/cloud.png",
+        data: {
+          scaleMode: "linear",
+          autoGenerateMipmaps: true,
+        },
+      },
+      // Target
+      {
+        alias: GameObjectEnums.target,
+        src: "../assets/image/target.svg",
+        data: {
+          scaleMode: "linear",
+          autoGenerateMipmaps: true,
+        },
+      },
     ]);
 
     const fontFace = new FontFace(

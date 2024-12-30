@@ -31,4 +31,5 @@ export enum GameObjectEnums {
   mouseRopeEffect = "mouse-rope-effect.png",
   mainAssets = "mainAssets",
   mainAssets_2 = "mainAssets-2",
+  cloud = "cloud",
 }
