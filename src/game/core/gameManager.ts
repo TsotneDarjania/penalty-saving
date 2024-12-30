@@ -1,4 +1,4 @@
-import { Sprite, Texture } from "pixi.js";
+import { Point, Sprite, Texture } from "pixi.js";
 import { Game } from "..";
 import { getResult } from "../../api";
 import { GameEventEnums } from "../../enums/gameEvenetEnums";
@@ -61,8 +61,6 @@ export class GameManager {
   makeReadyForShoot() {
     this.isShootCommand = false;
     this.isBallSelected = false;
-
-    this.game.gameObjects.ball!.ballGraphic.addSelector();
   }
 
   async shootCommand() {
@@ -202,10 +200,18 @@ export class GameManager {
             ? Texture.from(GameObjectEnums.winCircle)
             : Texture.from(GameObjectEnums.loseCircle)
         );
-        this.game.scene.addChild(circle);
+        this.game.scene.add(circle);
+
+        const points = this.game.gameObjects.ball!.toGlobal(
+          new Point(
+            this.game.gameObjects.ball!.ballGraphic.container.x,
+            this.game.gameObjects.ball!.ballGraphic.container.y
+          )
+        );
+
         circle.anchor = 0.5;
-        circle.x = this.game.gameObjects.ball!.x;
-        circle.y = this.game.gameObjects.ball!.y;
+        circle.x = points.x;
+        circle.y = points.y;
         circle.scale.x = 0;
         circle.scale.y = 0;
 

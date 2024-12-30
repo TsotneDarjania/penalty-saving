@@ -1,13 +1,18 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Container } from "pixi.js";
+import { Scene } from "../game/core/scene";
+import { getScaleX } from "../config/runtimeHelper";
 
 export class Character extends Container {
   spine!: Spine;
-  constructor(public scene: Container) {
+  constructor(public scene: Scene, initX: number, initY: number) {
     super();
 
+    this.x = initX;
+    this.y = initY;
+
     this.init();
-    this.scene.addChild(this);
+    this.scene.add(this);
   }
 
   init() {
@@ -15,9 +20,11 @@ export class Character extends Container {
     this.interactiveChildren = false;
 
     this.spine = Spine.from({
-      skeleton: "spineSkeleton",
-      atlas: "spineAtlas",
+      skeleton: "CharacterSkeleton",
+      atlas: "CharacterAtlas",
     });
+
+    this.spine.scale = getScaleX(2.5);
 
     this.spine.state.setAnimation(0, "Idle", true);
     this.addChild(this.spine);

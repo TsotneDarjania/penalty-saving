@@ -1,11 +1,17 @@
-import { Container, Sprite, textureFrom } from "pixi.js";
+import { Sprite, textureFrom } from "pixi.js";
 import { FootballDoor } from "../../gameObjects/footballDoor.ts";
 import { Ball } from "../../gameObjects/ball/index.ts";
-import { gameConfig } from "../../config/gameConfig.ts";
 import { GameObjectEnums } from "../../enums/gameObjectEnums.ts";
 import { Spectators } from "../../gameObjects/spectators.ts";
 import { BallTrail } from "../../gameObjects/ballTrail.ts";
-import { Game } from "../index.ts";
+import { Scene } from "./scene.ts";
+import {
+  getScaleX,
+  getX,
+  getY,
+  setBackground,
+  setScene,
+} from "../../config/runtimeHelper.ts";
 
 export class GameObjects {
   ball: Ball | null = null;
@@ -20,122 +26,79 @@ export class GameObjects {
 
   spectators!: Spectators;
 
-  constructor(public scene: Container, public game: Game) {
+  constructor(public scene: Scene) {
     this.addInitialGameObjects();
   }
 
   private addInitialGameObjects() {
     this.addBackground();
+    this.initRuntimeConfig();
     this.addBall();
     this.addFootballDor();
     this.addSpectators();
-    this.addBallTrailEffect();
   }
 
   addBackground() {
     this.stadiumBck = new Sprite(textureFrom(GameObjectEnums.stadiumBck));
-    const scaleX = window.innerWidth / this.stadiumBck.width;
-    const scaleY = window.innerHeight / this.stadiumBck.height;
-    this.backgroundScale = Math.max(scaleX, scaleY);
+    const scaleX = this.scene.width / this.stadiumBck.width;
+    const scaleY = this.scene.height / this.stadiumBck.height;
 
-    this.stadiumBck.x = window.innerWidth / 2;
-    this.stadiumBck.y = window.innerHeight / 2;
-    this.stadiumBck.scale.set(this.backgroundScale);
+    let scale_x = Math.max(scaleX, scaleY);
+    let scale_y = Math.max(scaleX, scaleY);
+
+    if (this.scene.height > 750) {
+      scale_x = Math.min(scaleX, scaleY);
+      scale_y = scale_y - 0.04;
+    }
+
+    if (this.scene.width >= 912) {
+      scale_x = Math.min(scaleX, scaleY);
+      scale_y = Math.min(scaleX, scaleY);
+    }
+
     this.stadiumBck.anchor.set(0.5);
     this.stadiumBck.zIndex = -1;
+    this.stadiumBck.x = this.scene.width / 2;
+    this.stadiumBck.y = this.scene.height / 2;
+    this.stadiumBck.scale.set(scale_x, scale_y);
 
-    this.scaledBackgroundgWidth =
-      this.stadiumBck.texture.width * this.stadiumBck.scale.x;
-    this.scaledBackgroundgHeight =
-      this.stadiumBck.texture.height * this.stadiumBck.scale.y;
+    this.scene.add(this.stadiumBck);
 
-    this.scene.addChild(this.stadiumBck);
+    const sky = new Sprite(textureFrom(GameObjectEnums.stadiumBck2));
 
-    const stadiumBck_2 = new Sprite(textureFrom(GameObjectEnums.stadiumBck2));
+    sky.x = window.innerWidth / 2;
+    sky.y = window.innerHeight / 2;
+    sky.scale.set(scale_x, scale_y);
+    sky.anchor.set(0.5);
+    sky.zIndex = -3;
 
-    stadiumBck_2.x = window.innerWidth / 2;
-    stadiumBck_2.y = window.innerHeight / 2;
-    stadiumBck_2.scale.set(this.backgroundScale);
-    stadiumBck_2.anchor.set(0.5);
-    stadiumBck_2.zIndex = -3;
+    this.scene.add(sky);
+  }
 
-    this.scene.addChild(stadiumBck_2);
+  private initRuntimeConfig() {
+    setBackground(this.stadiumBck);
+    setScene(this.scene);
   }
 
   private addBall() {
-    const ballInitPositionX =
-      this.stadiumBck.x -
-      this.scaledBackgroundgWidth / 2 +
-      gameConfig.mobile.ball.x * this.scaledBackgroundgWidth;
+    this.ball = new Ball(getX(0.5), getY(0.85), getScaleX(7.5));
+    this.scene.add(this.ball);
 
-    const ballInitPositionY =
-      this.stadiumBck.y -
-      this.scaledBackgroundgHeight / 2 +
-      gameConfig.mobile.ball.y * this.scaledBackgroundgHeight;
-
-    const ballShadowPositionX =
-      this.stadiumBck.x -
-      this.scaledBackgroundgWidth / 2 +
-      gameConfig.mobile.ball.shadow.x * this.scaledBackgroundgWidth;
-
-    const ballShadowPositionY =
-      this.stadiumBck.y -
-      this.scaledBackgroundgHeight / 2 +
-      gameConfig.mobile.ball.shadow.y * this.scaledBackgroundgHeight;
-
-    this.ball = new Ball(
-      ballInitPositionX,
-      ballInitPositionY,
-      this.scene,
-      this.backgroundScale,
-      this
-    );
-
-    this.ball.x = ballInitPositionX;
-    this.ball.y = ballInitPositionY;
-
-    this.ball.ballGraphic.shadow.x = ballShadowPositionX;
-    this.ball.ballGraphic.shadow.y = ballShadowPositionY;
-    this.ball.ballGraphic.sahdowInitialPositionX = ballShadowPositionX;
-    this.ball.ballGraphic.sahdowInitialPositionY = ballShadowPositionY;
-
-    this.ball.scale.set(this.backgroundScale * 7.5);
-    this.ball.ballGraphic.shadow.scale.set(this.backgroundScale * 1.25);
-    this.ball.ballGraphic.shadowInitScaleX =
-      this.ball.ballGraphic.shadow.scale.x;
-    this.ball.ballGraphic.shadowInitScaleY =
-      this.ball.ballGraphic.shadow.scale.y;
     this.ball.zIndex = 5;
-    this.scene.addChild(this.ball);
   }
 
   addFootballDor() {
     this.footballDoor = new FootballDoor();
+    this.footballDoor.scale = this.stadiumBck.scale;
+    this.footballDoor.x = getX(0.5);
+    this.footballDoor.y = getY(0.41);
 
-    this.footballDoor!.x =
-      this.stadiumBck.x -
-      this.scaledBackgroundgWidth / 2 +
-      gameConfig.mobile.footballDoor.x * this.scaledBackgroundgWidth;
-    this.footballDoor!.y =
-      this.stadiumBck.y -
-      this.scaledBackgroundgHeight / 2 +
-      gameConfig.mobile.footballDoor.y * this.scaledBackgroundgHeight;
-
-    this.footballDoor!.scale.set(this.backgroundScale * 5.4);
-    this.scene.addChild(this.footballDoor);
+    this.footballDoor.scale.x = getScaleX(5.4);
+    this.footballDoor.scale.y = getScaleX(5.4);
+    this.scene.add(this.footballDoor);
   }
 
   private addSpectators() {
-    this.spectators = new Spectators(
-      this.scene,
-      this.scaledBackgroundgWidth,
-      this.scaledBackgroundgHeight,
-      this.backgroundScale,
-      this.stadiumBck
-    );
-  }
-
-  private addBallTrailEffect() {
-    this.ballTrail = new BallTrail(this.scene, this.game);
+    this.spectators = new Spectators(this.scene);
   }
 }

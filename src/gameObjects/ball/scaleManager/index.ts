@@ -8,8 +8,13 @@ export class ScaleManager {
     // For Selector
     gsap.to(this.ball.ballGraphic.ballSelector.scale, {
       duration: 0.2,
-      x: this.ball.scale.x + 0.8,
-      y: this.ball.scale.y + 0.8,
+      x: this.ball.ballGraphic.ballSelector.scale.x + 0.26,
+      y: this.ball.ballGraphic.ballSelector.scale.y + 0.26,
+      ease: "power2",
+    });
+    gsap.to(this.ball.ballGraphic.ballSelector.greenShadow, {
+      duration: 0.2,
+      alpha: 0.5,
       ease: "power2",
     });
 
@@ -31,28 +36,6 @@ export class ScaleManager {
   }
 
   startScaleAnimationDuringShoot() {
-    // For Shadow
-    gsap.to(this.ball.ballGraphic.shadow.scale, {
-      duration: 0.2,
-      x: this.ball.ballGraphic.shadow.scale.x - 0.2,
-      y: this.ball.ballGraphic.shadow.scale.y - 0.2,
-      ease: "power2",
-    });
-    gsap.to(this.ball.ballGraphic.shadow, {
-      duration: 0.2,
-      alpha: 0,
-      ease: "power2",
-      onComplete: () => {
-        this.ball.ballGraphic.shadow.alpha = 1;
-        gsap.to(this.ball.ballGraphic.shadow.scale, {
-          duration: 0.5,
-          x: this.ball.backgroundScale * 0.4,
-          y: this.ball.backgroundScale * 0.4,
-          ease: "bounce.out",
-        });
-      },
-    });
-
     // For Ball
     gsap.to(this.ball.ballGraphic.container.scale, {
       duration: 0.1,

@@ -12,13 +12,13 @@ export class BlurManager {
     this.blurFilter = new BlurFilter({
       strength: 0,
     });
-    this.ball.filters = [this.blurFilter];
+    this.ball.ballGraphic.container.filters = [this.blurFilter];
   }
 
   public makeItBlur() {
     gsap.to(this.blurFilter, {
       duration: 0.3,
-      strength: 0.7,
+      strength: 2,
       ease: "power4.out",
       onUpdate: () => {
         this.ball.filters = [this.blurFilter];

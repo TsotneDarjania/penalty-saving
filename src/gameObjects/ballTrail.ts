@@ -1,12 +1,13 @@
-import { Container, Particle, ParticleContainer, Texture } from "pixi.js";
+import { Particle, ParticleContainer, Texture } from "pixi.js";
 import { Game } from "../game";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 import gsap from "gsap";
+import { Scene } from "../game/core/scene";
 
 export class BallTrail {
   particleContainer!: ParticleContainer;
 
-  constructor(public scene: Container, public game: Game) {
+  constructor(public scene: Scene, public game: Game) {
     this.init();
   }
 
@@ -16,14 +17,14 @@ export class BallTrail {
       texture,
       x,
       y,
-      scaleX: 0.36,
-      scaleY: 0.36,
+      scaleX: 0.39,
+      scaleY: 0.39,
       rotation: Math.PI / 2,
       anchorX: 0.5,
       anchorY: 0.5,
     });
     gsap.to(particle, {
-      duration: 0.5,
+      duration: 0.7,
       alpha: 0,
       onComplete: () => {
         this.particleContainer.removeParticle(particle);
@@ -42,7 +43,7 @@ export class BallTrail {
         tint: true,
       },
     });
-    this.scene.addChild(this.particleContainer);
+    this.scene.add(this.particleContainer);
     this.game.ticker.add(() => {
       this.particleContainer.update();
     });

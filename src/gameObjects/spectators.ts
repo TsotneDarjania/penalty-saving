@@ -1,10 +1,12 @@
-import { Container, Sprite, Texture } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 import { GameObjectEnums } from "../enums/gameObjectEnums";
 import { getRandomFloat } from "../helper";
 import gsap from "gsap";
+import { Scene } from "../game/core/scene";
+import { getScaleX, getX, getY } from "../config/runtimeHelper";
 
 export class Spectators {
-  count = 170;
+  count = 15;
   spectators: Sprite[] = [];
 
   minY!: number;
@@ -13,19 +15,13 @@ export class Spectators {
   minScale = 0.4;
   maxScale = 1.2;
 
-  minX = -1;
-  maxX = 2;
+  minX = 0;
+  maxX = 1;
 
   minDuration = 0.2;
   maxDuration = 0.3;
 
-  constructor(
-    public scene: Container,
-    public scaledBackgroundgWidth: number,
-    public scaledBackgroundgHeight: number,
-    public backgroundScale: number,
-    public stadiumBck: Sprite
-  ) {
+  constructor(public scene: Scene) {
     this.minY = 0.35;
     this.maxY = 0.47;
 
@@ -39,21 +35,13 @@ export class Spectators {
       spectator.anchor = 0.5;
       spectator.zIndex = -2;
       spectator.alpha = 0;
-      spectator.x =
-        this.stadiumBck.x -
-        this.scaledBackgroundgWidth / 2 +
-        getRandomFloat(this.minX, this.maxX) * this.scaledBackgroundgWidth;
-      spectator.y =
-        this.stadiumBck.y -
-        this.scaledBackgroundgHeight / 2 +
-        getRandomFloat(this.minY, this.maxY) * this.scaledBackgroundgHeight;
+      spectator.x = getX(getRandomFloat(this.minX, this.maxX));
+      spectator.y = getY(getRandomFloat(this.minY, this.maxY));
 
-      spectator.scale.set(
-        this.backgroundScale * getRandomFloat(this.minScale, this.maxScale)
-      );
+      spectator.scale.set(getScaleX(0.5));
 
       this.spectators.push(spectator);
-      this.scene.addChild(spectator);
+      this.scene.add(spectator);
     }
   }
 
@@ -81,14 +69,8 @@ export class Spectators {
   }
 
   doAnimationAgain(spectator: Sprite, delay: number) {
-    spectator.x =
-      this.stadiumBck.x -
-      this.scaledBackgroundgWidth / 2 +
-      getRandomFloat(this.minX, this.maxX) * this.scaledBackgroundgWidth;
-    spectator.y =
-      this.stadiumBck.y -
-      this.scaledBackgroundgHeight / 2 +
-      getRandomFloat(this.minY, this.maxY) * this.scaledBackgroundgHeight;
+    spectator.x = getX(getRandomFloat(this.minX, this.maxX));
+    spectator.y = getY(getRandomFloat(this.minY, this.maxY));
     spectator.alpha = 0;
 
     gsap.to(spectator, {

@@ -1,18 +1,33 @@
 import { Ball } from "..";
 import gsap from "gsap";
+import { ballTrail } from "../../../config/runtimeHelper";
+import { Container, Point } from "pixi.js";
 export class ShootManager {
-  constructor(public ball: Ball) {}
+  parentContainer!: Container;
+
+  constructor(public ball: Ball) {
+    this.parentContainer = ball;
+  }
 
   shoot(targetLocation: { x: number; y: number }) {
-    this.ball.ballGraphic.removeSelector();
+    const localTarget = this.ball.toLocal(
+      new Point(targetLocation.x, targetLocation.y)
+    );
 
-    gsap.to(this.ball, {
+    gsap.to(this.ball.ballGraphic.container, {
       duration: 0.2,
-      x: targetLocation.x,
-      y: targetLocation.y,
+      x: localTarget.x,
+      y: localTarget.y,
       ease: "power2.in",
       onUpdate: () => {
-        this.ball.gameObjects.ballTrail.drawParticles(this.ball.x, this.ball.y);
+        const localTarget = this.ball.toGlobal(
+          new Point(
+            this.ball.ballGraphic.container.x,
+            this.ball.ballGraphic.container.y
+          )
+        );
+
+        ballTrail.drawParticles(localTarget.x, localTarget.y);
       },
       onComplete: () => {
         this.ball.eventEmitter.emit("FinishShoot");
