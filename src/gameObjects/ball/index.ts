@@ -146,7 +146,6 @@ export class Ball extends Container {
       },
       ease: "bounce.out",
       onComplete: () => {
-        this.ballGraphic.shadow.alpha = 0;
         this.eventEmitter.emit(GameEventEnums.finishFallingOfBall);
       },
     });

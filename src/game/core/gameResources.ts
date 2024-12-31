@@ -43,6 +43,7 @@ export class GameResources extends AssetsClass {
           autoGenerateMipmaps: true,
         },
       },
+
       // stadium background
       {
         alias: GameObjectEnums.stadiumBck,
@@ -52,7 +53,8 @@ export class GameResources extends AssetsClass {
           autoGenerateMipmaps: true,
         },
       },
-      // Sky
+      
+      // Sky      
       {
         alias: GameObjectEnums.stadiumBck2,
         src: "../assets/image/stadium-bck-2.png",

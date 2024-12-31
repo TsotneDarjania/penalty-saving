@@ -48,12 +48,22 @@ export class GameObjects {
 
     if (this.scene.height > 750) {
       scale_x = Math.min(scaleX, scaleY);
-      scale_y = scale_y - 0.04;
+      scale_y = scale_y - 0.035;
     }
 
     if (this.scene.width >= 912) {
       scale_x = Math.min(scaleX, scaleY);
       scale_y = Math.min(scaleX, scaleY);
+    }
+
+    if (
+      this.scene.width >= 375 &&
+      this.scene.width < 500 &&
+      this.scene.height >= 800
+    ) {
+      console.log(1111);
+      scale_x = Math.min(scaleX, scaleY);
+      scale_y = Math.max(scaleX, scaleY);
     }
 
     this.stadiumBck.anchor.set(0.5);
@@ -89,9 +99,17 @@ export class GameObjects {
 
   addFootballDor() {
     this.footballDoor = new FootballDoor();
-    this.footballDoor.scale = this.stadiumBck.scale;
+
     this.footballDoor.x = getX(0.5);
     this.footballDoor.y = getY(0.41);
+
+    if (
+      this.scene.width >= 375 &&
+      this.scene.width < 500 &&
+      this.scene.height >= 800
+    ) {
+      this.footballDoor.y = getY(0.435);
+    }
 
     this.footballDoor.scale.x = getScaleX(5.4);
     this.footballDoor.scale.y = getScaleX(5.4);
